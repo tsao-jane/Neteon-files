@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neousys ICP Prospect Report — In-Vehicle & AI</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; line-height: 1.6; padding: 24px; }
+  .header { background: linear-gradient(135deg, #0a1628 0%, #1a365d 100%); color: white; padding: 32px 40px; border-radius: 16px; margin-bottom: 24px; }
+  .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+  .header p { opacity: 0.85; font-size: 15px; }
+  .product-ref { background: white; border-radius: 12px; padding: 20px 28px; margin-bottom: 24px; border: 1px solid #e2e8f0; }
+  .product-ref h2 { font-size: 16px; margin-bottom: 12px; color: #1a365d; }
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .product-card { background: #f8fafc; border-radius: 8px; padding: 12px 16px; border: 1px solid #e2e8f0; }
+  .product-card strong { color: #1a365d; font-size: 14px; }
+  .product-card a { color: #6366f1; text-decoration: none; }
+  .product-card a:hover { text-decoration: underline; }
+  .product-card p { font-size: 12px; color: #64748b; margin-top: 4px; }
+  .scoring-model { background: white; border-radius: 12px; padding: 28px 32px; margin-bottom: 24px; border: 1px solid #e2e8f0; }
+  .scoring-model h2 { font-size: 18px; margin-bottom: 16px; color: #1a365d; }
+  .scoring-model table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .scoring-model th { text-align: left; padding: 8px 12px; background: #f8fafc; border-bottom: 2px solid #e2e8f0; font-weight: 600; }
+  .scoring-model td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+  .scoring-model .weight { color: #6366f1; font-weight: 700; }
+  .geo-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 12px; }
+  .geo-table th { text-align: left; padding: 6px 10px; background: #eef2ff; font-weight: 600; }
+  .geo-table td { padding: 6px 10px; border-bottom: 1px solid #f1f5f9; }
+  .geo-table .pts { font-weight: 700; color: #6366f1; }
+  .summary-bar { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  .stat-card { background: white; border-radius: 12px; padding: 20px 24px; flex: 1; min-width: 140px; border: 1px solid #e2e8f0; }
+  .stat-card .num { font-size: 32px; font-weight: 800; }
+  .stat-card .label { font-size: 13px; color: #64748b; margin-top: 4px; }
+  .stat-card.tier-a .num { color: #059669; }
+  .stat-card.tier-b .num { color: #3b82f6; }
+  .stat-card.tier-c .num { color: #f59e0b; }
+  .stat-card.tier-d .num { color: #94a3b8; }
+
+  .section-title { font-size: 20px; font-weight: 700; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 2px solid #e2e8f0; }
+  .source-tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 99px; font-weight: 600; margin-left: 8px; vertical-align: middle; }
+  .source-apollo { background: #ede9fe; color: #7c3aed; }
+  .source-sheet { background: #dcfce7; color: #16a34a; }
+
+  .card { background: white; border-radius: 12px; padding: 24px 28px; margin-bottom: 16px; border: 1px solid #e2e8f0; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; }
+  .card.tier-a::before { background: #059669; }
+  .card.tier-b::before { background: #3b82f6; }
+  .card.tier-c::before { background: #f59e0b; }
+  .card.tier-d::before { background: #94a3b8; }
+
+  .card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+  .card-head h3 { font-size: 18px; font-weight: 700; }
+  .card-head h3 a { color: #1a365d; text-decoration: none; border-bottom: 2px solid #c7d2fe; }
+  .card-head h3 a:hover { color: #6366f1; border-bottom-color: #6366f1; }
+  .card-head .meta { font-size: 13px; color: #64748b; }
+  .tier-badge { display: inline-block; padding: 4px 14px; border-radius: 99px; font-size: 14px; font-weight: 800; }
+  .tier-badge.a { background: #d1fae5; color: #059669; }
+  .tier-badge.b { background: #dbeafe; color: #2563eb; }
+  .tier-badge.c { background: #fef3c7; color: #d97706; }
+  .tier-badge.d { background: #f1f5f9; color: #94a3b8; }
+
+  .score-bar-wrap { margin: 12px 0; }
+  .score-bar { height: 8px; border-radius: 99px; background: #f1f5f9; overflow: hidden; }
+  .score-bar-fill { height: 100%; border-radius: 99px; }
+  .score-bar-fill.a { background: linear-gradient(90deg, #34d399, #059669); }
+  .score-bar-fill.b { background: linear-gradient(90deg, #93c5fd, #3b82f6); }
+  .score-bar-fill.c { background: linear-gradient(90deg, #fcd34d, #f59e0b); }
+  .score-bar-fill.d { background: linear-gradient(90deg, #cbd5e1, #94a3b8); }
+
+  .dims { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px; margin: 12px 0; }
+  .dim { font-size: 13px; padding: 6px 10px; background: #f8fafc; border-radius: 8px; }
+  .dim strong { color: #1a365d; }
+  .dim.geo-highlight { background: #eef2ff; border: 1px solid #c7d2fe; }
+
+  .product-fit { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 99px; font-weight: 600; background: #faf5ff; color: #7c3aed; margin-left: 4px; }
+
+  .insight { background: #f0fdf4; border-left: 3px solid #059669; padding: 10px 14px; margin-top: 12px; border-radius: 0 8px 8px 0; font-size: 14px; }
+  .insight.warn { background: #fff7ed; border-left-color: #f59e0b; }
+
+  .new-badge { display: inline-block; background: #fee2e2; color: #dc2626; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; margin-left: 8px; }
+  .existing-badge { display: inline-block; background: #e0f2fe; color: #0284c7; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; margin-left: 8px; }
+
+  .removed { background: white; border-radius: 12px; padding: 20px 28px; margin-bottom: 16px; border: 1px dashed #e2e8f0; }
+  .removed h3 { font-size: 15px; color: #94a3b8; }
+  .removed p { font-size: 13px; color: #94a3b8; }
+
+  .footer { text-align: center; color: #94a3b8; font-size: 13px; margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+
+  .industries { background: white; border-radius: 12px; padding: 20px 28px; margin-bottom: 24px; border: 1px solid #e2e8f0; }
+  .industries h2 { font-size: 16px; margin-bottom: 12px; color: #1a365d; }
+  .industries-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+  .industry-tag { background: #f0fdf4; color: #16a34a; padding: 6px 12px; border-radius: 8px; font-size: 13px; font-weight: 500; border: 1px solid #bbf7d0; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Neousys ICP Prospect Report v5 — New Leads Only</h1>
+  <p>In-Vehicle Computing & AI/Edge Applications — March 26, 2026</p>
+  <p style="margin-top:4px; font-size:13px; opacity:0.7;">Neteon Tech HQ: New Jersey • Simplified geography scoring • Calibrated to actual Neousys product use cases</p>
+</div>
+
+<!-- NEOUSYS PRODUCT REFERENCE -->
+<div class="product-ref">
+  <h2>Neousys Products — Who Actually Buys These?</h2>
+  <div class="product-grid">
+    <div class="product-card">
+      <strong><a href="https://www.neteon.net/landing/neousys-poc-700" target="_blank">POC-700 Series</a></strong>
+      <p>Ultra-compact edge AI controller. Ignition control, 8-35V DC. For <strong>in-vehicle computing, AGVs, mobile robots, IoT gateways</strong> in vibration-heavy environments.</p>
+    </div>
+    <div class="product-card">
+      <strong><a href="https://www.neteon.net/landing/neousys-poc-766awp" target="_blank">POC-766AWP</a></strong>
+      <p>IP67 waterproof, M12 connectors. For <strong>food processing, agricultural robots, wash-down zones, outdoor autonomous systems</strong>.</p>
+    </div>
+    <div class="product-card">
+      <strong><a href="https://www.neteon.net/landing/neousys-nuvo-11000" target="_blank">NUVO-11000 Series</a></strong>
+      <p>Intel Core Ultra 200S. 36 TOPS fanless edge AI, PCIe Gen5. For <strong>machine vision, multi-camera AI, heavy edge inference</strong> in non-climate-controlled environments.</p>
+    </div>
+    <div class="product-card">
+      <strong><a href="https://neousys.neteon.net/" target="_blank">NUVO-11531 Series</a></strong>
+      <p>Intel Core Ultra 200 Compact. For <strong>space-constrained edge AI deployments</strong> needing high compute density in a smaller form factor.</p>
+    </div>
+    <div class="product-card">
+      <strong><a href="https://neousys.neteon.net/" target="_blank">NUVO-10000 Series</a></strong>
+      <p>Expandable industrial PC. Powerful and scalable for <strong>factory automation, process control, multi-function edge computing</strong> with expansion slots.</p>
+    </div>
+    <div class="product-card">
+      <strong><a href="https://neousys.neteon.net/" target="_blank">NUVO-9160 (130W GPU)</a></strong>
+      <p>Edge AI GPU computing. For <strong>LiDAR processing, sensor fusion, deep learning inference</strong> in autonomous vehicles & robotics.</p>
+    </div>
+    <div class="product-card">
+      <strong><a href="https://neousys.neteon.net/" target="_blank">NUVO-10x08GC / 10208GC (350W GPU)</a></strong>
+      <p>High-performance 350W GPU platform incl. NUVO-10208GC. For <strong>heavy AI workloads, multi-sensor fusion, real-time autonomous driving compute</strong>.</p>
+    </div>
+    <div class="product-card">
+      <strong><a href="https://neousys.neteon.net/" target="_blank">NRU-220 (Jetson)</a></strong>
+      <p>NVIDIA Jetson edge AI computer. For <strong>lightweight AI inference, mobile robotics, edge analytics</strong> in size/power-constrained deployments.</p>
+    </div>
+  </div>
+  <p style="font-size:13px; color:#64748b; margin-top:12px;"><strong>Real buyer profile:</strong> Companies that DEPLOY rugged computers into vehicles, robots, factory floors, or outdoor environments. NOT defense primes who build their own hardware. NOT component/sensor makers. NOT pure software companies.</p>
+</div>
+
+<!-- INDUSTRIES -->
+<div class="industries">
+  <h2>Target Industries (v4)</h2>
+  <div class="industries-grid">
+    <div class="industry-tag">Autonomous Vehicles</div>
+    <div class="industry-tag">Robotics/AGV</div>
+    <div class="industry-tag">Oil & Gas</div>
+    <div class="industry-tag">Maritime</div>
+    <div class="industry-tag">Cold Chain Logistics</div>
+    <div class="industry-tag">Manufacturing/Vision</div>
+    <div class="industry-tag">Agriculture</div>
+    <div class="industry-tag">Defense</div>
+  </div>
+</div>
+
+<!-- SCORING MODEL -->
+<div class="scoring-model">
+  <h2>Neousys ICP Scoring Model v4 (0–100)</h2>
+  <p style="font-size:14px; color:#64748b; margin-bottom:16px;">Calibrated from full Neousys product catalog: POC-700, POC-766AWP, NUVO-11000, NUVO-11531, NUVO-10000, NUVO-9160, NUVO-10x08GC, Nuvo-11006E-PoE, NRU-220 Jetson.</p>
+  <table>
+    <tr><th>Dimension</th><th>Max</th><th>What It Measures</th></tr>
+    <tr><td><strong>1. Edge AI & Harsh Environment Deployment</strong></td><td class="weight">25</td><td>Do they run AI inference on ruggedized hardware? Machine vision, LiDAR, sensor fusion at the edge — not in a data center or cloud. Must need fanless, wide-temp, shock-rated systems.</td></tr>
+    <tr><td><strong>2. In-Vehicle / Mobile / Outdoor Platform</strong></td><td class="weight">25</td><td>Do they put computing inside vehicles, AGVs, mobile robots, drones, agricultural equipment, or outdoor field installations? Neousys's ignition control, IP67, MIL-STD features exist for this.</td></tr>
+    <tr><td><strong>3. Hardware Buyer (not Builder)</strong></td><td class="weight">18</td><td>Do they BUY embedded PCs from distributors? Or do they design/build their own? Defense primes, chipmakers, and sensor OEMs that build custom hardware score low. System integrators and end-deployers score high.</td></tr>
+    <tr><td><strong>4. Company Size Sweet Spot</strong></td><td class="weight">12</td><td>50–2,000 emp is ideal. Large enough for meaningful orders, small enough to buy through Neteon distribution vs. going direct to Neousys Taiwan.</td></tr>
+    <tr><td><strong>5. Geography (Simplified)</strong></td><td class="weight">10</td><td>Proximity to Neteon NJ HQ for site visits, demos, and support.</td></tr>
+    <tr><td><strong>6. Growth & Funding</strong></td><td class="weight">10</td><td>Headcount growth, funding, expansion. Growing companies deploy more hardware.</td></tr>
+  </table>
+
+  <h2 style="margin-top:20px; font-size:16px;">Geography Scoring (v4 — Simplified)</h2>
+  <table class="geo-table">
+    <tr><th>Pts</th><th>Region</th><th>Why</th></tr>
+    <tr><td class="pts">10</td><td>North America (US + Canada)</td><td>Same continent, reasonable travel distance for sales visits and support</td></tr>
+    <tr><td class="pts">3</td><td>South America</td><td>Possible but more complex logistics</td></tr>
+    <tr><td class="pts">5</td><td>International (Europe, APAC, etc.)</td><td>Still potential customers — Neteon can serve them, just lower priority than nearby regions</td></tr>
+  </table>
+</div>
+
+<!-- SUMMARY -->
+<div class="summary-bar">
+  <div class="stat-card tier-a"><div class="num">7</div><div class="label">A-Tier — High priority</div></div>
+  <div class="stat-card tier-b"><div class="num">3</div><div class="label">B-Tier — Worth pursuing</div></div>
+  <div class="stat-card tier-c"><div class="num">1</div><div class="label">C-Tier — Enrich further</div></div>
+  <div class="stat-card tier-d"><div class="num">0</div><div class="label">D-Tier — Deprioritize</div></div>
+  <div class="stat-card" style="border-color:#90EE90;"><div class="num" style="color:#16a34a;">11</div><div class="label">Total New Leads</div></div>
+</div>
+
+<!-- ==================== A-TIER ==================== -->
+<div class="section-title">A-Tier (75–100) — Prioritize Outreach</div>
+
+<!-- May Mobility -->
+<div class="card tier-a">
+  <div class="card-head">
+    <div>
+      <h3><a href="https://maymobility.com" target="_blank">May Mobility</a> <span class="new-badge">NEW</span> <span class="source-tag source-apollo">Apollo</span></h3>
+      <div class="meta">Ann Arbor, Michigan • ~350 emp • $149.6M rev • $392.6M total funding (Feb 2026) • Autonomous Shuttle Deployment</div>
+    </div>
+    <span class="tier-badge a">A • 89</span>
+  </div>
+  <div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill a" style="width:89%"></div></div></div>
+  <div class="dims">
+    <div class="dim"><strong>Edge AI:</strong> 24/25</div>
+    <div class="dim"><strong>In-Vehicle:</strong> 25/25</div>
+    <div class="dim"><strong>HW Buyer:</strong> 16/18</div>
+    <div class="dim"><strong>Size:</strong> 12/12</div>
+    <div class="dim geo-highlight"><strong>Geo:</strong> 10/10 (NA)</div>
+    <div class="dim"><strong>Growth:</strong> 2/10</div>
+  </div>
+  <div class="insight"><strong>Product fit:</strong> <span class="product-fit">GPU Platforms</span> <span class="product-fit">POC-700</span> — Autonomous shuttle company deploying self-driving transit vehicles. NVIDIA A100 GPUs in tech stack. 400K+ autonomy-enabled rides across 18 deployments. Toyota, BMW, SoftBank backed. MI location accessible from NJ. Perfect size for Neousys GPU platforms. Growing deployment footprint = increasing hardware needs.</div>
+  <div style="margin-top:10px; padding:10px 14px; background:#f0fdf4; border-radius:8px; border:1px solid #bbf7d0;">
+    <strong style="font-size:12px; color:#166534;">Key Contacts (Apollo):</strong>
+    <ul style="margin:6px 0 0 0; padding-left:18px; font-size:12px; color:#334155; line-height:1.8;">
+      <li><strong>Eric Ha***n</strong> — Director of Product Integration Engineering (has email ✓ / has phone ✓)</li>
+      <li><strong>Daniel Bo***r</strong> — Senior Embedded Systems Engineer (has email ✓ / has phone ✓)</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- Path Robotics -->
+<div class="card tier-a">
+  <div class="card-head">
+    <div>
+      <h3><a href="https://path-robotics.com" target="_blank">Path Robotics</a> <span class="new-badge">NEW</span> <span class="source-tag source-apollo">Apollo</span></h3>
+      <div class="meta">Columbus, Ohio • ~170 emp • $79.2M rev • $271M total funding (Series D Oct 2024) • AI-Powered Autonomous Welding</div>
+    </div>
+    <span class="tier-badge a">A • 86</span>
+  </div>
+  <div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill a" style="width:86%"></div></div></div>
+  <div class="dims">
+    <div class="dim"><strong>Edge AI:</strong> 24/25</div>
+    <div class="dim"><strong>In-Vehicle:</strong> 18/25</div>
+    <div class="dim"><strong>HW Buyer:</strong> 16/18</div>
+    <div class="dim"><strong>Size:</strong> 12/12</div>
+    <div class="dim geo-highlight"><strong>Geo:</strong> 10/10 (NA)</div>
+    <div class="dim"><strong>Growth:</strong> 6/10</div>
+  </div>
+  <div class="insight"><strong>Product fit:</strong> <span class="product-fit">Nuvo-11000</span> <span class="product-fit">GPU Platforms</span> — AI-powered autonomous welding robots with machine vision for weld inspection. Tech stack: ABB Robotics, Siemens SIMATIC S7, TensorFlow. Harsh factory floor environment (sparks, vibration, heat) = perfect for ruggedized Neousys compute. OH location = 3.5 hours from NJ. Strong hardware buyer profile.</div>
+  <div style="margin-top:10px; padding:10px 14px; background:#f0fdf4; border-radius:8px; border:1px solid #bbf7d0;">
+    <strong style="font-size:12px; color:#166534;">Key Contacts (Apollo):</strong>
+    <ul style="margin:6px 0 0 0; padding-left:18px; font-size:12px; color:#334155; line-height:1.8;">
+      <li><strong>Josh Za***a</strong> — Hardware Engineering Manager (has email ✓ / has phone ✓)</li>
+      <li><strong>William Hu***g</strong> — Sr. Engineering Manager: Perception & Sensors (has email ✓ / has phone ✓)</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- Vecna Robotics -->
+<div class="card tier-a">
+  <div class="card-head">
+    <div>
+      <h3><a href="https://vecnarobotics.com" target="_blank">Vecna Robotics</a> <span class="new-badge">NEW</span> <span class="source-tag source-apollo">Apollo</span></h3>
+      <div class="meta">Waltham, Massachusetts • ~130 emp • $75M rev • $183M total funding • Autonomous Mobile Robots (AMRs)</div>
+    </div>
+    <span class="tier-badge a">A • 85</span>
+  </div>
+  <div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill a" style="width:85%"></div></div></div>
+  <div class="dims">
+    <div class="dim"><strong>Edge AI:</strong> 24/25</div>
+    <div class="dim"><strong>In-Vehicle:</strong> 22/25</div>
+    <div class="dim"><strong>HW Buyer:</strong> 16/18</div>
+    <div class="dim"><strong>Size:</strong> 12/12</div>
+    <div class="dim geo-highlight"><strong>Geo:</strong> 10/10 (NA)</div>
+    <div class="dim"><strong>Growth:</strong> 1/10</div>
+  </div>
+  <div class="insight"><strong>Product fit:</strong> <span class="product-fit">POC-700</span> <span class="product-fit">NRU-220 (Jetson)</span> — Autonomous mobile robots (AMRs) for warehouse automation. Tech stack includes NVIDIA Jetson, NVIDIA A100, NVIDIA TensorRT, OpenVINO. Already using NVIDIA Jetson platforms! Perfect size, MA location = easy from NJ. AMRs need compact ruggedized onboard compute for navigation & obstacle detection. Thousands of deployments underway.</div>
+  <div style="margin-top:10px; padding:10px 14px; background:#f0fdf4; border-radius:8px; border:1px solid #bbf7d0;">
+    <strong style="font-size:12px; color:#166534;">Key Contacts (Apollo):</strong>
+    <ul style="margin:6px 0 0 0; padding-left:18px; font-size:12px; color:#334155; line-height:1.8;">
+      <li><strong>Zachary Dy***k</strong> — Chief Technology Officer (has email ✓ / has phone ✓)</li>
+      <li><strong>Warranyu Wa***n</strong> — Chief Embedded Systems Engineer (has email ✓ / has phone ✓)</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- Neya Systems -->
+<div class="card tier-a">
+  <div class="card-head">
+    <div>
+      <h3><a href="https://neyarobotics.com" target="_blank">Neya Systems</a> <span class="new-badge">NEW</span> <span class="source-tag source-apollo">Apollo</span></h3>
+      <div class="meta">Warrendale, Pennsylvania • ~63 emp • $10.9M rev • ARA subsidiary • Autonomous Ground Vehicle Software</div>
+    </div>
+    <span class="tier-badge a">A • 84</span>
+  </div>
+  <div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill a" style="width:84%"></div></div></div>
+  <div class="dims">
+    <div class="dim"><strong>Edge AI:</strong> 24/25</div>
+    <div class="dim"><strong>In-Vehicle:</strong> 24/25</div>
+    <div class="dim"><strong>HW Buyer:</strong> 14/18</div>
+    <div class="dim"><strong>Size:</strong> 10/12</div>
+    <div class="dim geo-highlight"><strong>Geo:</strong> 10/10 (NA)</div>
+    <div class="dim"><strong>Growth:</strong> 2/10</div>
+  </div>
+  <div class="insight"><strong>Product fit:</strong> <span class="product-fit">GPU Platforms</span> <span class="product-fit">POC-700</span> — Autonomous ground vehicle software for defense, mining, construction. N-Drive modular autonomy platform. Computer vision, machine learning, off-road autonomy. US DoD contracts. PA location just 4 hours from NJ. Defense contracts = real budget. Perfect for Neousys rugged GPU boxes in mobile platforms operating in harsh off-road terrain.</div>
+  <div style="margin-top:10px; padding:10px 14px; background:#f0fdf4; border-radius:8px; border:1px solid #bbf7d0;">
+    <strong style="font-size:12px; color:#166534;">Key Contacts (Apollo):</strong>
+    <ul style="margin:6px 0 0 0; padding-left:18px; font-size:12px; color:#334155; line-height:1.8;">
+      <li><strong>Vikas Ba***l</strong> — CTO (has email ✓ / has phone ✓)</li>
+      <li><strong>Thomas Sw***t</strong> — Principal Mechanical Engineer / Hardware Group Manager (has email ✓)</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- Motional -->
+<div class="card tier-a">
+  <div class="card-head">
+    <div>
+      <h3><a href="https://motional.com" target="_blank">Motional</a> <span class="new-badge">NEW</span> <span class="source-tag source-apollo">Apollo</span></h3>
+      <div class="meta">Boston, MA • ~940 emp • $803M rev • Hyundai/Aptiv JV • Level 4 Autonomous Vehicles (IONIQ 5 Robotaxi)</div>
+    </div>
+    <span class="tier-badge a">A • 82</span>
+  </div>
+  <div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill a" style="width:82%"></div></div></div>
+  <div class="dims">
+    <div class="dim"><strong>Edge AI:</strong> 25/25</div>
+    <div class="dim"><strong>In-Vehicle:</strong> 25/25</div>
+    <div class="dim"><strong>HW Buyer:</strong> 8/18</div>
+    <div class="dim"><strong>Size:</strong> 10/12</div>
+    <div class="dim geo-highlight"><strong>Geo:</strong> 10/10 (NA)</div>
+    <div class="dim"><strong>Growth:</strong> 4/10</div>
+  </div>
+  <div class="insight"><strong>Product fit:</strong> <span class="product-fit">GPU Platforms</span> — Level 4 autonomous vehicles (Hyundai/Aptiv JV). IONIQ 5 robotaxi. 100K+ rides in Las Vegas. Tech stack: CANalyzer, CANoe, Simulink, PyTorch. Robotaxi fleet needs in-vehicle GPU compute for LiDAR + camera fusion. Hyundai backing means custom hardware culture, but R&D/prototype teams still need COTS platforms for testing. MA location reachable from NJ.</div>
+  <div style="margin-top:10px; padding:10px 14px; background:#f0fdf4; border-radius:8px; border:1px solid #bbf7d0;">
+    <strong style="font-size:12px; color:#166534;">Key Contacts (Apollo):</strong>
+    <ul style="margin:6px 0 0 0; padding-left:18px; font-size:12px; color:#334155; line-height:1.8;">
+      <li><strong>Ken Po***r</strong> — Director of Engineering (has email ✓ / has phone ✓)</li>
+      <li><strong>Till Ha***n</strong> — Senior Director, Engineering (has email ✓ / has phone ✓)</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- DWFritz Automation -->
+<div class="card tier-a">
+  <div class="card-head">
+    <div>
+      <h3><a href="https://dwfritz.com" target="_blank">DWFritz Automation</a> <span class="new-badge">NEW</span> <span class="source-tag source-apollo">Apollo</span></h3>
+      <div class="meta">Wilsonville, Oregon • ~300 emp • $78M rev • Balmoral Funds owned • Precision Automation & Machine Vision</div>
+    </div>
+    <span class="tier-badge a">A • 78</span>
+  </div>
+  <div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill a" style="width:78%"></div></div></div>
+  <div class="dims">
+    <div class="dim"><strong>Edge AI:</strong> 22/25</div>
+    <div class="dim"><strong>In-Vehicle:</strong> 10/25</div>
+    <div class="dim"><strong>HW Buyer:</strong> 16/18</div>
+    <div class="dim"><strong>Size:</strong> 12/12</div>
+    <div class="dim geo-highlight"><strong>Geo:</strong> 10/10 (NA)</div>
+    <div class="dim"><strong>Growth:</strong> 8/10</div>
+  </div>
+  <div class="insight"><strong>Product fit:</strong> <span class="product-fit">Nuvo-11000</span> <span class="product-fit">NUVO-10000</span> — Precision automation and machine vision for semiconductor, medical, automotive, aerospace. ZeroTouch non-contact inspection systems. Multi-camera setups need high-performance edge AI compute for real-time defect detection. Perfect hardware buyer profile. OR location farther but still within NA. Strong growth trajectory.</div>
+  <div style="margin-top:10px; padding:10px 14px; background:#f0fdf4; border-radius:8px; border:1px solid #bbf7d0;">
+    <strong style="font-size:12px; color:#166534;">Key Contacts (Apollo):</strong>
+    <ul style="margin:6px 0 0 0; padding-left:18px; font-size:12px; color:#334155; line-height:1.8;">
+      <li><strong>Derek Aq***i</strong> — Technical Director, Systems Engineering (has email ✓ / has phone ✓)</li>
+      <li><strong>Mike Ho***n</strong> — Sr. Staff Controls Software Engineer, Software Engineering Manager (has email ✓ / has phone ✓)</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- The Shyft Group -->
+<div class="card tier-a">
+  <div class="card-head">
+    <div>
+      <h3><a href="https://theshyftgroup.com" target="_blank">The Shyft Group</a> <span class="new-badge">NEW</span> <span class="source-tag source-apollo">Apollo</span></h3>
+      <div class="meta">Novi, Michigan • ~340 emp (HQ) / 2,555 total • $792.9M rev • $442.5M market cap • Aebi Schmidt Group • Specialty Vehicle Manufacturer</div>
+    </div>
+    <span class="tier-badge a">A • 75</span>
+  </div>
+  <div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill a" style="width:75%"></div></div></div>
+  <div class="dims">
+    <div class="dim"><strong>Edge AI:</strong> 18/25</div>
+    <div class="dim"><strong>In-Vehicle:</strong> 22/25</div>
+    <div class="dim"><strong>HW Buyer:</strong> 14/18</div>
+    <div class="dim"><strong>Size:</strong> 8/12</div>
+    <div class="dim geo-highlight"><strong>Geo:</strong> 10/10 (NA)</div>
+    <div class="dim"><strong>Growth:</strong> 3/10</div>
+  </div>
+  <div class="insight"><strong>Product fit:</strong> <span class="product-fit">POC-700</span> — Specialty vehicle manufacturer. Blue Arc electric vehicles, Utilimaster delivery trucks, Royal Truck Body. Vehicle integration engineering roles. Tech stack: Simulink, SOLIDWORKS. Specialty vehicles (delivery, utility, emergency) could integrate rugged onboard compute for fleet management, telematics, EV battery monitoring. MI location = accessible from NJ. Target their Blue Arc EV division and vehicle integration teams.</div>
+  <div style="margin-top:10px; padding:10px 14px; background:#f0fdf4; border-radius:8px; border:1px solid #bbf7d0;">
+    <strong style="font-size:12px; color:#166534;">Key Contacts (Apollo):</strong>
+    <ul style="margin:6px 0 0 0; padding-left:18px; font-size:12px; color:#334155; line-height:1.8;">
+      <li><strong>Ryan Mc***a</strong> — Electrical Engineering Manager (has email ✓ / has phone ✓)</li>
+      <li><strong>Ganesh Ba***l</strong> — Systems Engineering Manager (has email ✓ / has phone ✓)</li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="section-title">B-Tier (50–74) — Worth Pursuing</div>
+
+<!-- Einride -->
+<div class="card tier-b">
+  <div class="card-head">
+    <div>
+      <h3><a href="https://einride.tech" target="_blank">Einride</a> <span class="new-badge">NEW</span> <span class="source-tag source-apollo">Apollo</span></h3>
+      <div class="meta">Stockholm, Sweden + US ops • ~530 emp • $46M rev • $607.5M total funding (Oct 2025) • Autonomous Electric Freight</div>
+    </div>
+    <span class="tier-badge b">B • 74</span>
+  </div>
+  <div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill b" style="width:74%"></div></div></div>
+  <div class="dims">
+    <div class="dim"><strong>Edge AI:</strong> 24/25</div>
+    <div class="dim"><strong>In-Vehicle:</strong> 25/25</div>
+    <div class="dim"><strong>HW Buyer:</strong> 10/18</div>
+    <div class="dim"><strong>Size:</strong> 10/12</div>
+    <div class="dim geo-highlight"><strong>Geo:</strong> 5/10 (International)</div>
+    <div class="dim"><strong>Growth:</strong> 0/10</div>
+  </div>
+  <div class="insight"><strong>Product fit:</strong> <span class="product-fit">GPU Platforms</span> — Autonomous electric freight trucks (cab-less AV). Tech stack: Simulink, Fleetio, AI/ML. First autonomous electric truck on public road. 11M+ electric miles, operating in 7 countries. Cab-less design likely means custom hardware, but US operations growing and $607M total funding = real budget. International base hurts geography score, but worth monitoring. Target US vehicle integration team.</div>
+  <div style="margin-top:10px; padding:10px 14px; background:#f0fdf4; border-radius:8px; border:1px solid #bbf7d0;">
+    <strong style="font-size:12px; color:#166534;">Key Contacts (Apollo):</strong>
+    <ul style="margin:6px 0 0 0; padding-left:18px; font-size:12px; color:#334155; line-height:1.8;">
+      <li><strong>Trey Sh***e</strong> — VP Operations (has email ✓ / has phone ✓)</li>
+      <li><strong>Josh Ri***d</strong> — Senior Engineering Manager (has email ✓ / has phone ✓)</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- VisionNav Robotics -->
+<div class="card tier-b">
+  <div class="card-head">
+    <div>
+      <h3><a href="https://www.visionnav.com" target="_blank">VisionNav Robotics</a> <span class="new-badge">NEW</span> <span class="source-tag source-apollo">Apollo</span></h3>
+      <div class="meta">Shenzhen, China + US ops • ~120 emp • Autonomous Forklifts & Robotics</div>
+    </div>
+    <span class="tier-badge b">B • 67</span>
+  </div>
+  <div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill b" style="width:67%"></div></div></div>
+  <div class="dims">
+    <div class="dim"><strong>Edge AI:</strong> 23/25</div>
+    <div class="dim"><strong>In-Vehicle:</strong> 24/25</div>
+    <div class="dim"><strong>HW Buyer:</strong> 14/18</div>
+    <div class="dim"><strong>Size:</strong> 6/12</div>
+    <div class="dim geo-highlight"><strong>Geo:</strong> 5/10 (Intl)</div>
+    <div class="dim"><strong>Growth:</strong> 12/10</div>
+  </div>
+  <div class="insight"><strong>Product fit:</strong> <span class="product-fit">POC-700</span> <span class="product-fit">GPU Platforms</span> — Autonomous forklifts with vision-based navigation. Multiple project engineers identified. Strong growth but international base gets a lower geography score (may be handled by APAC distributors too, but Neteon can still serve). Worth enrichment & monitoring.</div>
+  <div style="margin-top:10px; padding:10px 14px; background:#f0fdf4; border-radius:8px; border:1px solid #bbf7d0;">
+    <strong style="font-size:12px; color:#166534;">Key Contacts (Apollo):</strong>
+    <ul style="margin:6px 0 0 0; padding-left:18px; font-size:12px; color:#334155; line-height:1.8;">
+      <li>No contacts found — needs Apollo enrichment</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- Delek US -->
+<div class="card tier-b">
+  <div class="card-head">
+    <div>
+      <h3><a href="https://www.delekus.com" target="_blank">Delek US</a> <span class="new-badge">NEW</span> <span class="source-tag source-apollo">Apollo</span></h3>
+      <div class="meta">Brentwood, TN • 2,000 emp • $10.7B rev • NYSE: DK • Petroleum Refining (4 refineries)</div>
+    </div>
+    <span class="tier-badge b">B • 68</span>
+  </div>
+  <div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill b" style="width:68%"></div></div></div>
+  <div class="dims">
+    <div class="dim"><strong>Edge AI:</strong> 22/25</div>
+    <div class="dim"><strong>In-Vehicle:</strong> 10/25</div>
+    <div class="dim"><strong>HW Buyer:</strong> 16/18</div>
+    <div class="dim"><strong>Size:</strong> 10/12</div>
+    <div class="dim geo-highlight"><strong>Geo:</strong> 10/10 (NA)</div>
+    <div class="dim"><strong>Growth:</strong> 0/10</div>
+  </div>
+  <div class="insight"><strong>Product fit:</strong> <span class="product-fit">Nuvo-11000</span> <span class="product-fit">POC-700</span> — Oil & Gas: operates 4 petroleum refineries (TX, AR, LA). Process controls need edge computing for real-time monitoring, predictive maintenance, field instrumentation. Tech: DeltaV, Siemens SCADA, RSLogix, Wonderware InTouch, PI System. Process Controls Engineers identified. B-tier: large company may prefer to buy direct to Neousys rather than through Neteon for bulk orders.</div>
+  <div style="margin-top:10px; padding:10px 14px; background:#f0fdf4; border-radius:8px; border:1px solid #bbf7d0;">
+    <strong style="font-size:12px; color:#166534;">Key Contacts (Apollo):</strong>
+    <ul style="margin:6px 0 0 0; padding-left:18px; font-size:12px; color:#334155; line-height:1.8;">
+      <li><strong>Jimmy Cr***y</strong> — Sr VP of Engineering Solutions and Asset Performance (has email ✓ / has phone ✓)</li>
+      <li><strong>Joseph An***s</strong> — Senior Process Controls Engineer (has email ✓ / has phone ✓)</li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="section-title">C-Tier (25–49) — Enrich Further</div>
+
+<!-- NGL Energy Partners -->
+<div class="card tier-c">
+  <div class="card-head">
+    <div>
+      <h3><a href="https://www.nglenergypartners.com" target="_blank">NGL Energy Partners</a> <span class="new-badge">NEW</span> <span class="source-tag source-apollo">Apollo</span></h3>
+      <div class="meta">Tulsa, OK • ~150 emp • Midstream Oil & Gas</div>
+    </div>
+    <span class="tier-badge c">C • 45</span>
+  </div>
+  <div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill c" style="width:45%"></div></div></div>
+  <div class="dims">
+    <div class="dim"><strong>Edge AI:</strong> 16/25</div>
+    <div class="dim"><strong>In-Vehicle:</strong> 12/25</div>
+    <div class="dim"><strong>HW Buyer:</strong> 12/18</div>
+    <div class="dim"><strong>Size:</strong> 6/12</div>
+    <div class="dim geo-highlight"><strong>Geo:</strong> 10/10 (NA)</div>
+    <div class="dim"><strong>Growth:</strong> -11/10</div>
+  </div>
+  <div class="insight"><strong>Product fit:</strong> <span class="product-fit">POC-700</span> — Midstream oil & gas operator. Needs edge compute for SCADA instrumentation & remote monitoring. SCADA instrumentation engineer identified. Smaller company, slowing growth. Requires enrichment on infrastructure modernization roadmap.</div>
+  <div style="margin-top:10px; padding:10px 14px; background:#f0fdf4; border-radius:8px; border:1px solid #bbf7d0;">
+    <strong style="font-size:12px; color:#166534;">Key Contacts (Apollo):</strong>
+    <ul style="margin:6px 0 0 0; padding-left:18px; font-size:12px; color:#334155; line-height:1.8;">
+      <li><strong>Jon Ji***g</strong> — VP of Engineering (has phone ✓)</li>
+      <li><strong>Hudson Ba***b</strong> — Engineering Manager (has email ✓ / has phone ✓)</li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="section-title">D-Tier (0–24) — Deprioritize</div>
+
+<p style="padding: 16px 20px; background: #f9f9f9; border-radius: 8px; color: #64748b; font-size: 14px;">No companies in this tier — all low-priority prospects have been removed.</p>
+
+<div class="footer">v5 — New Leads Only. Report generated March 26, 2026.</div>
+
+</body>
+</html>
