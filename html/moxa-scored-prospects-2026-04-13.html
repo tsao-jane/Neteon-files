@@ -509,6 +509,75 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Company Profile */
+        .info-block {
+            background: rgba(48, 54, 61, 0.3);
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+
+        .info-block h4 {
+            font-size: 11px;
+            font-weight: 600;
+            color: #8b949e;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .info-block p {
+            font-size: 13px;
+            color: #c9d1d9;
+            margin: 3px 0;
+        }
+
+        .info-block .label {
+            color: #8b949e;
+            font-size: 12px;
+        }
+
+        /* Why This Lead Matters */
+        .intel-block {
+            margin: 16px 0;
+            padding: 14px;
+            background: rgba(88, 166, 255, 0.05);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            border-radius: 8px;
+        }
+
+        .intel-block h4 {
+            font-size: 11px;
+            font-weight: 600;
+            color: #58a6ff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .intel-block ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .intel-block li {
+            font-size: 12px;
+            color: #c9d1d9;
+            padding: 4px 0;
+            padding-left: 12px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .intel-block li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #58a6ff;
+        }
     </style>
 </head>
 <body>
@@ -600,6 +669,15 @@
 
                     <div class="vertical-badge vertical-renewable">Renewable Energy / BESS</div>
 
+                    <div class="info-block">
+                        <h4>Company Profile</h4>
+                        <p><strong>SOLV Energy</strong></p>
+                        <p><span class="label">Size:</span> 4,000+ employees</p>
+                        <p><span class="label">Revenue:</span> $1.8B</p>
+                        <p><span class="label">Location:</span> San Diego, CA (West Coast)</p>
+                        <p><span class="label">Scope:</span> Largest solar EPC in North America, expanding into BESS integration</p>
+                    </div>
+
                     <div class="score-breakdown">
                         <div class="score-breakdown-title">Score Breakdown</div>
                         <div class="score-bar">
@@ -633,6 +711,17 @@
                             <span class="product-tag">ioLogik (Remote I/O)</span>
                             <span class="product-tag">EDS-G4000 (IEC 62443)</span>
                         </div>
+                    </div>
+
+                    <div class="intel-block">
+                        <h4>Why This Lead Matters</h4>
+                        <ul>
+                            <li>Leading $6B IPO filing signals massive growth phase</li>
+                            <li>6GW active build pipeline across utility-scale solar + BESS</li>
+                            <li>$8B backlog means multi-year procurement cycle for networking gear</li>
+                            <li>BESS integration requires IEC 62443-compliant OT networking</li>
+                            <li>California HQ = ideal for Neteon West Coast presence</li>
+                        </ul>
                     </div>
 
                     <div class="personas">
@@ -684,6 +773,15 @@
 
                     <div class="vertical-badge vertical-datacenter">Data Center</div>
 
+                    <div class="info-block">
+                        <h4>Company Profile</h4>
+                        <p><strong>Aligned Data Centers</strong></p>
+                        <p><span class="label">Size:</span> 500+ employees</p>
+                        <p><span class="label">Revenue:</span> $150M</p>
+                        <p><span class="label">Location:</span> Plano, TX (South)</p>
+                        <p><span class="label">Scope:</span> Hyperscale data center operator with patented cooling technology</p>
+                    </div>
+
                     <div class="score-breakdown">
                         <div class="score-breakdown-title">Score Breakdown</div>
                         <div class="score-bar">
@@ -717,6 +815,17 @@
                             <span class="product-tag">MPC-2070 (Edge Monitor)</span>
                             <span class="product-tag">ioLogik (Environmental)</span>
                         </div>
+                    </div>
+
+                    <div class="intel-block">
+                        <h4>Why This Lead Matters</h4>
+                        <ul>
+                            <li>$4.5B expansion across 5+ campuses in Utah, Phoenix, Chicago</li>
+                            <li>Patented Delta³ cooling tech creates demand for hardened network switches in cooling loops</li>
+                            <li>Hyperscale builds require IEC 62443-certified infrastructure from day one</li>
+                            <li>Active construction means immediate procurement windows</li>
+                            <li>AI/ML tenant demand driving accelerated build timelines</li>
+                        </ul>
                     </div>
 
                     <div class="personas">
@@ -768,6 +877,15 @@
 
                     <div class="vertical-badge vertical-colocation">Colocation</div>
 
+                    <div class="info-block">
+                        <h4>Company Profile</h4>
+                        <p><strong>QTS Data Centers</strong></p>
+                        <p><span class="label">Size:</span> 800+ employees</p>
+                        <p><span class="label">Revenue:</span> $600M+</p>
+                        <p><span class="label">Location:</span> Overland Park, KS (Midwest)</p>
+                        <p><span class="label">Scope:</span> Top-5 US data center provider, recently acquired by Blackstone for $10B</p>
+                    </div>
+
                     <div class="score-breakdown">
                         <div class="score-breakdown-title">Score Breakdown</div>
                         <div class="score-bar">
@@ -801,6 +919,17 @@
                             <span class="product-tag">EDS-G4000 (Secure)</span>
                             <span class="product-tag">ioLogik (Monitoring)</span>
                         </div>
+                    </div>
+
+                    <div class="intel-block">
+                        <h4>Why This Lead Matters</h4>
+                        <ul>
+                            <li>Blackstone acquisition fueling aggressive multi-billion dollar expansion</li>
+                            <li>Mega campus developments in Dallas, Phoenix, New Jersey require networking infrastructure</li>
+                            <li>QTS Hillsboro campus alone is 130MW+ facility</li>
+                            <li>Federal/government contracts demand IEC 62443 security compliance</li>
+                            <li>Multi-tenant architecture needs segmented, hardened network backbones</li>
+                        </ul>
                     </div>
 
                     <div class="personas">
@@ -852,6 +981,15 @@
 
                     <div class="vertical-badge vertical-maritime">Maritime</div>
 
+                    <div class="info-block">
+                        <h4>Company Profile</h4>
+                        <p><strong>Fincantieri Marine Group</strong></p>
+                        <p><span class="label">Size:</span> 4,000+ employees</p>
+                        <p><span class="label">Revenue:</span> $700M+</p>
+                        <p><span class="label">Location:</span> Marinette, WI (Midwest)</p>
+                        <p><span class="label">Scope:</span> US Navy shipbuilder — Constellation-class frigates, LCS, FFG(X)</p>
+                    </div>
+
                     <div class="score-breakdown">
                         <div class="score-breakdown-title">Score Breakdown</div>
                         <div class="score-bar">
@@ -885,6 +1023,17 @@
                             <span class="product-tag">MPC-2070 (Computing)</span>
                             <span class="product-tag">ioLogik (Telemetry)</span>
                         </div>
+                    </div>
+
+                    <div class="intel-block">
+                        <h4>Why This Lead Matters</h4>
+                        <ul>
+                            <li>$5.5B Constellation-class frigate contract (20 ships) = decade-long procurement cycle</li>
+                            <li>Active Navy shipbuilding with MIL-STD-810G/461G compliance requirements</li>
+                            <li>Marinette shipyard $300M expansion underway for new frigate production line</li>
+                            <li>Each vessel needs hardened networking across bridge, engine room, weapons systems</li>
+                            <li>DNV/naval certification mandates for all onboard networking equipment</li>
+                        </ul>
                     </div>
 
                     <div class="personas">
@@ -936,6 +1085,15 @@
 
                     <div class="vertical-badge vertical-renewable">Renewable Energy / BESS</div>
 
+                    <div class="info-block">
+                        <h4>Company Profile</h4>
+                        <p><strong>Plus Power</strong></p>
+                        <p><span class="label">Size:</span> 100+ employees</p>
+                        <p><span class="label">Revenue:</span> $50M+</p>
+                        <p><span class="label">Location:</span> Houston, TX (South)</p>
+                        <p><span class="label">Scope:</span> Pure-play utility-scale BESS developer, 18GWh pipeline</p>
+                    </div>
+
                     <div class="score-breakdown">
                         <div class="score-breakdown-title">Score Breakdown</div>
                         <div class="score-bar">
@@ -969,6 +1127,17 @@
                             <span class="product-tag">ioLogik (Battery Monitor)</span>
                             <span class="product-tag">EDS-510E (Harsh Env)</span>
                         </div>
+                    </div>
+
+                    <div class="intel-block">
+                        <h4>Why This Lead Matters</h4>
+                        <ul>
+                            <li>18GWh development pipeline = one of largest independent BESS portfolios in US</li>
+                            <li>Flagship Kapolei Energy Storage (185MW) in Hawaii already operational</li>
+                            <li>ERCOT market presence in Texas aligns with grid modernization mandates</li>
+                            <li>Pure BESS focus means every project needs OT networking from site controller to BMS</li>
+                            <li>Rapid growth from startup to utility-scale operator signals active vendor evaluation</li>
+                        </ul>
                     </div>
 
                     <div class="personas">
@@ -1020,6 +1189,15 @@
 
                     <div class="vertical-badge vertical-defense">Defense</div>
 
+                    <div class="info-block">
+                        <h4>Company Profile</h4>
+                        <p><strong>IERUS Technologies</strong></p>
+                        <p><span class="label">Size:</span> 200+ employees</p>
+                        <p><span class="label">Revenue:</span> $50M+</p>
+                        <p><span class="label">Location:</span> Huntsville, AL (South)</p>
+                        <p><span class="label">Scope:</span> Defense electronics R&D — directed energy, electronic warfare, C4ISR</p>
+                    </div>
+
                     <div class="score-breakdown">
                         <div class="score-breakdown-title">Score Breakdown</div>
                         <div class="score-bar">
@@ -1053,6 +1231,17 @@
                             <span class="product-tag">EDS-G4000 (IEC 62443)</span>
                             <span class="product-tag">EDR-G9010 (VPN)</span>
                         </div>
+                    </div>
+
+                    <div class="intel-block">
+                        <h4>Why This Lead Matters</h4>
+                        <ul>
+                            <li>Huntsville location = heart of US defense procurement ecosystem (Redstone Arsenal, MDA)</li>
+                            <li>Directed energy and electronic warfare programs require ultra-reliable edge networking</li>
+                            <li>Active DoD contracts with CMMC compliance mandates</li>
+                            <li>C4ISR systems integration demands MIL-STD rugged networking equipment</li>
+                            <li>Growing headcount signals expanding program portfolio and procurement needs</li>
+                        </ul>
                     </div>
 
                     <div class="personas">
@@ -1104,6 +1293,15 @@
 
                     <div class="vertical-badge vertical-maritime">Maritime</div>
 
+                    <div class="info-block">
+                        <h4>Company Profile</h4>
+                        <p><strong>Trident Maritime Systems</strong></p>
+                        <p><span class="label">Size:</span> 1,500+ employees</p>
+                        <p><span class="label">Revenue:</span> $300M+</p>
+                        <p><span class="label">Location:</span> Annapolis, MD (East Coast)</p>
+                        <p><span class="label">Scope:</span> Naval systems integrator — power conversion, automation, HVAC for US Navy</p>
+                    </div>
+
                     <div class="score-breakdown">
                         <div class="score-breakdown-title">Score Breakdown</div>
                         <div class="score-bar">
@@ -1137,6 +1335,17 @@
                             <span class="product-tag">MPC-2070 (Computing)</span>
                             <span class="product-tag">MGate (Protocol Conv)</span>
                         </div>
+                    </div>
+
+                    <div class="intel-block">
+                        <h4>Why This Lead Matters</h4>
+                        <ul>
+                            <li>Primary naval systems integrator for power and automation aboard US Navy vessels</li>
+                            <li>Active contracts across DDG, LCS, CVN platforms = continuous procurement</li>
+                            <li>Vessel automation systems require hardened Ethernet backbones (MPC-series, EDS-600)</li>
+                            <li>Annapolis MD = direct proximity to Naval Sea Systems Command (NAVSEA)</li>
+                            <li>Growing fleet modernization programs create rolling upgrade cycles for legacy serial-to-Ethernet</li>
+                        </ul>
                     </div>
 
                     <div class="personas">
@@ -1195,6 +1404,15 @@
 
                     <div class="vertical-badge vertical-epc">EPC</div>
 
+                    <div class="info-block">
+                        <h4>Company Profile</h4>
+                        <p><strong>DEPCOM Power</strong></p>
+                        <p><span class="label">Size:</span> 1,500+ employees</p>
+                        <p><span class="label">Revenue:</span> $500M+</p>
+                        <p><span class="label">Location:</span> Scottsdale, AZ (West)</p>
+                        <p><span class="label">Scope:</span> Koch Industries-owned solar EPC, 15GW+ installed base</p>
+                    </div>
+
                     <div class="score-breakdown">
                         <div class="score-breakdown-title">Score Breakdown</div>
                         <div class="score-bar">
@@ -1228,6 +1446,17 @@
                             <span class="product-tag">ioLogik (Remote I/O)</span>
                             <span class="product-tag">EDR-810 (VPN)</span>
                         </div>
+                    </div>
+
+                    <div class="intel-block">
+                        <h4>Why This Lead Matters</h4>
+                        <ul>
+                            <li>Koch Industries backing provides effectively unlimited procurement budget</li>
+                            <li>15GW+ installed base = massive existing fleet needing monitoring infrastructure</li>
+                            <li>EPC model means DEPCOM specifies networking gear for client projects</li>
+                            <li>Southwest US solar belt = high-density project concentration</li>
+                            <li>Active hiring for commissioning and O&M roles signals new project pipeline</li>
+                        </ul>
                     </div>
 
                     <div class="personas">
@@ -1279,6 +1508,15 @@
 
                     <div class="vertical-badge vertical-oilgas">Oil & Gas (Systems Integrator)</div>
 
+                    <div class="info-block">
+                        <h4>Company Profile</h4>
+                        <p><strong>Wunderlich-Malec Engineering</strong></p>
+                        <p><span class="label">Size:</span> 500+ employees</p>
+                        <p><span class="label">Revenue:</span> $100M+</p>
+                        <p><span class="label">Location:</span> Eden Prairie, MN (Midwest)</p>
+                        <p><span class="label">Scope:</span> Largest independent US systems integrator — SCADA, DCS, PLC across 25+ offices</p>
+                    </div>
+
                     <div class="score-breakdown">
                         <div class="score-breakdown-title">Score Breakdown</div>
                         <div class="score-bar">
@@ -1312,6 +1550,17 @@
                             <span class="product-tag">ioLogik (Remote I/O)</span>
                             <span class="product-tag">EDS-510E (ATEX Rated)</span>
                         </div>
+                    </div>
+
+                    <div class="intel-block">
+                        <h4>Why This Lead Matters</h4>
+                        <ul>
+                            <li>25+ offices across US = broad geographic reach for Neteon distribution partnership</li>
+                            <li>Systems integrator model means WM specifies networking equipment into client projects</li>
+                            <li>SCADA/DCS integration expertise maps directly to Moxa protocol gateways (MGate)</li>
+                            <li>Oil & gas, power, pharma verticals all require IEC 62443 compliant infrastructure</li>
+                            <li>Independent status means open to new vendor relationships (not locked to Siemens/Rockwell)</li>
+                        </ul>
                     </div>
 
                     <div class="personas">
@@ -1363,6 +1612,15 @@
 
                     <div class="vertical-badge vertical-oilgas">Oil & Gas (Industrial Automation)</div>
 
+                    <div class="info-block">
+                        <h4>Company Profile</h4>
+                        <p><strong>SkyIO</strong></p>
+                        <p><span class="label">Size:</span> 50+ employees</p>
+                        <p><span class="label">Revenue:</span> $10M+</p>
+                        <p><span class="label">Location:</span> Frisco, TX (South)</p>
+                        <p><span class="label">Scope:</span> Edge data center-as-a-service for oil & gas, mining, remote industrial sites</p>
+                    </div>
+
                     <div class="score-breakdown">
                         <div class="score-breakdown-title">Score Breakdown</div>
                         <div class="score-bar">
@@ -1396,6 +1654,17 @@
                             <span class="product-tag">ioLogik (Remote I/O)</span>
                             <span class="product-tag">EDS-G4000 (IEC 62443)</span>
                         </div>
+                    </div>
+
+                    <div class="intel-block">
+                        <h4>Why This Lead Matters</h4>
+                        <ul>
+                            <li>Edge computing at remote industrial sites = exact Moxa use case for rugged networking</li>
+                            <li>Oil & gas and mining verticals need ATEX/C1D2 rated networking equipment</li>
+                            <li>Modular data center model means standardized, repeatable networking BOM</li>
+                            <li>Rapid deployment model creates predictable procurement cycles</li>
+                            <li>Growing demand for edge AI at wellhead and mine site = expanding TAM</li>
+                        </ul>
                     </div>
 
                     <div class="personas">
