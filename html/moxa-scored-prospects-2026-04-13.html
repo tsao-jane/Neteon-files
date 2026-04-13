@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moxa ICP Scored Prospects Report - Neteon Tech</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0f1117;
+            color: #e6edf3;
+            line-height: 1.6;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1d27 0%, #161b22 100%);
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .header-branding h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            background: linear-gradient(135deg, #58a6ff 0%, #79c0ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-branding p {
+            color: #8b949e;
+            font-size: 14px;
+        }
+
+        .report-date {
+            text-align: right;
+            color: #8b949e;
+        }
+
+        .report-date .date {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e6edf3;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .stat-card {
+            background: rgba(48, 54, 61, 0.3);
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #58a6ff;
+            display: block;
+        }
+
+        .stat-card .label {
+            font-size: 12px;
+            color: #8b949e;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        /* Vertical badges legend */
+        .vertical-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #30363d;
+        }
+
+        .vertical-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .vertical-tag .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Main content */
+        .content {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #30363d;
+            color: #e6edf3;
+        }
+
+        .tier-label {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 12px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+
+        .tier-label.a-tier {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+        }
+
+        .tier-label.b-tier {
+            background: rgba(234, 179, 8, 0.15);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            color: #eab308;
+        }
+
+        /* Company cards grid */
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .company-card {
+            background: linear-gradient(135deg, #1a1d27 0%, #161b22 100%);
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .company-card:hover {
+            border-color: #58a6ff;
+            box-shadow: 0 8px 24px rgba(88, 166, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .company-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #e6edf3;
+            margin-bottom: 4px;
+        }
+
+        .company-info {
+            font-size: 12px;
+            color: #8b949e;
+        }
+
+        .score-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(88, 166, 255, 0.1);
+            border: 2px solid #58a6ff;
+            border-radius: 8px;
+            padding: 8px 12px;
+            min-width: 70px;
+        }
+
+        .score-badge .number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #58a6ff;
+        }
+
+        .score-badge .label {
+            font-size: 10px;
+            color: #8b949e;
+            text-transform: uppercase;
+        }
+
+        .vertical-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            white-space: nowrap;
+        }
+
+        /* Scoring breakdown */
+        .score-breakdown {
+            margin: 16px 0;
+            padding: 12px 0;
+        }
+
+        .score-breakdown-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #8b949e;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .score-bar {
+            display: flex;
+            gap: 2px;
+            height: 6px;
+            background: rgba(48, 54, 61, 0.5);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .score-segment {
+            height: 100%;
+            border-radius: 3px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .segment-vertical { background: #58a6ff; }
+        .segment-buying { background: #79c0ff; }
+        .segment-ot { background: #a371f7; }
+        .segment-intent { background: #d29922; }
+        .segment-role { background: #22c55e; }
+        .segment-geo { background: #f85149; }
+
+        .score-legend {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            font-size: 11px;
+            margin-top: 8px;
+        }
+
+        .score-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* Proof of Intent */
+        .section {
+            margin: 16px 0;
+            padding: 12px 0;
+            border-top: 1px solid #30363d;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #8b949e;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .proof-text {
+            font-size: 13px;
+            color: #c9d1d9;
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+
+        .proof-link {
+            display: inline-block;
+            color: #58a6ff;
+            text-decoration: none;
+            font-size: 12px;
+            padding: 4px 8px;
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .proof-link:hover {
+            background: rgba(88, 166, 255, 0.2);
+            border-color: rgba(88, 166, 255, 0.4);
+        }
+
+        /* Product Fit */
+        .product-fit-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .product-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(167, 113, 247, 0.15);
+            border: 1px solid rgba(167, 113, 247, 0.3);
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            color: #d2a8ff;
+        }
+
+        /* Persona Triad */
+        .personas {
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid #30363d;
+        }
+
+        .personas-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #8b949e;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .persona-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .persona-card {
+            background: rgba(48, 54, 61, 0.4);
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .persona-card:hover {
+            background: rgba(48, 54, 61, 0.6);
+            border-color: #58a6ff;
+        }
+
+        .persona-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #e6edf3;
+        }
+
+        .persona-title {
+            font-size: 11px;
+            color: #8b949e;
+            margin: 2px 0 6px 0;
+        }
+
+        .persona-role-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: rgba(88, 166, 255, 0.15);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            border-radius: 3px;
+            font-size: 9px;
+            font-weight: 600;
+            color: #58a6ff;
+            text-transform: uppercase;
+            margin-right: 6px;
+        }
+
+        .persona-links {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .persona-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: #58a6ff;
+            text-decoration: none;
+            font-size: 11px;
+            padding: 3px 8px;
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            border-radius: 3px;
+            transition: all 0.2s ease;
+        }
+
+        .persona-link:hover {
+            background: rgba(88, 166, 255, 0.2);
+            border-color: rgba(88, 166, 255, 0.4);
+        }
+
+        .icon {
+            width: 12px;
+            height: 12px;
+            display: inline-block;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            color: #8b949e;
+            font-size: 12px;
+            border-top: 1px solid #30363d;
+            margin-top: 48px;
+        }
+
+        /* Vertical colors */
+        .vertical-renewable { background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); color: #22c55e; }
+        .vertical-datacenter { background: rgba(88, 166, 255, 0.15); border: 1px solid rgba(88, 166, 255, 0.3); color: #58a6ff; }
+        .vertical-colocation { background: rgba(121, 192, 255, 0.15); border: 1px solid rgba(121, 192, 255, 0.3); color: #79c0ff; }
+        .vertical-maritime { background: rgba(167, 113, 247, 0.15); border: 1px solid rgba(167, 113, 247, 0.3); color: #a371f7; }
+        .vertical-defense { background: rgba(248, 81, 73, 0.15); border: 1px solid rgba(248, 81, 73, 0.3); color: #f85149; }
+        .vertical-epc { background: rgba(210, 168, 255, 0.15); border: 1px solid rgba(210, 168, 255, 0.3); color: #d2a8ff; }
+        .vertical-oilgas { background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.3); color: #eab308; }
+
+        .vertical-renewable-dot { background: #22c55e; }
+        .vertical-datacenter-dot { background: #58a6ff; }
+        .vertical-colocation-dot { background: #79c0ff; }
+        .vertical-maritime-dot { background: #a371f7; }
+        .vertical-defense-dot { background: #f85149; }
+        .vertical-epc-dot { background: #d2a8ff; }
+        .vertical-oilgas-dot { background: #eab308; }
+
+        @media (max-width: 1024px) {
+            .companies-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-top {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 16px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header-branding h1 {
+                font-size: 24px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .score-legend {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <div class="header-branding">
+                    <h1>Moxa ICP Scorer</h1>
+                    <p>Neteon Tech Authorized Distributor</p>
+                </div>
+                <div class="report-date">
+                    <div class="date">April 13, 2026</div>
+                    <div style="font-size: 12px; color: #8b949e; margin-top: 4px;">Scored Prospects Report</div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="number">10</span>
+                    <span class="label">Total Prospects</span>
+                </div>
+                <div class="stat-card">
+                    <span class="number" style="color: #22c55e;">7</span>
+                    <span class="label">A-Tier Qualified</span>
+                </div>
+                <div class="stat-card">
+                    <span class="number" style="color: #eab308;">3</span>
+                    <span class="label">B-Tier Watchlist</span>
+                </div>
+                <div class="stat-card">
+                    <span class="number" style="color: #a371f7;">9</span>
+                    <span class="label">Key Personas</span>
+                </div>
+            </div>
+
+            <div class="vertical-legend">
+                <div class="vertical-tag">
+                    <div class="dot vertical-renewable-dot"></div>
+                    <span>Renewable Energy</span>
+                </div>
+                <div class="vertical-tag">
+                    <div class="dot vertical-datacenter-dot"></div>
+                    <span>Data Center</span>
+                </div>
+                <div class="vertical-tag">
+                    <div class="dot vertical-colocation-dot"></div>
+                    <span>Colocation</span>
+                </div>
+                <div class="vertical-tag">
+                    <div class="dot vertical-maritime-dot"></div>
+                    <span>Maritime</span>
+                </div>
+                <div class="vertical-tag">
+                    <div class="dot vertical-defense-dot"></div>
+                    <span>Defense</span>
+                </div>
+                <div class="vertical-tag">
+                    <div class="dot vertical-epc-dot"></div>
+                    <span>EPC</span>
+                </div>
+                <div class="vertical-tag">
+                    <div class="dot vertical-oilgas-dot"></div>
+                    <span>Oil & Gas</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- A-Tier -->
+            <div class="section-title">
+                <span class="tier-label a-tier">A-Tier: Qualified Prospects (80+)</span>
+            </div>
+
+            <div class="companies-grid">
+                <!-- 1. SOLV Energy -->
+                <div class="company-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="company-name">SOLV Energy</div>
+                            <div class="company-info">solvenergy.com | Revenue: $1.8B | San Diego, CA</div>
+                        </div>
+                        <div class="score-badge">
+                            <div class="number">98</div>
+                            <div class="label">Score</div>
+                        </div>
+                    </div>
+
+                    <div class="vertical-badge vertical-renewable">Renewable Energy / BESS</div>
+
+                    <div class="score-breakdown">
+                        <div class="score-breakdown-title">Score Breakdown</div>
+                        <div class="score-bar">
+                            <div class="score-segment segment-vertical" style="flex: 25;"></div>
+                            <div class="score-segment segment-buying" style="flex: 20;"></div>
+                            <div class="score-segment segment-ot" style="flex: 18;"></div>
+                            <div class="score-segment segment-intent" style="flex: 15;"></div>
+                            <div class="score-segment segment-role" style="flex: 10;"></div>
+                            <div class="score-segment segment-geo" style="flex: 10;"></div>
+                        </div>
+                        <div class="score-legend">
+                            <div class="score-legend-item"><div class="legend-dot segment-vertical"></div><span>Vertical: 25</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-buying"></div><span>Buying: 20</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-ot"></div><span>OT: 18</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-intent"></div><span>Intent: 15</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-role"></div><span>Role: 10</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-geo"></div><span>Geo: 10</span></div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Proof of Intent</div>
+                        <div class="proof-text">$6B Nasdaq IPO (Feb 2026), $8B backlog, 6GW build pipeline, Darden 1.6GW+4.6GWh project</div>
+                        <a href="https://www.latitudemedia.com/news/solv-energys-6-billion-ipo-solar-battery-storage/" class="proof-link" target="_blank">View Source →</a>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Moxa Product Fit</div>
+                        <div class="product-fit-list">
+                            <span class="product-tag">EDR-810 (BESS Security)</span>
+                            <span class="product-tag">ioLogik (Remote I/O)</span>
+                            <span class="product-tag">EDS-G4000 (IEC 62443)</span>
+                        </div>
+                    </div>
+
+                    <div class="personas">
+                        <div class="personas-title">Persona Triad</div>
+                        <div class="persona-list">
+                            <div class="persona-card">
+                                <div class="persona-name">Steven Lawrence</div>
+                                <div class="persona-title">Director of Engineering, BESS & Emerging Technologies</div>
+                                <span class="persona-role-badge">Engineer</span>
+                                <div class="persona-links">
+                                    <a href="mailto:slawrence@csenergy.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/steven-lawrence-pe-9031661a" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Chris Wenger</div>
+                                <div class="persona-title">Sr. BESS Project Manager</div>
+                                <span class="persona-role-badge">PM</span>
+                                <div class="persona-links">
+                                    <a href="mailto:christopher.wenger@solvenergy.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/chris-wenger-8754a9235" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Lance Dunning</div>
+                                <div class="persona-title">VP of Business Development, BESS and HV</div>
+                                <span class="persona-role-badge">Sales</span>
+                                <div class="persona-links">
+                                    <a href="mailto:ldunning@csenergy.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/lance-dunning-b8471866" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Aligned Data Centers -->
+                <div class="company-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="company-name">Aligned Data Centers</div>
+                            <div class="company-info">aligneddc.com | Revenue: $150M | Plano, TX</div>
+                        </div>
+                        <div class="score-badge">
+                            <div class="number">97</div>
+                            <div class="label">Score</div>
+                        </div>
+                    </div>
+
+                    <div class="vertical-badge vertical-datacenter">Data Center</div>
+
+                    <div class="score-breakdown">
+                        <div class="score-breakdown-title">Score Breakdown</div>
+                        <div class="score-bar">
+                            <div class="score-segment segment-vertical" style="flex: 25;"></div>
+                            <div class="score-segment segment-buying" style="flex: 20;"></div>
+                            <div class="score-segment segment-ot" style="flex: 18;"></div>
+                            <div class="score-segment segment-intent" style="flex: 15;"></div>
+                            <div class="score-segment segment-role" style="flex: 9;"></div>
+                            <div class="score-segment segment-geo" style="flex: 10;"></div>
+                        </div>
+                        <div class="score-legend">
+                            <div class="score-legend-item"><div class="legend-dot segment-vertical"></div><span>Vertical: 25</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-buying"></div><span>Buying: 20</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-ot"></div><span>OT: 18</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-intent"></div><span>Intent: 15</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-role"></div><span>Role: 9</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-geo"></div><span>Geo: 10</span></div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Proof of Intent</div>
+                        <div class="proof-text">$40B acquisition by BlackRock/NVIDIA/Microsoft consortium, $2.58B credit facility, Project Caprock 540MW groundbreaking in TX</div>
+                        <a href="https://finance.yahoo.com/economy/policy/articles/aligned-data-centers-breaks-ground-203000351.html" class="proof-link" target="_blank">View Source →</a>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Moxa Product Fit</div>
+                        <div class="product-fit-list">
+                            <span class="product-tag">PT-G7000 (Data Center)</span>
+                            <span class="product-tag">MPC-2070 (Edge Monitor)</span>
+                            <span class="product-tag">ioLogik (Environmental)</span>
+                        </div>
+                    </div>
+
+                    <div class="personas">
+                        <div class="personas-title">Persona Triad</div>
+                        <div class="persona-list">
+                            <div class="persona-card">
+                                <div class="persona-name">Cedar Falcon</div>
+                                <div class="persona-title">Director, Electrical Engineering</div>
+                                <span class="persona-role-badge">Engineer</span>
+                                <div class="persona-links">
+                                    <a href="mailto:cedar.falcon@aligneddc.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/cedar-falcon-p-e-217b18a8" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Gabrielle Armetta</div>
+                                <div class="persona-title">Senior Project Manager</div>
+                                <span class="persona-role-badge">PM</span>
+                                <div class="persona-links">
+                                    <a href="mailto:gabrielle.armetta@aligneddc.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/gabrielle-armetta-10703a14b" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Greg Davit</div>
+                                <div class="persona-title">VP Business Development</div>
+                                <span class="persona-role-badge">Sales</span>
+                                <div class="persona-links">
+                                    <a href="mailto:greg.davit@alignedenergy.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/greg-davit-76556b8" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. QTS Data Centers -->
+                <div class="company-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="company-name">QTS Data Centers</div>
+                            <div class="company-info">qtsdatacenters.com | Revenue: $935M | Sterling, VA</div>
+                        </div>
+                        <div class="score-badge">
+                            <div class="number">95</div>
+                            <div class="label">Score</div>
+                        </div>
+                    </div>
+
+                    <div class="vertical-badge vertical-colocation">Colocation</div>
+
+                    <div class="score-breakdown">
+                        <div class="score-breakdown-title">Score Breakdown</div>
+                        <div class="score-bar">
+                            <div class="score-segment segment-vertical" style="flex: 25;"></div>
+                            <div class="score-segment segment-buying" style="flex: 19;"></div>
+                            <div class="score-segment segment-ot" style="flex: 17;"></div>
+                            <div class="score-segment segment-intent" style="flex: 15;"></div>
+                            <div class="score-segment segment-role" style="flex: 9;"></div>
+                            <div class="score-segment segment-geo" style="flex: 10;"></div>
+                        </div>
+                        <div class="score-legend">
+                            <div class="score-legend-item"><div class="legend-dot segment-vertical"></div><span>Vertical: 25</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-buying"></div><span>Buying: 19</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-ot"></div><span>OT: 17</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-intent"></div><span>Intent: 15</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-role"></div><span>Role: 9</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-geo"></div><span>Geo: 10</span></div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Proof of Intent</div>
+                        <div class="proof-text">$12B DeForest WI campus, $10B Cedar Rapids IA campus, DFW2 expansion (DC2+DC3), 1,700-acre Salem Township purchase</div>
+                        <a href="https://dailyreporter.com/2025/11/07/qts-12b-deforest-data-center-development/" class="proof-link" target="_blank">View Source →</a>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Moxa Product Fit</div>
+                        <div class="product-fit-list">
+                            <span class="product-tag">PT-G7000 (DCIM)</span>
+                            <span class="product-tag">EDS-G4000 (Secure)</span>
+                            <span class="product-tag">ioLogik (Monitoring)</span>
+                        </div>
+                    </div>
+
+                    <div class="personas">
+                        <div class="personas-title">Persona Triad</div>
+                        <div class="persona-list">
+                            <div class="persona-card">
+                                <div class="persona-name">Ivan Duerk</div>
+                                <div class="persona-title">DCIM Engineer III (Senior DCIM Engineer)</div>
+                                <span class="persona-role-badge">Engineer</span>
+                                <div class="persona-links">
+                                    <a href="mailto:ivan.duerk@qtsdatacenters.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/ivan-duerk-090b491a" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">John Wiegman</div>
+                                <div class="persona-title">Project Manager II - DCIM</div>
+                                <span class="persona-role-badge">PM</span>
+                                <div class="persona-links">
+                                    <a href="mailto:john.wiegman@qtsdatacenters.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/john-wiegman-b25b234b" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Alan French</div>
+                                <div class="persona-title">VP Engineering</div>
+                                <span class="persona-role-badge">Sales</span>
+                                <div class="persona-links">
+                                    <a href="mailto:alan.french@qtsdatacenters.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/alan-french-79491213" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Fincantieri Marine Group -->
+                <div class="company-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="company-name">Fincantieri Marine Group</div>
+                            <div class="company-info">fincantierimarinegroup.com | Revenue: $500M | Marinette, WI</div>
+                        </div>
+                        <div class="score-badge">
+                            <div class="number">95</div>
+                            <div class="label">Score</div>
+                        </div>
+                    </div>
+
+                    <div class="vertical-badge vertical-maritime">Maritime</div>
+
+                    <div class="score-breakdown">
+                        <div class="score-breakdown-title">Score Breakdown</div>
+                        <div class="score-bar">
+                            <div class="score-segment segment-vertical" style="flex: 25;"></div>
+                            <div class="score-segment segment-buying" style="flex: 18;"></div>
+                            <div class="score-segment segment-ot" style="flex: 18;"></div>
+                            <div class="score-segment segment-intent" style="flex: 15;"></div>
+                            <div class="score-segment segment-role" style="flex: 9;"></div>
+                            <div class="score-segment segment-geo" style="flex: 10;"></div>
+                        </div>
+                        <div class="score-legend">
+                            <div class="score-legend-item"><div class="legend-dot segment-vertical"></div><span>Vertical: 25</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-buying"></div><span>Buying: 18</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-ot"></div><span>OT: 18</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-intent"></div><span>Intent: 15</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-role"></div><span>Role: 9</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-geo"></div><span>Geo: 10</span></div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Proof of Intent</div>
+                        <div class="proof-text">LSM contract (Feb 2026, 4 ships), Constellation-class program, $800M congressional funding for Marinette Marine yard</div>
+                        <a href="https://www.defensenews.com/naval/2026/02/20/us-navy-taps-fincantieri-to-build-marine-corps-landing-vessels/" class="proof-link" target="_blank">View Source →</a>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Moxa Product Fit</div>
+                        <div class="product-fit-list">
+                            <span class="product-tag">EDS-600 (Marine Grade)</span>
+                            <span class="product-tag">MPC-2070 (Computing)</span>
+                            <span class="product-tag">ioLogik (Telemetry)</span>
+                        </div>
+                    </div>
+
+                    <div class="personas">
+                        <div class="personas-title">Persona Triad</div>
+                        <div class="persona-list">
+                            <div class="persona-card">
+                                <div class="persona-name">Eric Olson</div>
+                                <div class="persona-title">Senior Network Engineer</div>
+                                <span class="persona-role-badge">Engineer</span>
+                                <div class="persona-links">
+                                    <a href="mailto:eric.olson@us.fincantieri.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/eric-olson-6714b365" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Christian Rocco</div>
+                                <div class="persona-title">Program Manager</div>
+                                <span class="persona-role-badge">PM</span>
+                                <div class="persona-links">
+                                    <a href="mailto:christian.dirocco@us.fincantieri.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/christian-di-rocco-3505a244" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Jeffrey Matson</div>
+                                <div class="persona-title">Business Development Manager</div>
+                                <span class="persona-role-badge">Sales</span>
+                                <div class="persona-links">
+                                    <a href="mailto:jeffrey.matson@us.fincantieri.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/jeffreycmatson" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Plus Power -->
+                <div class="company-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="company-name">Plus Power</div>
+                            <div class="company-info">pluspower.com | Revenue: $141.1M | The Woodlands, TX</div>
+                        </div>
+                        <div class="score-badge">
+                            <div class="number">92</div>
+                            <div class="label">Score</div>
+                        </div>
+                    </div>
+
+                    <div class="vertical-badge vertical-renewable">Renewable Energy / BESS</div>
+
+                    <div class="score-breakdown">
+                        <div class="score-breakdown-title">Score Breakdown</div>
+                        <div class="score-bar">
+                            <div class="score-segment segment-vertical" style="flex: 25;"></div>
+                            <div class="score-segment segment-buying" style="flex: 17;"></div>
+                            <div class="score-segment segment-ot" style="flex: 17;"></div>
+                            <div class="score-segment segment-intent" style="flex: 14;"></div>
+                            <div class="score-segment segment-role" style="flex: 9;"></div>
+                            <div class="score-segment segment-geo" style="flex: 10;"></div>
+                        </div>
+                        <div class="score-legend">
+                            <div class="score-legend-item"><div class="legend-dot segment-vertical"></div><span>Vertical: 25</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-buying"></div><span>Buying: 17</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-ot"></div><span>OT: 17</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-intent"></div><span>Intent: 14</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-role"></div><span>Role: 9</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-geo"></div><span>Geo: 10</span></div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Proof of Intent</div>
+                        <div class="proof-text">Cranberry Point (largest BESS on ISO-NE) online, Cross Town 175MW/350MWh online, Corazon 150MW/600MWh awarded by PNM</div>
+                        <a href="https://www.energy-storage.news/plus-power-brings-largest-bess-on-iso-new-england-grid-online-in-maine/" class="proof-link" target="_blank">View Source →</a>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Moxa Product Fit</div>
+                        <div class="product-fit-list">
+                            <span class="product-tag">EDR-810 (BESS Security)</span>
+                            <span class="product-tag">ioLogik (Battery Monitor)</span>
+                            <span class="product-tag">EDS-510E (Harsh Env)</span>
+                        </div>
+                    </div>
+
+                    <div class="personas">
+                        <div class="personas-title">Persona Triad</div>
+                        <div class="persona-list">
+                            <div class="persona-card">
+                                <div class="persona-name">Larry Zhong</div>
+                                <div class="persona-title">Senior Grid Integration Engineer</div>
+                                <span class="persona-role-badge">Engineer</span>
+                                <div class="persona-links">
+                                    <a href="mailto:lzhong@pluspower.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/larry-zhong-p-e-779682126" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Jon Holt</div>
+                                <div class="persona-title">Project Manager</div>
+                                <span class="persona-role-badge">PM</span>
+                                <div class="persona-links">
+                                    <a href="mailto:jholt@pluspower.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/jonathan-t-holt" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Cameron Witthuhn</div>
+                                <div class="persona-title">Director, Business Development</div>
+                                <span class="persona-role-badge">Sales</span>
+                                <div class="persona-links">
+                                    <a href="mailto:cwitthuhn@pluspower.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/cameronwitthuhn" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. IERUS Technologies -->
+                <div class="company-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="company-name">IERUS Technologies</div>
+                            <div class="company-info">ierustech.com | Revenue: $73.5M | Huntsville, AL</div>
+                        </div>
+                        <div class="score-badge">
+                            <div class="number">92</div>
+                            <div class="label">Score</div>
+                        </div>
+                    </div>
+
+                    <div class="vertical-badge vertical-defense">Defense</div>
+
+                    <div class="score-breakdown">
+                        <div class="score-breakdown-title">Score Breakdown</div>
+                        <div class="score-bar">
+                            <div class="score-segment segment-vertical" style="flex: 25;"></div>
+                            <div class="score-segment segment-buying" style="flex: 18;"></div>
+                            <div class="score-segment segment-ot" style="flex: 15;"></div>
+                            <div class="score-segment segment-intent" style="flex: 15;"></div>
+                            <div class="score-segment segment-role" style="flex: 9;"></div>
+                            <div class="score-segment segment-geo" style="flex: 10;"></div>
+                        </div>
+                        <div class="score-legend">
+                            <div class="score-legend-item"><div class="legend-dot segment-vertical"></div><span>Vertical: 25</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-buying"></div><span>Buying: 18</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-ot"></div><span>OT: 15</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-intent"></div><span>Intent: 15</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-role"></div><span>Role: 9</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-geo"></div><span>Geo: 10</span></div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Proof of Intent</div>
+                        <div class="proof-text">$474M MDA RSTAC contract (Oct 2025), 9-year period of performance, radar systems test and analysis</div>
+                        <a href="https://ierustech.com/ierus-technologies-awarded-rstac-474-million-contract/" class="proof-link" target="_blank">View Source →</a>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Moxa Product Fit</div>
+                        <div class="product-fit-list">
+                            <span class="product-tag">MIL-STD Rugged</span>
+                            <span class="product-tag">EDS-G4000 (IEC 62443)</span>
+                            <span class="product-tag">EDR-G9010 (VPN)</span>
+                        </div>
+                    </div>
+
+                    <div class="personas">
+                        <div class="personas-title">Persona Triad</div>
+                        <div class="persona-list">
+                            <div class="persona-card">
+                                <div class="persona-name">John Burger</div>
+                                <div class="persona-title">Systems Engineer and Program Manager</div>
+                                <span class="persona-role-badge">Engineer</span>
+                                <div class="persona-links">
+                                    <a href="mailto:john.burger@ierustech.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/johnlburger" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Joel Burcham</div>
+                                <div class="persona-title">Program Manager</div>
+                                <span class="persona-role-badge">PM</span>
+                                <div class="persona-links">
+                                    <a href="mailto:joel.burcham@ierustech.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/joelburcham" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Dan Bodeker</div>
+                                <div class="persona-title">VP of Business Development</div>
+                                <span class="persona-role-badge">Sales</span>
+                                <div class="persona-links">
+                                    <a href="mailto:dan.bodeker@ierustech.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/dan-bodeker-4435386" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. Trident Maritime Systems -->
+                <div class="company-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="company-name">Trident Maritime Systems</div>
+                            <div class="company-info">tridentllc.com | Revenue: $130M | Arlington, VA</div>
+                        </div>
+                        <div class="score-badge">
+                            <div class="number">86</div>
+                            <div class="label">Score</div>
+                        </div>
+                    </div>
+
+                    <div class="vertical-badge vertical-maritime">Maritime</div>
+
+                    <div class="score-breakdown">
+                        <div class="score-breakdown-title">Score Breakdown</div>
+                        <div class="score-bar">
+                            <div class="score-segment segment-vertical" style="flex: 25;"></div>
+                            <div class="score-segment segment-buying" style="flex: 14;"></div>
+                            <div class="score-segment segment-ot" style="flex: 17;"></div>
+                            <div class="score-segment segment-intent" style="flex: 12;"></div>
+                            <div class="score-segment segment-role" style="flex: 8;"></div>
+                            <div class="score-segment segment-geo" style="flex: 10;"></div>
+                        </div>
+                        <div class="score-legend">
+                            <div class="score-legend-item"><div class="legend-dot segment-vertical"></div><span>Vertical: 25</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-buying"></div><span>Buying: 14</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-ot"></div><span>OT: 17</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-intent"></div><span>Intent: 12</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-role"></div><span>Role: 8</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-geo"></div><span>Geo: 10</span></div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Proof of Intent</div>
+                        <div class="proof-text">Canadian River-class destroyer contracts ($8M+), SCA Platinum Partner 2026, divested UK ops to focus on US Navy</div>
+                        <a href="https://www.tridentllc.com/news-events" class="proof-link" target="_blank">View Source →</a>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Moxa Product Fit</div>
+                        <div class="product-fit-list">
+                            <span class="product-tag">EDS-600 (Marine Grade)</span>
+                            <span class="product-tag">MPC-2070 (Computing)</span>
+                            <span class="product-tag">MGate (Protocol Conv)</span>
+                        </div>
+                    </div>
+
+                    <div class="personas">
+                        <div class="personas-title">Persona Triad</div>
+                        <div class="persona-list">
+                            <div class="persona-card">
+                                <div class="persona-name">Stephen Read</div>
+                                <div class="persona-title">Chief Systems Engineer</div>
+                                <span class="persona-role-badge">Engineer</span>
+                                <div class="persona-links">
+                                    <a href="mailto:stephen.read@tridentllc.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/stephen-read-00b1a921a" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Sebastian Kowalski</div>
+                                <div class="persona-title">Project Manager</div>
+                                <span class="persona-role-badge">PM</span>
+                                <div class="persona-links">
+                                    <a href="mailto:sebastian.kowalski@tridentllc.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/sebastian-kowalski-5072817b" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Tom Gibbons</div>
+                                <div class="persona-title">Engineering Manager</div>
+                                <span class="persona-role-badge">Engineer</span>
+                                <div class="persona-links">
+                                    <a href="mailto:thomas.gibbons@tridentllc.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/tom-gibbons-459b47290" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- B-Tier -->
+            <div class="section-title" style="margin-top: 48px;">
+                <span class="tier-label b-tier">B-Tier: Watchlist (60-79)</span>
+            </div>
+
+            <div class="companies-grid">
+                <!-- 8. DEPCOM Power -->
+                <div class="company-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="company-name">DEPCOM Power</div>
+                            <div class="company-info">depcompower.com | Revenue: $280M | Scottsdale, AZ</div>
+                        </div>
+                        <div class="score-badge">
+                            <div class="number">73</div>
+                            <div class="label">Score</div>
+                        </div>
+                    </div>
+
+                    <div class="vertical-badge vertical-epc">EPC</div>
+
+                    <div class="score-breakdown">
+                        <div class="score-breakdown-title">Score Breakdown</div>
+                        <div class="score-bar">
+                            <div class="score-segment segment-vertical" style="flex: 25;"></div>
+                            <div class="score-segment segment-buying" style="flex: 16;"></div>
+                            <div class="score-segment segment-ot" style="flex: 16;"></div>
+                            <div class="score-segment segment-intent" style="flex: 10;"></div>
+                            <div class="score-segment segment-role" style="flex: 9;"></div>
+                            <div class="score-segment segment-geo" style="flex: 10;"></div>
+                        </div>
+                        <div class="score-legend">
+                            <div class="score-legend-item"><div class="legend-dot segment-vertical"></div><span>Vertical: 25</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-buying"></div><span>Buying: 16</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-ot"></div><span>OT: 16</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-intent"></div><span>Intent: 10</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-role"></div><span>Role: 9</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-geo"></div><span>Geo: 10</span></div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Proof of Intent</div>
+                        <div class="proof-text">150+ projects, 10+ GW installed, Kansas Sky 200MW, Tucson 2×800MWh BESS (indirect — no dated press release)</div>
+                        <a href="https://www.depcompower.com/projects" class="proof-link" target="_blank">View Source →</a>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Moxa Product Fit</div>
+                        <div class="product-fit-list">
+                            <span class="product-tag">EDS-G4000 (IEC 62443)</span>
+                            <span class="product-tag">ioLogik (Remote I/O)</span>
+                            <span class="product-tag">EDR-810 (VPN)</span>
+                        </div>
+                    </div>
+
+                    <div class="personas">
+                        <div class="personas-title">Persona Triad</div>
+                        <div class="persona-list">
+                            <div class="persona-card">
+                                <div class="persona-name">Seth Gilliss</div>
+                                <div class="persona-title">Sr. Project Controls Manager</div>
+                                <span class="persona-role-badge">PM</span>
+                                <div class="persona-links">
+                                    <a href="mailto:sgilliss@depcompower.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/seth-gilliss-1172b2160" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Alex Boone</div>
+                                <div class="persona-title">Project Controls Manager</div>
+                                <span class="persona-role-badge">PM</span>
+                                <div class="persona-links">
+                                    <a href="mailto:alex.boone@depcompower.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/alex-boone-5aaa8b106" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Nate McAdams</div>
+                                <div class="persona-title">Director of Business Development</div>
+                                <span class="persona-role-badge">Sales</span>
+                                <div class="persona-links">
+                                    <a href="mailto:nmcadams@depcompower.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/nate-mcadams-79901b147" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. Wunderlich-Malec Engineering -->
+                <div class="company-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="company-name">Wunderlich-Malec Engineering</div>
+                            <div class="company-info">wmeng.com | Revenue: $275M | Hopkins, MN</div>
+                        </div>
+                        <div class="score-badge">
+                            <div class="number">68</div>
+                            <div class="label">Score</div>
+                        </div>
+                    </div>
+
+                    <div class="vertical-badge vertical-oilgas">Oil & Gas (Systems Integrator)</div>
+
+                    <div class="score-breakdown">
+                        <div class="score-breakdown-title">Score Breakdown</div>
+                        <div class="score-bar">
+                            <div class="score-segment segment-vertical" style="flex: 22;"></div>
+                            <div class="score-segment segment-buying" style="flex: 14;"></div>
+                            <div class="score-segment segment-ot" style="flex: 18;"></div>
+                            <div class="score-segment segment-intent" style="flex: 8;"></div>
+                            <div class="score-segment segment-role" style="flex: 8;"></div>
+                            <div class="score-segment segment-geo" style="flex: 10;"></div>
+                        </div>
+                        <div class="score-legend">
+                            <div class="score-legend-item"><div class="legend-dot segment-vertical"></div><span>Vertical: 22</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-buying"></div><span>Buying: 14</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-ot"></div><span>OT: 18</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-intent"></div><span>Intent: 8</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-role"></div><span>Role: 8</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-geo"></div><span>Geo: 10</span></div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Proof of Intent</div>
+                        <div class="proof-text">GE Vernova partner, Inductive Automation showcase, active controls engineer hiring (indirect signals only)</div>
+                        <a href="https://www.wmeng.com/industries/oil-gas/" class="proof-link" target="_blank">View Source →</a>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Moxa Product Fit</div>
+                        <div class="product-fit-list">
+                            <span class="product-tag">MGate (Protocol Conv)</span>
+                            <span class="product-tag">ioLogik (Remote I/O)</span>
+                            <span class="product-tag">EDS-510E (ATEX Rated)</span>
+                        </div>
+                    </div>
+
+                    <div class="personas">
+                        <div class="personas-title">Persona Triad</div>
+                        <div class="persona-list">
+                            <div class="persona-card">
+                                <div class="persona-name">Patrick Goodell</div>
+                                <div class="persona-title">Controls Engineer and Project Manager</div>
+                                <span class="persona-role-badge">Engineer</span>
+                                <div class="persona-links">
+                                    <a href="mailto:patrick.goodell@wmeng.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/patrick-goodell-43b38a11" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Brad Wade</div>
+                                <div class="persona-title">Controls Engineer, Project Manager</div>
+                                <span class="persona-role-badge">Engineer</span>
+                                <div class="persona-links">
+                                    <a href="mailto:brad.w@wmeng.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/brad-w-2520719" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Carlos Giron</div>
+                                <div class="persona-title">Sr. Controls Engineer</div>
+                                <span class="persona-role-badge">Engineer</span>
+                                <div class="persona-links">
+                                    <a href="mailto:carlos.giron@wmeng.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/cdgiron" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10. SkyIO -->
+                <div class="company-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="company-name">SkyIO</div>
+                            <div class="company-info">skyio.com | Revenue: $10M | Greer, SC</div>
+                        </div>
+                        <div class="score-badge">
+                            <div class="number">66</div>
+                            <div class="label">Score</div>
+                        </div>
+                    </div>
+
+                    <div class="vertical-badge vertical-oilgas">Oil & Gas (Industrial Automation)</div>
+
+                    <div class="score-breakdown">
+                        <div class="score-breakdown-title">Score Breakdown</div>
+                        <div class="score-bar">
+                            <div class="score-segment segment-vertical" style="flex: 20;"></div>
+                            <div class="score-segment segment-buying" style="flex: 14;"></div>
+                            <div class="score-segment segment-ot" style="flex: 18;"></div>
+                            <div class="score-segment segment-intent" style="flex: 7;"></div>
+                            <div class="score-segment segment-role" style="flex: 9;"></div>
+                            <div class="score-segment segment-geo" style="flex: 10;"></div>
+                        </div>
+                        <div class="score-legend">
+                            <div class="score-legend-item"><div class="legend-dot segment-vertical"></div><span>Vertical: 20</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-buying"></div><span>Buying: 14</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-ot"></div><span>OT: 18</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-intent"></div><span>Intent: 7</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-role"></div><span>Role: 9</span></div>
+                            <div class="score-legend-item"><div class="legend-dot segment-geo"></div><span>Geo: 10</span></div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Proof of Intent</div>
+                        <div class="proof-text">IT/OT convergence specialist, 34% headcount growth over 24mo, active hiring (indirect signals only)</div>
+                        <a href="https://skyio.com/industries/" class="proof-link" target="_blank">View Source →</a>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-label">Moxa Product Fit</div>
+                        <div class="product-fit-list">
+                            <span class="product-tag">MGate (Modbus/PROFINET)</span>
+                            <span class="product-tag">ioLogik (Remote I/O)</span>
+                            <span class="product-tag">EDS-G4000 (IEC 62443)</span>
+                        </div>
+                    </div>
+
+                    <div class="personas">
+                        <div class="personas-title">Persona Triad</div>
+                        <div class="persona-list">
+                            <div class="persona-card">
+                                <div class="persona-name">Jake Sessler</div>
+                                <div class="persona-title">Lead Controls Engineer</div>
+                                <span class="persona-role-badge">Engineer</span>
+                                <div class="persona-links">
+                                    <a href="mailto:jake.sessler@skyio.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/jake-sessler-b13954b8" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Will Branch</div>
+                                <div class="persona-title">Project Manager</div>
+                                <span class="persona-role-badge">PM</span>
+                                <div class="persona-links">
+                                    <a href="mailto:will.branch@aeengr.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/will-branch-67a887b4" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                            <div class="persona-card">
+                                <div class="persona-name">Chris Raymes</div>
+                                <div class="persona-title">Director of Business Development</div>
+                                <span class="persona-role-badge">Sales</span>
+                                <div class="persona-links">
+                                    <a href="mailto:chris.raymes@apexmfgsolutions.com" class="persona-link">✉ Email</a>
+                                    <a href="http://www.linkedin.com/in/chrisraymes" class="persona-link" target="_blank">in LinkedIn</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            Generated by Moxa ICP Scorer v2.0 | April 13, 2026 | Neteon Tech Authorized Distributor
+        </div>
+    </div>
+</body>
+</html>
