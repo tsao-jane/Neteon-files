@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Jane Francis Tsao — Resume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1F2937;
+    --ink-soft: #475569;
+    --accent: #0B3D91;
+    --rule: #E5E7EB;
+    --tag-bg: #F1F5F9;
+    --tag-ink: #334155;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: #E5E7EB;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    width: 8.27in;      /* A4 width */
+    min-height: 11.69in; /* A4 height */
+    margin: 24px auto;
+    padding: 0.55in 0.6in;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    font-size: 10pt;
+    line-height: 1.4;
+  }
+
+  /* HEADER */
+  .header { padding-bottom: 10px; border-bottom: 1px solid var(--rule); margin-bottom: 14px; }
+  .name { font-size: 26pt; font-weight: 600; letter-spacing: -0.5px; color: var(--ink); line-height: 1.1; }
+  .subtitle { font-size: 10.5pt; color: var(--accent); font-weight: 500; margin-top: 4px; letter-spacing: 0.1px; }
+  .contact { margin-top: 8px; font-size: 9pt; color: var(--ink-soft); display: flex; flex-wrap: wrap; gap: 14px; }
+  .contact a { color: var(--ink-soft); text-decoration: none; }
+  .contact span { display: inline-flex; align-items: center; gap: 5px; }
+  .contact svg { width: 11px; height: 11px; color: var(--accent); }
+
+  /* SECTIONS */
+  section { margin-top: 14px; }
+  h2 {
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* SUMMARY */
+  .summary { font-size: 9.8pt; line-height: 1.55; color: var(--ink); }
+
+  /* WORK EXPERIENCE */
+  .role { margin-bottom: 11px; }
+  .role:last-child { margin-bottom: 0; }
+  .role-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 3px;
+  }
+  .role-title-line { font-size: 10.5pt; }
+  .company { font-weight: 600; color: var(--ink); }
+  .divider { color: var(--ink-soft); margin: 0 4px; }
+  .title { color: var(--ink); }
+  .loc { color: var(--ink-soft); font-size: 9pt; }
+  .dates { font-size: 9pt; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .bullets { list-style: none; margin-top: 4px; }
+  .bullets li {
+    position: relative;
+    padding-left: 14px;
+    margin-bottom: 3px;
+    font-size: 9.7pt;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  .bullets li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .bullets strong { font-weight: 600; color: var(--ink); }
+
+  /* EDUCATION */
+  .edu { margin-bottom: 8px; }
+  .edu:last-child { margin-bottom: 0; }
+  .edu-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .edu-title { font-size: 10.5pt; }
+  .edu-degree { font-weight: 600; }
+  .edu-school { color: var(--ink-soft); }
+  .edu-coursework { font-size: 9pt; color: var(--ink-soft); margin-top: 2px; }
+
+  /* SKILLS */
+  .skill-row { margin-bottom: 7px; display: flex; gap: 8px; align-items: flex-start; }
+  .skill-row:last-child { margin-bottom: 0; }
+  .skill-label {
+    font-size: 9pt;
+    font-weight: 600;
+    color: var(--ink);
+    min-width: 135px;
+    padding-top: 2px;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 4px; }
+  .tag {
+    background: var(--tag-bg);
+    color: var(--tag-ink);
+    font-size: 8.5pt;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* LANGUAGES */
+  .lang { font-size: 9.8pt; color: var(--ink); }
+  .lang strong { font-weight: 600; }
+
+  /* PRINT */
+  @media print {
+    html, body { background: white; }
+    .page { box-shadow: none; margin: 0; width: 100%; min-height: 100vh; }
+  }
+  @page { size: A4; margin: 0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="name">Jane Francis Tsao</div>
+    <div class="subtitle">AI Marketing Associate · B2B Content × Generative AI × Analytics</div>
+    <div class="contact">
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 4l8 8 8-8"/></svg>
+        tsaojane615@yahoo.com
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-3 2a12 12 0 006 6l2-3 5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg>
+        +1 (613) 882-4480
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 018 8c0 6-8 12-8 12S4 16 4 10a8 8 0 018-8z"/></svg>
+        Remote / Hybrid (Taipei · Ottawa)
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 11.02 5.001A2.5 2.5 0 014.98 3.5zM3 9h4v12H3zM9 9h3.8v1.71h.05c.53-1 1.82-2.06 3.75-2.06 4.01 0 4.75 2.64 4.75 6.07V21h-4v-5.4c0-1.28-.02-2.93-1.79-2.93-1.79 0-2.06 1.4-2.06 2.84V21H9z"/></svg>
+        linkedin.com/in/jane-t-042913220
+      </span>
+    </div>
+  </header>
+
+  <!-- SUMMARY -->
+  <section>
+    <h2>Summary</h2>
+    <p class="summary">AI Marketing Associate at Neteon building an AI-first B2B marketing engine for industrial computing, edge AI, and OT networking audiences. Combine generative AI workflows (ChatGPT, Claude, Midjourney, Notion AI) with GA4 and HubSpot analytics to ship SEO- and GEO-optimized content, paid campaigns on LinkedIn and Google, and lead-scoring workflows. Bilingual English/Mandarin; Business Analytics background grounds every decision in performance data.</p>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section>
+    <h2>Experience</h2>
+
+    <div class="role">
+      <div class="role-head">
+        <div class="role-title-line">
+          <span class="company">Neteon Tech</span><span class="divider">·</span><span class="title">AI Marketing Associate</span><span class="divider">·</span><span class="loc">Remote / Hybrid</span>
+        </div>
+        <div class="dates">Dec 2025 – Present</div>
+      </div>
+      <ul class="bullets">
+        <li>Build an AI-first content engine for a US-based industrial computing and networking distributor — ship landing pages, blogs, white papers, and email using <strong>ChatGPT, Claude, Midjourney, and Notion AI</strong>.</li>
+        <li>Develop bilingual (EN/中) SEO and <strong>GEO (Generative Engine Optimization)</strong> content so brand assets surface in Google and AI-answer engines (ChatGPT, Perplexity, Gemini).</li>
+        <li>Plan and operate B2B campaigns across LinkedIn Ads, Google Ads, and programmatic — targeting engineering, procurement, and OEM buyers in industrial computing, edge AI, and IIoT.</li>
+        <li>Operate the marketing stack — <strong>GA4, Google Tag Manager, HubSpot</strong> — and design lead-scoring criteria for MQL-to-SQL handoffs with business development.</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <div class="role-head">
+        <div class="role-title-line">
+          <span class="company">Pinax</span><span class="divider">·</span><span class="title">Marketing Intern</span><span class="divider">·</span><span class="loc">Ottawa, Canada</span>
+        </div>
+        <div class="dates">Sep 2024 – Jan 2025</div>
+      </div>
+      <ul class="bullets">
+        <li>Lifted organic traffic <strong>20%</strong> in 4 months via SEO and early GEO tactics (schema, AI-answer-ready FAQ content, long-tail keyword clusters) for a Web3 infrastructure brand.</li>
+        <li>Produced bilingual (EN/中) content and localized campaigns across <strong>3+ APAC markets</strong>; used Claude and Notion AI to accelerate drafting and translation.</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <div class="role-head">
+        <div class="role-title-line">
+          <span class="company">CUPETIT</span><span class="divider">·</span><span class="title">Marketing Intern</span><span class="divider">·</span><span class="loc">Taipei, Taiwan</span>
+        </div>
+        <div class="dates">May 2022 – Sep 2022</div>
+      </div>
+      <ul class="bullets">
+        <li>Built a linear regression model in R to forecast customer trends and reallocate paid spend; improved engagement and cut low-ROI placements.</li>
+        <li>Ran 15+ KOL and partner collaborations across IG, FB, and LINE — briefed creators, tracked UTMs, and reported weekly paid-social performance.</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <div class="role-head">
+        <div class="role-title-line">
+          <span class="company">PAULTEX</span><span class="divider">·</span><span class="title">Marketing Intern</span><span class="divider">·</span><span class="loc">Taipei, Taiwan</span>
+        </div>
+        <div class="dates">Sep 2021 – Jan 2022</div>
+      </div>
+      <ul class="bullets">
+        <li>Managed a <strong>50+ SKU B2B product catalog</strong> across Alibaba and Taiwan Trade — optimized titles, specs, and keywords for industrial procurement search; launched company LinkedIn and IG from zero.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section>
+    <h2>Education</h2>
+
+    <div class="edu">
+      <div class="edu-head">
+        <div class="edu-title">
+          <span class="edu-degree">MSc Business Analytics</span><span class="divider">·</span><span class="edu-school">University of Ottawa</span>
+        </div>
+        <div class="dates">Sep 2023 – Jun 2025</div>
+      </div>
+      <div class="edu-coursework">Coursework: Quantitative Methods · Predictive Analytics · Machine Learning</div>
+    </div>
+
+    <div class="edu">
+      <div class="edu-head">
+        <div class="edu-title">
+          <span class="edu-degree">BBA Marketing</span><span class="divider">·</span><span class="edu-school">National Chung Hsing University</span>
+        </div>
+        <div class="dates">Sep 2018 – Jun 2022</div>
+      </div>
+      <div class="edu-coursework">Coursework: Market Research · Statistics · Consumer Behavior</div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section>
+    <h2>Skills</h2>
+    <div class="skill-row">
+      <div class="skill-label">AI &amp; Content</div>
+      <div class="tags">
+        <span class="tag">ChatGPT</span>
+        <span class="tag">Claude</span>
+        <span class="tag">Midjourney</span>
+        <span class="tag">Notion AI</span>
+        <span class="tag">Perplexity</span>
+        <span class="tag">SEO</span>
+        <span class="tag">GEO</span>
+        <span class="tag">EN / 中 copywriting</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-label">Marketing Ops</div>
+      <div class="tags">
+        <span class="tag">GA4</span>
+        <span class="tag">Google Tag Manager</span>
+        <span class="tag">HubSpot</span>
+        <span class="tag">Looker Studio</span>
+        <span class="tag">Google Ads</span>
+        <span class="tag">LinkedIn Ads</span>
+        <span class="tag">Meta Ads</span>
+        <span class="tag">Lead scoring</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-label">Data &amp; Platforms</div>
+      <div class="tags">
+        <span class="tag">R</span>
+        <span class="tag">Python</span>
+        <span class="tag">SQL</span>
+        <span class="tag">Stata</span>
+        <span class="tag">BigCommerce</span>
+        <span class="tag">Webflow</span>
+        <span class="tag">HTML</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- LANGUAGES -->
+  <section>
+    <h2>Languages</h2>
+    <div class="lang"><strong>English</strong> — Fluent &nbsp;·&nbsp; <strong>Mandarin</strong> — Native</div>
+  </section>
+
+</div>
+</body>
+</html>
