@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neteon Brand Diagnostic — Vol. 01 / April 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,700;9..144,900&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0a0a0a;
+  --paper: #f2eee6;
+  --paper-warm: #e8e2d4;
+  --signal: #7cff50;
+  --signal-dim: #4a9f32;
+  --alert: #ff4d3d;
+  --alert-dim: #c23528;
+  --amber: #ffb347;
+  --rule: #1f1f1f;
+  --muted: #7a7568;
+  --line: #dcd5c2;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  font-feature-settings: 'ss01', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  background-image: 
+    repeating-linear-gradient(0deg, transparent 0, transparent 2px, rgba(0,0,0,0.01) 2px, rgba(0,0,0,0.01) 3px);
+}
+
+.mono { font-family: 'JetBrains Mono', monospace; }
+.serif { font-family: 'Fraunces', serif; }
+
+/* =========================== */
+/*  COVER / MASTHEAD           */
+/* =========================== */
+.cover {
+  min-height: 100vh;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 32px 48px 48px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 80% 50% at 100% 0%, rgba(124, 255, 80, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 0% 100%, rgba(255, 77, 61, 0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(242, 238, 230, 0.2);
+  padding-bottom: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  position: relative;
+  z-index: 2;
+}
+
+.masthead-left { opacity: 0.6; }
+.masthead-right { opacity: 0.6; text-align: right; }
+
+.cover-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  padding-top: 80px;
+  position: relative;
+  z-index: 2;
+}
+
+.vol-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.vol-tag::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--signal);
+}
+
+.cover-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: clamp(60px, 11vw, 160px);
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+  margin-bottom: 40px;
+}
+
+.cover-title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--signal);
+}
+
+.cover-deck {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: clamp(18px, 2.2vw, 28px);
+  line-height: 1.4;
+  max-width: 780px;
+  color: rgba(242, 238, 230, 0.85);
+  margin-bottom: 56px;
+}
+
+.cover-foot {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(242, 238, 230, 0.2);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+}
+
+.cover-foot-block label {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  font-size: 10px;
+  margin-bottom: 8px;
+}
+
+.cover-foot-block .val {
+  font-size: 14px;
+  color: var(--paper);
+  font-weight: 500;
+}
+
+.cover-foot-block .val.green { color: var(--signal); }
+.cover-foot-block .val.red { color: var(--alert); }
+
+/* =========================== */
+/*  SECTION STRUCTURE          */
+/* =========================== */
+.section {
+  padding: 80px 48px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.section-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.section-tag .num {
+  color: var(--alert);
+  font-weight: 700;
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
+  max-width: 920px;
+}
+
+.section-title em {
+  font-style: italic;
+  font-weight: 300;
+}
+
+.section-deck {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 1.5;
+  color: #3a3a3a;
+  max-width: 780px;
+  margin-bottom: 56px;
+  font-style: italic;
+}
+
+/* =========================== */
+/*  VERDICT BANNER             */
+/* =========================== */
+.verdict {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 64px 48px;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.verdict-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.score-display {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.score-num {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 220px;
+  line-height: 0.8;
+  color: var(--alert);
+  letter-spacing: -0.06em;
+}
+
+.score-denom {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 80px;
+  color: rgba(242, 238, 230, 0.4);
+  letter-spacing: -0.05em;
+}
+
+.score-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.verdict-text h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 48px;
+  line-height: 1;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.verdict-text h3 em {
+  color: var(--alert);
+  font-style: italic;
+}
+
+.verdict-text p {
+  font-size: 17px;
+  line-height: 1.6;
+  color: rgba(242, 238, 230, 0.8);
+  max-width: 480px;
+}
+
+/* =========================== */
+/*  DIMENSION GRID (6 cols)    */
+/* =========================== */
+.dim-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1px;
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  margin-bottom: 64px;
+}
+
+.dim-cell {
+  background: var(--paper);
+  padding: 28px 20px;
+  position: relative;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.dim-cell .name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.dim-cell .score {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 76px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.dim-cell .score .of {
+  font-size: 24px;
+  color: var(--muted);
+}
+
+.dim-cell.critical .score { color: var(--alert); }
+.dim-cell.warn .score { color: var(--amber); }
+.dim-cell.okay .score { color: var(--signal-dim); }
+
+.dim-cell .bar {
+  height: 3px;
+  background: var(--line);
+  margin-top: 12px;
+  position: relative;
+}
+
+.dim-cell .bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: var(--w);
+  background: var(--c);
+}
+
+.dim-cell.critical .bar::after { background: var(--alert); }
+.dim-cell.warn .bar::after { background: var(--amber); }
+.dim-cell.okay .bar::after { background: var(--signal-dim); }
+
+.dim-cell .note {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #3a3a3a;
+  margin-top: 12px;
+}
+
+/* =========================== */
+/*  KEYWORD TABLE              */
+/* =========================== */
+.kw-section {
+  background: var(--paper-warm);
+  padding: 80px 48px;
+}
+
+.kw-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.kw-table {
+  border-top: 2px solid var(--ink);
+  margin-top: 32px;
+}
+
+.kw-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 220px 100px;
+  gap: 20px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.kw-row:hover {
+  background: rgba(0,0,0,0.02);
+}
+
+.kw-header {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.kw-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+.kw-term {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.kw-winners {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #3a3a3a;
+  line-height: 1.5;
+}
+
+.kw-severity {
+  text-align: right;
+}
+
+.badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border: 1px solid currentColor;
+}
+
+.badge.critical { color: var(--alert); background: rgba(255, 77, 61, 0.08); }
+.badge.high { color: var(--amber); background: rgba(255, 179, 71, 0.12); }
+.badge.ok { color: var(--signal-dim); background: rgba(124, 255, 80, 0.08); }
+
+.kw-summary {
+  margin-top: 32px;
+  padding: 32px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.kw-summary em {
+  color: var(--alert);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* =========================== */
+/*  COMP COMPARISON TABLE      */
+/* =========================== */
+.comp-table {
+  display: grid;
+  grid-template-columns: 200px repeat(5, 1fr);
+  background: var(--ink);
+  gap: 1px;
+  border: 1px solid var(--ink);
+}
+
+.comp-cell {
+  background: var(--paper);
+  padding: 18px 16px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.comp-cell.header {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+  padding: 20px 16px;
+}
+
+.comp-cell.header.neteon {
+  background: var(--signal);
+  color: var(--ink);
+}
+
+.comp-cell.row-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  background: var(--paper-warm);
+}
+
+.comp-cell.neteon-col {
+  background: rgba(124, 255, 80, 0.08);
+  font-weight: 500;
+}
+
+/* =========================== */
+/*  POSITIONING BLOCK          */
+/* =========================== */
+.pos-block {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 80px 48px;
+  position: relative;
+}
+
+.pos-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.pos-card {
+  border: 1px solid rgba(242, 238, 230, 0.2);
+  padding: 48px;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.pos-card .tag {
+  position: absolute;
+  top: -10px;
+  left: 32px;
+  background: var(--ink);
+  padding: 0 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--signal);
+}
+
+.pos-card h4 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.pos-card .quote {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 1.45;
+  color: var(--paper);
+}
+
+.pos-card .quote em {
+  color: var(--signal);
+  font-style: italic;
+}
+
+.pos-card.hero .quote {
+  font-size: 56px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-weight: 300;
+}
+
+.pos-stack {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* =========================== */
+/*  FINDINGS (3 red flags)     */
+/* =========================== */
+.findings {
+  background: var(--paper);
+  padding: 80px 48px;
+}
+
+.findings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.finding-card {
+  background: var(--paper-warm);
+  padding: 40px 32px;
+  border-top: 6px solid var(--alert);
+  position: relative;
+}
+
+.finding-num {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 96px;
+  line-height: 0.8;
+  color: rgba(255, 77, 61, 0.15);
+  position: absolute;
+  top: 24px;
+  right: 24px;
+}
+
+.finding-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--alert);
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.finding-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+.finding-body {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #2a2a2a;
+}
+
+.finding-body strong {
+  color: var(--alert-dim);
+  font-weight: 700;
+}
+
+.finding-action {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.finding-action::before {
+  content: '→ ';
+  color: var(--alert);
+  font-weight: 700;
+}
+
+/* =========================== */
+/*  ROADMAP                    */
+/* =========================== */
+.roadmap {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 80px 48px;
+}
+
+.roadmap-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.roadmap-timeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(242, 238, 230, 0.2);
+  border: 1px solid rgba(242, 238, 230, 0.2);
+  margin-top: 40px;
+}
+
+.roadmap-phase {
+  background: var(--ink);
+  padding: 40px 32px;
+}
+
+.phase-timer {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin-bottom: 12px;
+}
+
+.phase-name {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 36px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+
+.phase-list {
+  list-style: none;
+  padding: 0;
+}
+
+.phase-list li {
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(242, 238, 230, 0.1);
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(242, 238, 230, 0.85);
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 8px;
+}
+
+.phase-list li::before {
+  content: attr(data-num);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--signal);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding-top: 2px;
+}
+
+.phase-list li:last-child { border-bottom: none; }
+
+/* =========================== */
+/*  IDENTITY GAP CALLOUT       */
+/* =========================== */
+.identity-gap {
+  background: var(--paper-warm);
+  padding: 80px 48px;
+  border-top: 4px solid var(--alert);
+  border-bottom: 4px solid var(--alert);
+}
+
+.ig-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ig-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--alert);
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.ig-text {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.ig-text .strike { 
+  text-decoration: line-through; 
+  text-decoration-thickness: 2px;
+  color: var(--alert);
+  text-decoration-color: var(--alert);
+}
+
+.ig-text em {
+  font-style: italic;
+  color: var(--signal-dim);
+}
+
+.ig-sub {
+  margin-top: 32px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #4a4a4a;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* =========================== */
+/*  FOOTER                     */
+/* =========================== */
+.footer {
+  background: var(--ink);
+  color: rgba(242, 238, 230, 0.6);
+  padding: 48px;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  line-height: 1.8;
+}
+
+.footer .top {
+  color: var(--signal);
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  margin-bottom: 16px;
+}
+
+/* =========================== */
+/*  RESPONSIVE                 */
+/* =========================== */
+@media (max-width: 960px) {
+  .cover { padding: 24px 24px 32px; }
+  .section, .kw-section, .findings, .roadmap, .pos-block, .identity-gap, .verdict { padding: 48px 24px; }
+  .cover-foot { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .verdict-inner { grid-template-columns: 1fr; gap: 40px; }
+  .score-num { font-size: 140px; }
+  .verdict-text h3 { font-size: 34px; }
+  .dim-grid { grid-template-columns: repeat(2, 1fr); }
+  .kw-row { grid-template-columns: 40px 1fr; grid-template-areas: 'num term' 'num winners' 'num severity'; gap: 8px; }
+  .kw-num { grid-area: num; }
+  .kw-term { grid-area: term; font-size: 18px; }
+  .kw-winners { grid-area: winners; }
+  .kw-severity { grid-area: severity; text-align: left; }
+  .comp-table { grid-template-columns: 1fr; }
+  .comp-cell.header { padding: 12px; }
+  .pos-stack { grid-template-columns: 1fr; }
+  .pos-card.hero .quote { font-size: 32px; }
+  .findings-grid { grid-template-columns: 1fr; }
+  .roadmap-timeline { grid-template-columns: 1fr; }
+  .ig-text { font-size: 24px; }
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.cover-title, .cover-deck, .cover-foot {
+  animation: fadeUp 0.8s ease-out;
+  animation-fill-mode: both;
+}
+
+.cover-deck { animation-delay: 0.15s; }
+.cover-foot { animation-delay: 0.3s; }
+
+/* Print */
+@media print {
+  body { background: white; }
+  .cover, .verdict, .pos-block, .roadmap { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================= -->
+<!-- COVER                                         -->
+<!-- ============================================= -->
+<section class="cover">
+  <div class="masthead">
+    <div class="masthead-left">
+      NETEON / BRAND DIAGNOSTIC &nbsp;·&nbsp; ISSUED BY CLAUDE CODE
+    </div>
+    <div class="masthead-right">
+      VOL. 01 &nbsp;·&nbsp; NO. 01 &nbsp;·&nbsp; APR 2026
+    </div>
+  </div>
+
+  <div class="cover-body">
+    <div class="vol-tag">A Brand Positioning &amp; AI Discoverability Report</div>
+
+    <h1 class="cover-title">
+      Invisible<br>
+      to the <em>machines</em>
+      <br>that matter.
+    </h1>
+
+    <p class="cover-deck">
+      A 30-page diagnostic on how Neteon shows up (and mostly doesn't) when 
+      controls engineers, procurement teams, and AI search engines go looking 
+      for industrial Edge&nbsp;AI hardware.
+    </p>
+
+    <div class="cover-foot">
+      <div class="cover-foot-block">
+        <label>Subject</label>
+        <div class="val">Neteon Technologies</div>
+      </div>
+      <div class="cover-foot-block">
+        <label>AI Discoverability</label>
+        <div class="val red">11 / 30 · Weak</div>
+      </div>
+      <div class="cover-foot-block">
+        <label>Positioning</label>
+        <div class="val green">4/5 Pass</div>
+      </div>
+      <div class="cover-foot-block">
+        <label>Findings</label>
+        <div class="val">13 Actionable</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- VERDICT BANNER                                -->
+<!-- ============================================= -->
+<section class="verdict">
+  <div class="verdict-inner">
+    <div>
+      <div class="score-label">AI Discoverability Score</div>
+      <div class="score-display">
+        <div class="score-num">11</div>
+        <div class="score-denom">/ 30</div>
+      </div>
+    </div>
+    <div class="verdict-text">
+      <h3>Neteon is <em>effectively invisible</em> in AI-generated answers.</h3>
+      <p>
+        Tested against 7 category keywords across ChatGPT-style queries.
+        Neteon appeared in <strong>zero</strong> of them. AI engines recommend 
+        Neteon's own suppliers — Neousys, Moxa — directly, bypassing Neteon 
+        entirely.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- SECTION 01: THE SIX DIMENSIONS                -->
+<!-- ============================================= -->
+<section class="section">
+  <div class="section-tag">
+    <span class="num">01</span>
+    <span>The Six Dimensions</span>
+  </div>
+  <h2 class="section-title">
+    Where the <em>signal</em> breaks down.
+  </h2>
+  <p class="section-deck">
+    Across six measures of AI brand presence, three scored at the floor. 
+    Category presence, authority, and competitive position all returned 1/5 — 
+    a near-total absence in the places LLMs draw recommendations from.
+  </p>
+
+  <div class="dim-grid">
+    <div class="dim-cell warn" style="--w: 40%;">
+      <div>
+        <div class="name">Recognition</div>
+        <div class="score">2<span class="of">/5</span></div>
+      </div>
+      <div>
+        <div class="bar"></div>
+        <div class="note">Found when asked directly, but descriptions are thin and self-sourced.</div>
+      </div>
+    </div>
+
+    <div class="dim-cell warn" style="--w: 60%;">
+      <div>
+        <div class="name">Accuracy</div>
+        <div class="score">3<span class="of">/5</span></div>
+      </div>
+      <div>
+        <div class="bar"></div>
+        <div class="note">Described as a Moxa networking distributor — Edge AI positioning is invisible.</div>
+      </div>
+    </div>
+
+    <div class="dim-cell warn" style="--w: 60%;">
+      <div>
+        <div class="name">Sentiment</div>
+        <div class="score">3<span class="of">/5</span></div>
+      </div>
+      <div>
+        <div class="bar"></div>
+        <div class="note">Positive testimonials exist, but all live on Neteon's own domains.</div>
+      </div>
+    </div>
+
+    <div class="dim-cell critical" style="--w: 20%;">
+      <div>
+        <div class="name">Category</div>
+        <div class="score">1<span class="of">/5</span></div>
+      </div>
+      <div>
+        <div class="bar"></div>
+        <div class="note">Not found in any of 7 target keyword searches. Most severe gap.</div>
+      </div>
+    </div>
+
+    <div class="dim-cell critical" style="--w: 20%;">
+      <div>
+        <div class="name">Authority</div>
+        <div class="score">1<span class="of">/5</span></div>
+      </div>
+      <div>
+        <div class="bar"></div>
+        <div class="note">Zero third-party citations. No press, no analyst reports, no listicles.</div>
+      </div>
+    </div>
+
+    <div class="dim-cell critical" style="--w: 20%;">
+      <div>
+        <div class="name">Competitive</div>
+        <div class="score">1<span class="of">/5</span></div>
+      </div>
+      <div>
+        <div class="bar"></div>
+        <div class="note">Dominated by OnLogic, Premio, CoastIPC — and Neteon's own supplier brands.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- SECTION 02: KEYWORD MATRIX                    -->
+<!-- ============================================= -->
+<section class="kw-section">
+  <div class="kw-inner">
+    <div class="section-tag">
+      <span class="num">02</span>
+      <span>Keyword Matrix</span>
+    </div>
+    <h2 class="section-title">
+      Seven queries. <em>Zero</em> appearances.
+    </h2>
+    <p class="section-deck">
+      Every keyword below represents an industrial buyer Googling for what 
+      Neteon sells. The right column shows who shows up instead. Neteon 
+      appears nowhere — including for terms where it claims category 
+      leadership.
+    </p>
+
+    <div class="kw-table">
+      <div class="kw-row kw-header">
+        <div>#</div>
+        <div>Query</div>
+        <div>Who Appears Instead</div>
+        <div style="text-align: right;">Severity</div>
+      </div>
+
+      <div class="kw-row">
+        <div class="kw-num">01</div>
+        <div class="kw-term">industrial edge AI computer</div>
+        <div class="kw-winners">Teguar · OnLogic · InHand · Neousys · NVIDIA · ASUS · Syslogic · CONTEC · NEXCOM · Moxa</div>
+        <div class="kw-severity"><span class="badge critical">Critical</span></div>
+      </div>
+
+      <div class="kw-row">
+        <div class="kw-num">02</div>
+        <div class="kw-term">rugged edge computing distributor</div>
+        <div class="kw-winners">Comark · Premio · Crystal Group · Neousys · Things Embedded · 2CRSi · One Stop Systems</div>
+        <div class="kw-severity"><span class="badge critical">Critical</span></div>
+      </div>
+
+      <div class="kw-row">
+        <div class="kw-num">03</div>
+        <div class="kw-term">Moxa US distributor</div>
+        <div class="kw-winners">Moxa official · M.A. Rugged · RS Components · MoxaStore · Parkelect</div>
+        <div class="kw-severity"><span class="badge critical">Critical</span></div>
+      </div>
+
+      <div class="kw-row">
+        <div class="kw-num">04</div>
+        <div class="kw-term">industrial NVIDIA Jetson platform</div>
+        <div class="kw-winners">NVIDIA · Arrow · Advantech · Syslogic</div>
+        <div class="kw-severity"><span class="badge high">High</span></div>
+      </div>
+
+      <div class="kw-row">
+        <div class="kw-num">05</div>
+        <div class="kw-term">fanless industrial PC for oil and gas</div>
+        <div class="kw-winners">Maple Systems · ADLINK · Corvalent · Cybernet · PSB Engineering · VarTech · Sinsmarts</div>
+        <div class="kw-severity"><span class="badge high">High</span></div>
+      </div>
+
+      <div class="kw-row">
+        <div class="kw-num">06</div>
+        <div class="kw-term">Neousys distributor USA</div>
+        <div class="kw-winners">Neousys official · CoastIPC · IndustrialPC.com · Assured Systems · EASTECH</div>
+        <div class="kw-severity"><span class="badge critical">Critical</span></div>
+      </div>
+
+      <div class="kw-row">
+        <div class="kw-num">07</div>
+        <div class="kw-term">ruggedized computer for manufacturing</div>
+        <div class="kw-winners">Rugged Science · Neousys · Stealth · Teguar · IndustrialPC.com · Things Embedded · Forecr</div>
+        <div class="kw-severity"><span class="badge high">High</span></div>
+      </div>
+    </div>
+
+    <div class="kw-summary">
+      A prospect asking Perplexity "recommend a rugged edge AI computer 
+      distributor" will receive a list of 10+ companies. 
+      <em>Neteon is on none of them.</em>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- SECTION 03: THREE RED FLAGS                   -->
+<!-- ============================================= -->
+<section class="findings">
+  <div class="section-tag" style="max-width: 1280px; margin-left: auto; margin-right: auto;">
+    <span class="num">03</span>
+    <span>Three Findings That Demand Attention</span>
+  </div>
+  <h2 class="section-title" style="max-width: 1280px; margin-left: auto; margin-right: auto; margin-bottom: 56px;">
+    The diagnostic surfaced <em>thirteen</em> findings.<br>
+    These three are <em>existential</em>.
+  </h2>
+
+  <div class="findings-grid">
+    <div class="finding-card">
+      <div class="finding-num">01</div>
+      <div class="finding-label">Identity Mismatch</div>
+      <h3 class="finding-title">AI thinks Neteon is a Moxa shop.</h3>
+      <p class="finding-body">
+        The desired positioning is <strong>"Edge AI partner."</strong>
+        The AI-visible identity is <strong>"Moxa networking distributor."</strong>
+        The Neousys and Edge AI content on neteon.ai is too thin and too recent 
+        to have shifted how LLMs describe the company.
+      </p>
+      <div class="finding-action">
+        Audit content volume ratio: networking vs. Edge AI. Target 1:1 within 90 days.
+      </div>
+    </div>
+
+    <div class="finding-card">
+      <div class="finding-num">02</div>
+      <div class="finding-label">Claim vs. Reality</div>
+      <h3 class="finding-title">"Moxa #1 US distributor" doesn't compute.</h3>
+      <p class="finding-body">
+        Neteon claims top Moxa US distributor status. AI searches for that 
+        exact query surface <strong>M.A. Rugged, RS Components, and MoxaStore</strong> — 
+        not Neteon. The claim either isn't validated in third-party data, 
+        or isn't discoverable where buyers look.
+      </p>
+      <div class="finding-action">
+        Verify listing on Moxa's official distributor finder. Add schema markup: "Moxa authorized distributor."
+      </div>
+    </div>
+
+    <div class="finding-card">
+      <div class="finding-num">03</div>
+      <div class="finding-label">Zero Authority Signal</div>
+      <h3 class="finding-title">No third-party citations exist.</h3>
+      <p class="finding-body">
+        Every search result is first-party: neteon.net, shopmoxa, ipc, iiot, 
+        neteon.ai, LinkedIn, ZoomInfo. <strong>No press coverage, no analyst 
+        reports, no listicle mentions, no G2 or Capterra reviews.</strong>
+        LLMs weight third-party sources heavily — without them, Neteon cannot 
+        appear in "best X" or "recommend a Y" answers.
+      </p>
+      <div class="finding-action">
+        Pitch 2–3 industry publications (EdgeIR, RoboticsTomorrow, CNX Software) within 30 days.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- IDENTITY GAP CALLOUT                          -->
+<!-- ============================================= -->
+<section class="identity-gap">
+  <div class="ig-inner">
+    <div class="ig-label">⚠ The Central Problem</div>
+    <div class="ig-text">
+      When an LLM is asked<br>
+      "what does Neteon do?", it answers:<br><br>
+      <span class="strike">Edge AI partner for industrial operations.</span><br>
+      <em>"A US distributor of Moxa industrial networking products."</em>
+    </div>
+    <p class="ig-sub">
+      The new Edge AI layer exists, but it's invisible to the systems that matter. 
+      Every recommendation engine — ChatGPT, Perplexity, Gemini, Claude — still 
+      references a 10-year-old Neteon.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- SECTION 04: COMPETITIVE POSITION              -->
+<!-- ============================================= -->
+<section class="section">
+  <div class="section-tag">
+    <span class="num">04</span>
+    <span>Competitive Position</span>
+  </div>
+  <h2 class="section-title">
+    Category presence across <em>five rivals</em>.
+  </h2>
+  <p class="section-deck">
+    Across the seven target keywords, competitors appear between 1 and 3 times. 
+    Neteon appears zero. OnLogic's recent Siemens partnership and steady 
+    editorial footprint makes it the most frequently cited rival.
+  </p>
+
+  <div class="comp-table">
+    <div class="comp-cell header">Metric</div>
+    <div class="comp-cell header neteon">Neteon</div>
+    <div class="comp-cell header">OnLogic</div>
+    <div class="comp-cell header">Arrow</div>
+    <div class="comp-cell header">Premio</div>
+    <div class="comp-cell header">CoastIPC</div>
+
+    <div class="comp-cell row-label">Direct Recognition</div>
+    <div class="comp-cell neteon-col">Partial<br><small style="color:#888;">(own sites only)</small></div>
+    <div class="comp-cell">Strong</div>
+    <div class="comp-cell">Very Strong<br><small style="color:#888;">(NYSE, $30B+)</small></div>
+    <div class="comp-cell">Moderate</div>
+    <div class="comp-cell">Weak</div>
+
+    <div class="comp-cell row-label">Category Presence<br>(of 7 keywords)</div>
+    <div class="comp-cell neteon-col" style="color: var(--alert); font-weight: 700; font-size: 18px;">0 / 7</div>
+    <div class="comp-cell" style="font-weight: 700; font-size: 18px;">3 / 7</div>
+    <div class="comp-cell" style="font-weight: 700; font-size: 18px;">2 / 7</div>
+    <div class="comp-cell" style="font-weight: 700; font-size: 18px;">2 / 7</div>
+    <div class="comp-cell" style="font-weight: 700; font-size: 18px;">1 / 7</div>
+
+    <div class="comp-cell row-label">Authority Citations</div>
+    <div class="comp-cell neteon-col" style="color: var(--alert);">None</div>
+    <div class="comp-cell">EdgeIR,<br>RoboticsTomorrow,<br>CNX Software</div>
+    <div class="comp-cell">ainvest.com,<br>Industry EMEA</div>
+    <div class="comp-cell">industry4-1.com<br>listicle</div>
+    <div class="comp-cell">Neousys<br>distributor page</div>
+
+    <div class="comp-cell row-label">Sentiment</div>
+    <div class="comp-cell neteon-col">Positive<br><small style="color:#888;">(self-sourced)</small></div>
+    <div class="comp-cell">Positive</div>
+    <div class="comp-cell">Neutral+</div>
+    <div class="comp-cell">Positive</div>
+    <div class="comp-cell">Neutral</div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- SECTION 05: POSITIONING REWRITE               -->
+<!-- ============================================= -->
+<section class="pos-block">
+  <div class="pos-inner">
+    <div class="section-tag">
+      <span class="num">05</span>
+      <span>Positioning Rewrite</span>
+    </div>
+    <h2 class="section-title" style="color: var(--paper);">
+      One line <em>already lives</em><br>
+      inside the doc.
+    </h2>
+    <p class="section-deck" style="color: rgba(242, 238, 230, 0.7);">
+      The sharpest articulation of Neteon's value is buried deep in the 
+      differentiation section. Promote it to the headline. Retire the word 
+      "distributor" from the opening line.
+    </p>
+
+    <div class="pos-card hero">
+      <span class="tag">Proposed Primary Tagline</span>
+      <h4>One-liner (10 words)</h4>
+      <p class="quote">
+        A <em>recommendation</em>,<br>not a search result.
+      </p>
+    </div>
+
+    <div class="pos-stack">
+      <div class="pos-card">
+        <span class="tag">Alternate Tagline</span>
+        <h4>If a more explicit frame is needed</h4>
+        <p class="quote">
+          The Edge AI hardware <em>advisor</em> for industrial operations teams.
+        </p>
+      </div>
+
+      <div class="pos-card">
+        <span class="tag">Elevator Pitch (75 words)</span>
+        <h4>For sales calls and pitch decks</h4>
+        <p class="quote" style="font-size: 18px;">
+          Industrial teams are under pressure to deploy AI at the edge. 
+          Picking the wrong ruggedized computer costs months and thousands. 
+          Neteon is the industrial Edge AI partner that cuts through the noise — 
+          tell us your environment, we recommend the right platform across 
+          Neousys, Moxa, and NVIDIA, spec'd and shipping within a day.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- SECTION 06: ROADMAP                           -->
+<!-- ============================================= -->
+<section class="roadmap">
+  <div class="roadmap-inner">
+    <div class="section-tag">
+      <span class="num">06</span>
+      <span>The 90-Day Recovery Roadmap</span>
+    </div>
+    <h2 class="section-title" style="color: var(--paper);">
+      From <em>invisible</em><br>
+      to <em>indexed</em>.
+    </h2>
+    <p class="section-deck" style="color: rgba(242, 238, 230, 0.7);">
+      A three-phase execution plan. The first week is all plumbing — directory 
+      listings and schema. Month two publishes the content LLMs actually cite. 
+      Month three builds the social proof that keeps Neteon in their index.
+    </p>
+
+    <div class="roadmap-timeline">
+      <div class="roadmap-phase">
+        <div class="phase-timer">Phase 01 · Days 0–7</div>
+        <h3 class="phase-name">Plumbing</h3>
+        <ul class="phase-list">
+          <li data-num="01">Verify Neteon on Moxa's official distributor finder</li>
+          <li data-num="02">Verify Neteon on Neousys's US distributor page</li>
+          <li data-num="03">Deploy schema markup on ShopMoxa (Organization + "Moxa authorized distributor")</li>
+          <li data-num="04">Submit Google Knowledge Panel entity data</li>
+        </ul>
+      </div>
+
+      <div class="roadmap-phase">
+        <div class="phase-timer">Phase 02 · Days 8–30</div>
+        <h3 class="phase-name">Content</h3>
+        <ul class="phase-list">
+          <li data-num="05">Publish 5 answer-worthy long-form guides (one per target keyword)</li>
+          <li data-num="06">Enrich ThomasNet profile; submit to Industry 4-1 and STL Partners listicles</li>
+          <li data-num="07">Claim Google Knowledge Panel; verify Google Business Profile</li>
+          <li data-num="08">Seed PLCtalk forum presence (where OnLogic already lives)</li>
+        </ul>
+      </div>
+
+      <div class="roadmap-phase">
+        <div class="phase-timer">Phase 03 · Days 31–90</div>
+        <h3 class="phase-name">Authority</h3>
+        <ul class="phase-list">
+          <li data-num="09">Ship comparison pages: Neteon vs CoastIPC, ShopMoxa vs RS Components</li>
+          <li data-num="10">Secure 2–3 independent press mentions (EdgeIR, RoboticsTomorrow, CNX Software)</li>
+          <li data-num="11">Build G2 / Capterra / Google review presence (target 10–15 reviews)</li>
+          <li data-num="12">Launch executive LinkedIn thought leadership program</li>
+          <li data-num="13">Re-audit all 7 keywords on day 90; measure dimension-level delta</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- FOOTER / COLOPHON                             -->
+<!-- ============================================= -->
+<footer class="footer">
+  <div class="top">End of report</div>
+  <div>
+    Generated via Claude Code — <span style="color: var(--signal);">ai-discoverability-audit</span> 
+    + <span style="color: var(--signal);">positioning-basics</span> skills<br>
+    Baseline date: 2026-04-22 · First re-audit: 2026-07-22<br>
+    Typeset in Fraunces &amp; JetBrains Mono
+  </div>
+</footer>
+
+</body>
+</html>
