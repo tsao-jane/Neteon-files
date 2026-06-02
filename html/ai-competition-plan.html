@@ -1,0 +1,1071 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI 生產力衝刺賽 — 規則與計劃書</title>
+<meta name="description" content="4 週內把全公司從「會問問題」推進到「跟 AI 一起工作」的內部競賽計劃" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f7f5ef;
+    --bg-card: #ffffff;
+    --bg-sub: #f1ede3;
+    --ink: #15130f;
+    --ink-mid: #504d45;
+    --ink-soft: #837e72;
+    --rule: #e7e1d3;
+    --rule-strong: #d8d0bd;
+    --accent: #14532d;          /* deep forest green */
+    --accent-hi: #1c6b3c;       /* brighter green for hover / gradients */
+    --accent-2: #c2620a;        /* warm amber, deepened for contrast */
+    --accent-3: #1e3a8a;        /* deep indigo (used sparingly) */
+    --accent-soft: #e7f6d9;
+    --highlight: #fdf2d0;
+    --shadow-sm: 0 1px 2px rgba(28,22,10,.05);
+    --shadow: 0 1px 2px rgba(28,22,10,.04), 0 10px 30px -8px rgba(28,22,10,.10);
+    --shadow-lg: 0 2px 4px rgba(28,22,10,.04), 0 24px 60px -16px rgba(28,22,10,.16);
+    --radius: 14px;
+    --radius-sm: 10px;
+    --ease: cubic-bezier(.22,.61,.36,1);
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: "Inter", "Noto Sans TC", -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 24px; -webkit-text-size-adjust: 100%; }
+  html, body { margin: 0; padding: 0; }
+  ::selection { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 28px; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 104px 0 76px;
+    border-bottom: 1px solid var(--rule);
+    background:
+      radial-gradient(ellipse 60% 50% at 12% -5%, rgba(20,83,45,.10), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 100% 20%, rgba(194,98,10,.07), transparent 55%),
+      linear-gradient(180deg, #fbf9f3, var(--bg));
+    overflow: hidden;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -1px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: .25;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+    padding: 6px 13px;
+    border-radius: 999px;
+    box-shadow: var(--shadow-sm);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+  }
+  h1 {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: clamp(38px, 6vw, 60px);
+    line-height: 1.06;
+    letter-spacing: -0.025em;
+    margin: 26px 0 18px;
+    max-width: 20ch;
+  }
+  h1 em {
+    font-style: normal;
+    background: linear-gradient(120deg, var(--accent), var(--accent-hi));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .lede {
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+    max-width: 60ch;
+    margin: 0;
+  }
+  .meta {
+    margin-top: 38px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .meta span {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 7px;
+    background: color-mix(in srgb, var(--bg-card) 70%, transparent);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 7px 14px;
+    backdrop-filter: blur(4px);
+  }
+  .meta b { color: var(--ink); font-weight: 600; }
+
+  /* SECTIONS */
+  section { padding: 88px 0; border-bottom: 1px solid var(--rule); }
+  .section-num {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .16em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .section-num::before {
+    content: "";
+    width: 22px; height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  h2 {
+    font-size: clamp(26px, 4vw, 36px);
+    line-height: 1.16;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    margin: 0 0 18px;
+  }
+  h2 em { font-style: normal; color: var(--accent); }
+  h3 {
+    font-size: 19px;
+    line-height: 1.35;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 28px 0 8px;
+  }
+  p { margin: 12px 0; color: var(--ink-mid); }
+  .lead { font-size: 17.5px; line-height: 1.7; color: var(--ink-mid); max-width: 68ch; }
+  .lead strong { color: var(--ink); }
+  ul, ol { color: var(--ink-mid); padding-left: 22px; }
+  li { margin: 7px 0; }
+  li::marker { color: var(--accent); }
+  strong { color: var(--ink); }
+
+  /* TOC */
+  .toc {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 26px 30px;
+    box-shadow: var(--shadow);
+    margin-top: 44px;
+  }
+  .toc h4 {
+    margin: 0 0 16px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .toc ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    columns: 2;
+    column-gap: 40px;
+    font-size: 14.5px;
+  }
+  .toc a {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 8px 10px;
+    margin: 1px -10px;
+    color: var(--ink);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background .18s var(--ease), color .18s var(--ease);
+  }
+  .toc a:hover { color: var(--accent); background: var(--accent-soft); }
+  .toc a span {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    opacity: .7;
+  }
+
+  /* CARDS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  @media (max-width: 760px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .toc ol { columns: 1; }
+    h1 { font-size: 36px; }
+    h2 { font-size: 26px; }
+    section { padding: 60px 0; }
+    .wrap { padding: 0 22px; }
+  }
+  .card {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 26px 28px;
+    box-shadow: var(--shadow);
+    transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease);
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--rule-strong);
+  }
+  .card .num {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    color: var(--accent);
+    padding-bottom: 2px;
+    border-bottom: 2px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+  .card h3 { margin-top: 12px; }
+  .card p { font-size: 14.5px; line-height: 1.65; }
+  .card .who {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent-2);
+    background: color-mix(in srgb, var(--accent-2) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent-2) 25%, transparent);
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-top: 14px;
+  }
+
+  /* CALLOUT */
+  .callout {
+    position: relative;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--highlight) 70%, #fff), var(--highlight));
+    border: 1px solid color-mix(in srgb, var(--accent-2) 22%, transparent);
+    border-left: 4px solid var(--accent-2);
+    padding: 22px 26px;
+    border-radius: 4px var(--radius-sm) var(--radius-sm) 4px;
+    margin: 28px 0;
+    box-shadow: var(--shadow-sm);
+  }
+  .callout p { color: var(--ink); margin: 0; line-height: 1.7; }
+  .callout b { color: var(--accent-2); }
+
+  .note {
+    background: var(--bg-sub);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--rule-strong);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-mid);
+  }
+
+  /* PRIZE TABLE */
+  .prize-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .prize-table th, .prize-table td {
+    padding: 18px 22px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .prize-table th {
+    background: var(--bg-sub);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .prize-table tbody tr { transition: background .15s var(--ease); }
+  .prize-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 3%, var(--bg-card)); }
+  .prize-table tr:last-child td { border-bottom: none; }
+  .prize-table td:first-child { font-weight: 600; color: var(--ink); }
+  .prize-table .top td {
+    background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 9%, var(--bg-card)), color-mix(in srgb, var(--accent) 3%, var(--bg-card)));
+    box-shadow: inset 4px 0 0 var(--accent);
+  }
+  .prize-table .top td:first-child { color: var(--accent); }
+
+  /* TIMELINE */
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 32px;
+  }
+  @media (max-width: 760px) { .timeline { grid-template-columns: 1fr; } }
+  .wk {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 24px 22px 20px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+    transition: transform .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  .wk::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-hi));
+  }
+  .wk:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  .wk .label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .08em;
+    color: var(--accent);
+    text-transform: uppercase;
+    padding-right: 44px;
+  }
+  .wk h4 {
+    margin: 10px 0 12px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .wk ul { padding-left: 18px; font-size: 13.5px; line-height: 1.6; margin: 0; }
+  .wk li { margin: 5px 0; }
+  .wk .pct {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 2px 7px;
+    border-radius: 999px;
+  }
+
+  /* SCORING */
+  .scoring {
+    display: grid;
+    grid-template-columns: 210px 1fr 84px;
+    gap: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-top: 22px;
+    box-shadow: var(--shadow);
+  }
+  .scoring > div {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .scoring > div:nth-child(3n+1) {
+    background: var(--bg-sub);
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .scoring > div:nth-last-child(-n+3) { border-bottom: none; }
+  .scoring .head {
+    background: var(--accent) !important;
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .scoring .pct {
+    font-family: var(--mono);
+    text-align: right;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* FAQ */
+  details {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-sm);
+    padding: 16px 22px;
+    margin: 12px 0;
+    background: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+    transition: border-color .18s var(--ease), box-shadow .18s var(--ease);
+  }
+  details:hover { border-color: var(--rule-strong); }
+  details[open] {
+    box-shadow: var(--shadow);
+    border-color: color-mix(in srgb, var(--accent) 25%, var(--rule));
+  }
+  details summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--ink);
+    list-style: none;
+    position: relative;
+    padding-right: 34px;
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::after {
+    content: '+';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px; height: 22px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    font-family: var(--mono);
+    color: var(--accent);
+    font-size: 15px;
+    line-height: 1;
+    transition: transform .2s var(--ease), background .2s var(--ease);
+  }
+  details[open] summary::after { content: '−'; transform: translateY(-50%) rotate(180deg); }
+  details > p, details > ul {
+    margin-top: 14px;
+    color: var(--ink-mid);
+    font-size: 14.5px;
+    line-height: 1.7;
+  }
+
+  /* SURVEY */
+  .survey-q {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-left: 3px solid color-mix(in srgb, var(--accent) 45%, var(--rule));
+    border-radius: var(--radius-sm);
+    padding: 18px 22px;
+    margin: 12px 0;
+    box-shadow: var(--shadow-sm);
+    transition: border-color .18s var(--ease), transform .18s var(--ease);
+  }
+  .survey-q:hover { border-left-color: var(--accent); transform: translateX(2px); }
+  .survey-q .qnum {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: .12em;
+    font-weight: 500;
+  }
+  .survey-q .q { color: var(--ink); margin: 6px 0 8px; font-weight: 600; font-size: 15.5px; }
+  .survey-q .scale { font-size: 13px; color: var(--ink-soft); font-family: var(--mono); line-height: 1.7; }
+
+  /* FOOTER */
+  footer {
+    padding: 64px 0 90px;
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 13px;
+    background: radial-gradient(ellipse 50% 80% at 50% 100%, rgba(20,83,45,.05), transparent 70%);
+  }
+  footer .sig {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    margin-top: 10px;
+    color: var(--accent);
+    opacity: .8;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">內部競賽計劃書 ‧ v1.0</span>
+    <h1>AI 生產力<em>衝刺賽</em></h1>
+    <p class="lede">
+      用 4 週的時間,把全公司從「會問問題」推進到「跟 AI 一起工作」。重點不是選出冠軍,
+      是把每一個人的 AI 使用基準線往上抬一階。
+    </p>
+    <div class="meta">
+      <span><b>Duration</b> · 4 週(8 月)</span>
+      <span><b>對象</b> · 全體正職員工</span>
+      <span><b>賽期</b> · 2026/08/03 – 08/28</span>
+      <span><b>Hosted by</b> · 〔主辦單位〕</span>
+      <span><b>Status</b> · 8 月開跑</span>
+    </div>
+
+    <nav class="toc" aria-label="目錄">
+      <h4>Contents</h4>
+      <ol>
+        <li><a href="#why"><span>01</span>為什麼要辦</a></li>
+        <li><a href="#format"><span>02</span>賽程設計</a></li>
+        <li><a href="#categories"><span>03</span>比賽組別</a></li>
+        <li><a href="#prizes"><span>04</span>獎品結構</a></li>
+        <li><a href="#rules"><span>05</span>比賽規則</a></li>
+        <li><a href="#scoring"><span>06</span>評分標準</a></li>
+        <li><a href="#timeline"><span>07</span>4 週時程</a></li>
+        <li><a href="#survey"><span>08</span>前後問卷</a></li>
+        <li><a href="#tips"><span>09</span>主辦提醒</a></li>
+        <li><a href="#faq"><span>10</span>FAQ</a></li>
+      </ol>
+    </nav>
+  </div>
+</header>
+
+<!-- ═══════════ 01 為什麼 ═══════════ -->
+<section id="why">
+  <div class="wrap">
+    <div class="section-num">01 ‧ Why</div>
+    <h2>為什麼要辦這個比賽</h2>
+
+    <p class="lead">
+      公司大多數同事目前用 AI 的方式,還停留在「打開對話框 → 問一個問題 → 拿到一個答案」。
+      這只用到 AI 不到 10% 的價值。真正能幫到工作的能力,是把 AI 變成
+      <strong>多步驟、跨人、跨檔案的協作夥伴</strong>。
+    </p>
+
+    <div class="callout">
+      <p>
+        <b>本次比賽的真正目標:</b>
+        把全公司的 AI 使用基準線往上抬一階。冠軍是誰其實不重要,
+        <b>結束時有多少人開始把 AI 當「同事」用</b>,才是我們要報告給經營層的數字。
+      </p>
+    </div>
+
+    <div class="grid-2" style="margin-top: 28px;">
+      <div class="card">
+        <div class="num">CURRENT</div>
+        <h3>現在大家在做的事</h3>
+        <p>雖然公司已經給大家 AI 工具的權限,但多數人停在「單輪問答」 — 把 AI 當 Google、偶爾請它修個錯字,完全沒用過 Projects、沒上傳過檔案、沒做過多步驟流程。</p>
+      </div>
+      <div class="card">
+        <div class="num">GOAL</div>
+        <h3>4 週後我們希望看到</h3>
+        <p>多輪對話設計流程 · 把週期性任務丟給 AI · 跨同事用 AI 接力 · 開始建立部門共用的提示詞範本庫。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 02 格式 ═══════════ -->
+<section id="format">
+  <div class="wrap">
+    <div class="section-num">02 ‧ Format</div>
+    <h2>賽程設計:<em>4 週生產力衝刺</em></h2>
+    <p class="lead">
+      不要直接辦黑客松 — 那只會讓本來就會 AI 的人把獎全拿走。先教,再做,最後展示。
+    </p>
+
+    <div class="timeline">
+      <div class="wk">
+        <span class="pct">25%</span>
+        <span class="label">Week 01 · 8/3–8/7</span>
+        <h4>學習週</h4>
+        <ul>
+          <li>2 場午餐學習會(算工時)</li>
+          <li>主題:多輪對話、上傳檔案、Projects 工作區、提問結構</li>
+          <li>現場一起做一個範例</li>
+        </ul>
+      </div>
+      <div class="wk">
+        <span class="pct">50%</span>
+        <span class="label">Week 02 · 8/10–8/14</span>
+        <h4>選題 + 規劃</h4>
+        <ul>
+          <li>每人 / 每隊挑「真的會反覆做」的任務</li>
+          <li>個人或既有團隊報名,自由選擇</li>
+          <li>記錄「現在做要多久」當作 baseline</li>
+        </ul>
+      </div>
+      <div class="wk">
+        <span class="pct">75%</span>
+        <span class="label">Week 03 · 8/17–8/21</span>
+        <h4>實作週</h4>
+        <ul>
+          <li>用 AI 重新做一次同樣的任務</li>
+          <li>主辦單位 office hours 答疑</li>
+          <li>中段檢核點:簡短匯報進度</li>
+        </ul>
+      </div>
+      <div class="wk">
+        <span class="pct">100%</span>
+        <span class="label">Week 04 · 8/24–8/28</span>
+        <h4>發表 + 評審</h4>
+        <ul>
+          <li>每人 5 分鐘成果展示</li>
+          <li>同事投票 + 評審打分</li>
+          <li>頒獎 + 後測問卷</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>關鍵設計:</strong>第 1 週的學習會「算正式工時」,中年同事才不會覺得「上班還要花時間學 AI」。
+      比賽<strong>不強制配對</strong> — 可以個人報名,也可以用本來就在一起工作的小組報名,降低額外協作負擔。
+      想嘗試跨部門合作的人,自行邀請隊友一起報「最佳跨團隊協作獎」。
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 03 組別 ═══════════ -->
+<section id="categories">
+  <div class="wrap">
+    <div class="section-num">03 ‧ Categories</div>
+    <h2>5 個比賽組別</h2>
+    <p class="lead">
+      每個人可以同時報名多組(不重複拿獎)。組別設計刻意讓「中年同事 + 行政/業務/營運」也有
+      自己能贏的賽道,而不是工程團隊把獎全包。
+    </p>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div class="card">
+        <div class="num">CATEGORY 01</div>
+        <h3>省最多時間獎</h3>
+        <p>用具體數字證明 AI 幫你省下多少時間。<br>
+          範例:「以前每週花 4 小時做月報,現在 30 分鐘搞定 → 每月省 14 小時」。</p>
+        <span class="who">最適合:工作摩擦多的同事(行政、財務、業務助理)</span>
+      </div>
+
+      <div class="card">
+        <div class="num">CATEGORY 02</div>
+        <h3>最佳工作流程 / Playbook 獎</h3>
+        <p>交一份其他同事可以「直接抄」的提示詞範本或 SOP。<br>
+          評分重點是「可重複使用性」,不是技術難度。</p>
+        <span class="who">最適合:愛整理流程的同事(專案經理、營運)</span>
+      </div>
+
+      <div class="card">
+        <div class="num">CATEGORY 03</div>
+        <h3>最有創意應用獎</h3>
+        <p>同事公開投票決定。發表會結束當場開放投票 48 小時。<br>
+          鼓勵跳脫框架的想法,不限部門。</p>
+        <span class="who">最適合:腦洞大、敢嘗試的同事</span>
+      </div>
+
+      <div class="card">
+        <div class="num">CATEGORY 04</div>
+        <h3>最佳跨團隊協作獎</h3>
+        <p>2 人以上、跨部門的 AI 接力流程。<br>
+          這組是「把人推離單輪 Q&amp;A」的關鍵,獎勵真的學會跟 AI「一起工作」的人。</p>
+        <span class="who">最適合:跨部門合作的小組</span>
+      </div>
+
+      <div class="card" style="grid-column: span 2; border: 2px solid var(--accent); background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));">
+        <div class="num">CATEGORY 05 ‧ FLAGSHIP</div>
+        <h3>最大進步獎(本次比賽的主軸)</h3>
+        <p>
+          用比賽前/後的自評分數 + 主管或同事簽核共同決定。<strong>這是中年同事的主獎,也是公司最在乎的指標。</strong>
+          從「我以前只會問問題」進步到「我每天工作都用 AI 接案」的同事,就是這個獎的得主。
+        </p>
+        <span class="who">最適合:從零開始的人 — 起點越低,贏面越大</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 04 獎品 ═══════════ -->
+<section id="prizes">
+  <div class="wrap">
+    <div class="section-num">04 ‧ Prizes</div>
+    <h2>獎品結構</h2>
+    <p class="lead">
+      首獎簡單明瞭:<strong>現金 + 特休</strong>。其他獎項混合現金、工具權限、認可頭銜。
+      對中年同事來說,「公司看見我的努力 + 給我好工具用」常常比一筆現金更有感。
+    </p>
+
+    <table class="prize-table">
+      <thead>
+        <tr>
+          <th style="width: 28%;">獎項</th>
+          <th style="width: 12%;">名額</th>
+          <th>內容</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="top">
+          <td>首獎 · Grand Prize</td>
+          <td>1 名</td>
+          <td>
+            <strong>USD $500 現金</strong> + <strong>2 天額外特休</strong>。<br>
+            <span style="font-family: var(--mono); font-size: 12px; color: var(--ink-soft);">— 簡單、實在、可以馬上花掉。</span>
+          </td>
+        </tr>
+        <tr>
+          <td>各組得主</td>
+          <td>5 名</td>
+          <td>每組第一名 <strong>USD $150 現金</strong>(或等值禮券)。</td>
+        </tr>
+        <tr>
+          <td>最大進步獎(主軸)</td>
+          <td>1 名</td>
+          <td><strong>USD $250 現金 + 1 天額外特休</strong>。中年同事的主獎。</td>
+        </tr>
+        <tr>
+          <td>「AI 教練」榮譽頭銜</td>
+          <td>前 3 名綜合分數最高</td>
+          <td>每月 <strong>USD $30 津貼</strong> + 內部網站專欄 + 成為公司內部 AI 導師,擔任未來新人 AI 入門指導。</td>
+        </tr>
+        <tr>
+          <td>參加獎(全員)</td>
+          <td>所有完賽者</td>
+          <td>
+            品牌小物(馬克杯 / 環保杯)+ 公司表揚證書。<br>
+            <span style="font-family: var(--mono); font-size: 12px; color: var(--ink-soft);">— 完賽即可領取,認可每一位願意嘗試的同事。</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <p>
+        <b>沒有現金的「認可」也是關鍵獎項:</b>
+        「AI 教練」頭銜雖然每月只有 USD $30 津貼,但會被列在內部網站專欄、公司年會點名表揚,
+        並擔任未來新人 AI 入門指導。對中年同事來說,「被公司看見」常常比一次性現金更有感、
+        也是讓他們持續使用 AI 的長期動力。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 05 規則 ═══════════ -->
+<section id="rules">
+  <div class="wrap">
+    <div class="section-num">05 ‧ Rules</div>
+    <h2>比賽規則</h2>
+
+    <h3>參賽資格</h3>
+    <ul>
+      <li>全體正職員工皆可報名(含主管;主管不能跟自己下屬同組)</li>
+      <li>主辦單位、評審本人不參賽(可不公開示範)</li>
+      <li>每人最多報名 3 組</li>
+    </ul>
+
+    <h3>投稿格式(刻意要求短)</h3>
+    <ul>
+      <li><strong>一頁簡報</strong>(PDF / Slides)<strong>或</strong> <strong>90 秒影片</strong>,二擇一</li>
+      <li>需包含:任務描述、原本怎麼做、用 AI 怎麼做、實際成果(數字或範例)</li>
+      <li><strong>嚴禁長文章</strong> — 我們是來看「成果」,不是來閱卷</li>
+    </ul>
+
+    <h3>誠信規範</h3>
+    <ul>
+      <li>必須是「真的會做」的工作任務,不能編造</li>
+      <li>「省下的時間」需主管或同部門同事簽核確認</li>
+      <li>多人團隊報名時,所有成員平分獎金</li>
+      <li>提示詞、流程必須可以重現(評審可能會抽測)</li>
+    </ul>
+
+    <h3>個人 / 團隊報名(<em style="font-style: normal; color: var(--accent);">不強制配對</em>)</h3>
+    <ul>
+      <li><strong>個人報名:</strong>單獨完成,自由安排時間</li>
+      <li><strong>既有團隊報名:</strong>同部門或同小組 2–5 人為單位,用本來就在合作的關係即可,不用額外協作</li>
+      <li>不強制跨部門配對 — 中年同事時間寶貴,不增加多餘的協作負擔</li>
+      <li>想跨部門合作的人,自行邀請隊友一起報「最佳跨團隊協作獎」(Category 04)</li>
+      <li>同一人不能同時出現在多支隊伍中</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════ 06 評分 ═══════════ -->
+<section id="scoring">
+  <div class="wrap">
+    <div class="section-num">06 ‧ Scoring</div>
+    <h2>評分標準</h2>
+    <p class="lead">
+      評審 7 成 + 同事投票 3 成。評審組成建議:1 位高層、1 位 AI 熟悉的工程師、1 位非工程部門主管。
+    </p>
+
+    <div class="scoring">
+      <div class="head">評分維度</div>
+      <div class="head">說明</div>
+      <div class="head">權重</div>
+
+      <div>實際影響</div>
+      <div>有沒有真的省到時間 / 提升品質 / 解決真實痛點?可以量化最好。</div>
+      <div class="pct">35%</div>
+
+      <div>可重複使用性</div>
+      <div>其他同事能不能直接抄?有沒有可以分享的範本 / SOP?</div>
+      <div class="pct">25%</div>
+
+      <div>AI 使用深度</div>
+      <div>有沒有跳出「單輪問答」?用到多輪、檔案、Projects、跨步驟設計?</div>
+      <div class="pct">20%</div>
+
+      <div>呈現清晰度</div>
+      <div>5 分鐘內能不能讓人聽懂?有沒有 before/after 對比?</div>
+      <div class="pct">10%</div>
+
+      <div>同事投票</div>
+      <div>發表後 48 小時開放全公司線上投票。</div>
+      <div class="pct">10%</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 07 時程 ═══════════ -->
+<section id="timeline">
+  <div class="wrap">
+    <div class="section-num">07 ‧ Timeline</div>
+    <h2>4 週詳細時程</h2>
+    <p class="lead">
+      賽期定於 <strong>2026 年 8 月</strong>:啟動週於 7 月底,4 週競賽自 8/3 起至 8/28 結束,結果於 9/4 前公布。
+      已避開月初結帳與月底、季底等業務忙碌期。
+    </p>
+
+    <table class="prize-table" style="margin-top: 28px;">
+      <thead>
+        <tr>
+          <th style="width: 14%;">週次</th>
+          <th style="width: 22%;">關鍵活動</th>
+          <th>細節 / 產出</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>啟動週<br><span style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-weight: 400;">T-1 · 7/27–7/31</span></td>
+          <td>報名 + 前測問卷</td>
+          <td>
+            • 週一(7/27)Email + 海報全公司宣布<br>
+            • 開放報名 5 天(7/27–7/31)<br>
+            • 同步發送「AI 使用基準線」前測問卷(必填,5 分鐘)
+          </td>
+        </tr>
+        <tr>
+          <td>Week 01<br><span style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-weight: 400;">8/3–8/7</span></td>
+          <td>學習週</td>
+          <td>
+            • 週二(8/4)午餐學習會 #1:多輪對話 + 上傳檔案<br>
+            • 週四(8/6)午餐學習會 #2:Projects / 自訂指令 / 提示詞結構<br>
+            • 週五(8/7)前確認報名單位(個人 / 既有團隊)
+          </td>
+        </tr>
+        <tr>
+          <td>Week 02<br><span style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-weight: 400;">8/10–8/14</span></td>
+          <td>選題 + 規劃</td>
+          <td>
+            • 每人 / 每隊選定要處理的「真實工作任務」<br>
+            • 主辦單位收集所有題目,確認沒有重複過多<br>
+            • 各部門小型分享會(15 分鐘):互相聽聽彼此要做什麼
+          </td>
+        </tr>
+        <tr>
+          <td>Week 03<br><span style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-weight: 400;">8/17–8/21</span></td>
+          <td>實作週</td>
+          <td>
+            • 用 AI 重做任務<br>
+            • 中段檢核點(週三 8/19):每人 1 分鐘進度匯報<br>
+            • Office Hours(週五 8/21 下午):主辦單位 / AI 熟悉同事答疑
+          </td>
+        </tr>
+        <tr>
+          <td>Week 04<br><span style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-weight: 400;">8/24–8/28</span></td>
+          <td>發表 + 評審</td>
+          <td>
+            • 週二(8/25)、週四(8/27):全公司發表會(分上下半場)<br>
+            • 週五(8/28)中午:同事投票截止<br>
+            • 週五(8/28)傍晚:頒獎典禮 + 後測問卷<br>
+            • 9/4 前公布「省下時間總計」與基準線變化
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════ 08 問卷 ═══════════ -->
+<section id="survey">
+  <div class="wrap">
+    <div class="section-num">08 ‧ Survey</div>
+    <h2>前後問卷 — <em>真正的 KPI</em></h2>
+    <p class="lead">
+      比賽結束時要跟經營層報告的,不是「誰得獎」,而是「全公司的 AI 使用基準線移動了多少」。
+      下面是建議的 6 題,前後各做一次,3 分鐘填完。
+    </p>
+
+    <div class="survey-q">
+      <div class="qnum">Q1</div>
+      <div class="q">過去 7 天,你使用 AI 工具(Claude / ChatGPT / Gemini …)幾次?</div>
+      <div class="scale">0 / 1–2 / 3–5 / 6–10 / 10 次以上</div>
+    </div>
+
+    <div class="survey-q">
+      <div class="qnum">Q2</div>
+      <div class="q">你最常用 AI 做什麼?(可複選)</div>
+      <div class="scale">□ 查資料 □ 寫文案 □ 翻譯 □ 整理會議紀錄 □ 寫程式 □ 分析 Excel/檔案 □ 規劃流程 □ 從來沒用過</div>
+    </div>
+
+    <div class="survey-q">
+      <div class="qnum">Q3</div>
+      <div class="q">下面哪些功能你「實際用過」?(可複選)</div>
+      <div class="scale">□ 多輪對話 □ 上傳檔案 / PDF □ Projects / 自訂指令 □ 圖片輸入 □ 一個都沒用過</div>
+    </div>
+
+    <div class="survey-q">
+      <div class="qnum">Q4</div>
+      <div class="q">以 1–5 分自評,你對「用 AI 解決工作問題」的信心程度?</div>
+      <div class="scale">1 = 完全不會 ‧ 5 = 很有信心,每天都用</div>
+    </div>
+
+    <div class="survey-q">
+      <div class="qnum">Q5</div>
+      <div class="q">過去一個月,你估計 AI 幫你省下多少工作時數?</div>
+      <div class="scale">0 / 1–3 / 4–10 / 11–20 / 20 小時以上</div>
+    </div>
+
+    <div class="survey-q">
+      <div class="qnum">Q6</div>
+      <div class="q">(後測題)經過這次比賽,你最大的收穫是?(自由填寫,1–2 句話)</div>
+      <div class="scale">— 質性回饋,後測才問</div>
+    </div>
+
+    <div class="callout">
+      <p>
+        <b>報告經營層的重點數字:</b>
+        Q1 平均次數變化、Q3 功能熟悉度涵蓋率、Q4 信心平均分數、Q5 總計省下工時。
+        這四個數字才是這次比賽的真正成績單。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 09 提醒 ═══════════ -->
+<section id="tips">
+  <div class="wrap">
+    <div class="section-num">09 ‧ Notes for Organizer</div>
+    <h2>主辦單位提醒</h2>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="num">DO</div>
+        <h3>該做的事</h3>
+        <ul>
+          <li>分組設計上預留給業務、行政、財務都能贏的賽道</li>
+          <li>第 1 週學習會必須算工時、提供餐點</li>
+          <li>允許個人 / 既有團隊自由選擇參賽形式</li>
+          <li>Office Hours 排在週五下午,降低詢問門檻</li>
+          <li>發表會控時嚴格 — 一人 / 一隊 5 分鐘,設計倒數計時</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="num">DON'T</div>
+        <h3>避開的事</h3>
+        <ul>
+          <li>不要要求長篇報告 — 中年同事一看就退賽</li>
+          <li>不要讓工程團隊組成「夢幻隊」橫掃所有獎</li>
+          <li>不要強制跨部門配對 — 中年同事時間最寶貴,別給他們多餘的協作負擔</li>
+          <li>不要把「成果」設成唯一評分標準(會排擠進步空間大的人)</li>
+          <li>頒獎不要只給冠軍 — 每個獎都單獨頒</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 10 FAQ ═══════════ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="section-num">10 ‧ FAQ</div>
+    <h2>常見問題</h2>
+
+    <details>
+      <summary>我從來沒用過 AI,可以參加嗎?</summary>
+      <p>當然 — 而且你最有機會拿「最大進步獎」。從零開始的人,進步幅度幾乎一定贏在 AI 熟手前面。
+        第 1 週的學習會就是為了你而設計的。</p>
+    </details>
+
+    <details>
+      <summary>我可以用 AI 寫程式嗎?算「工作任務」嗎?</summary>
+      <p>算。但工程同事如果想參加,建議報「最佳跨團隊協作」或「最佳工作流程」這類組別,
+        不要全擠在「省最多時間」 — 那組是給原本工作流程摩擦大的同事(行政、業助、業務)的。</p>
+    </details>
+
+    <details>
+      <summary>我的工作很機密,不能在 AI 上輸入,怎麼比?</summary>
+      <p>三個方法:(1)用去識別化的資料示範流程;(2)只描述任務、不貼真實內容;(3)
+        改參加「最佳工作流程」獎,交一份你部門可以用的 SOP / 提示詞範本就好,不需要真的丟進 AI。</p>
+    </details>
+
+    <details>
+      <summary>我想自己一個人參賽,可以嗎?</summary>
+      <p>當然可以。個人參賽和團隊參賽評分標準完全一樣,自由選擇。
+        除了「最佳跨團隊協作獎」(Category 04)需要 2 人以上之外,其他四組都歡迎個人報名。</p>
+    </details>
+
+    <details>
+      <summary>我想跟我同部門的同事一起參賽,需要報誰決定?</summary>
+      <p>不用報備,自由組隊。建議 2–5 人為宜,用你們本來就在合作的關係即可,
+        不需要額外開會 — 重點是不要讓比賽變成多出來的工作負擔。
+        團隊報名後,所有成員均分獎金,評分標準與個人組相同。</p>
+    </details>
+
+    <details>
+      <summary>我想找其他部門的人一起合作,怎麼辦?</summary>
+      <p>歡迎自行邀請 — 這正是 Category 04「最佳跨團隊協作獎」要鼓勵的事。
+        主辦單位不會強制配對,但會在第 1 週學習會後開一個聯絡頻道(Slack / Teams),
+        讓想跨部門組隊的人有地方互相找隊友。</p>
+    </details>
+
+    <details>
+      <summary>我可以同時報名多組嗎?</summary>
+      <p>可以,最多 3 組。但同一個專案不能重複報名兩組以上。</p>
+    </details>
+
+    <details>
+      <summary>得獎是不是要繳稅?</summary>
+      <p>依照公司薪酬制度規定處理 — 現金獎與特休都會走正常程序。詳細請洽人資。</p>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>AI 生產力衝刺賽 ‧ 規則與計劃書 v1.0</p>
+    <p class="sig">Internal use only ‧ 〔主辦單位〕</p>
+  </div>
+</footer>
+
+</body>
+</html>
