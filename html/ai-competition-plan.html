@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AI 生產力衝刺賽 — 規則與計劃書</title>
-<meta name="description" content="4 週內把全公司從「會問問題」推進到「跟 AI 一起工作」的內部競賽計劃" />
+<title>AI 生產力養成賽 — 規則與計劃書</title>
+<meta name="description" content="3 個月、每月一次,把全公司從「會問問題」推進到「跟 AI 一起工作」的內部競賽計劃" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -334,7 +334,7 @@
   /* TIMELINE */
   .timeline {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 14px;
     margin-top: 32px;
   }
@@ -385,6 +385,54 @@
     background: var(--accent-soft);
     padding: 2px 7px;
     border-radius: 999px;
+  }
+
+  /* AGENDA (run of show) */
+  .agenda {
+    margin-top: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .agenda-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 24px;
+    background: var(--bg-sub);
+    border-bottom: 1px solid var(--rule);
+  }
+  .agenda-head h4 { margin: 0; font-size: 16px; font-weight: 600; }
+  .agenda-head .dur {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: .08em;
+  }
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 18px;
+    padding: 15px 24px;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-row.act { background: color-mix(in srgb, var(--accent-2) 7%, var(--bg-card)); }
+  .agenda-row .time {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .agenda-row.act .time { color: var(--accent-2); }
+  .agenda-row .what { font-size: 14.5px; color: var(--ink-mid); line-height: 1.55; }
+  .agenda-row .what b { color: var(--ink); }
+  @media (max-width: 760px) {
+    .agenda-row { grid-template-columns: 1fr; gap: 4px; }
   }
 
   /* SCORING */
@@ -522,18 +570,19 @@
 <!-- ═══════════ HERO ═══════════ -->
 <header class="hero">
   <div class="wrap">
-    <span class="eyebrow">內部競賽計劃書 ‧ v1.0</span>
-    <h1>AI 生產力<em>衝刺賽</em></h1>
+    <span class="eyebrow">內部競賽計劃書 ‧ v2.0</span>
+    <h1>AI 生產力<em>養成賽</em></h1>
     <p class="lede">
-      用 4 週的時間,把全公司從「會問問題」推進到「跟 AI 一起工作」。重點不是選出冠軍,
+      用 3 個月、每月一次的節奏,把全公司從「會問問題」推進到「跟 AI 一起工作」。
+      前兩個月先給大家上手期,大獎壓軸在最後一個月 —— 重點不是選出冠軍,
       是把每一個人的 AI 使用基準線往上抬一階。
     </p>
     <div class="meta">
-      <span><b>Duration</b> · 4 週(8 月)</span>
+      <span><b>Duration</b> · 3 個月 · 每月一次</span>
       <span><b>對象</b> · 全體正職員工</span>
-      <span><b>賽期</b> · 2026/08/03 – 08/28</span>
+      <span><b>賽期</b> · 2026/06 – 08(大獎在 8 月)</span>
       <span><b>Hosted by</b> · 〔主辦單位〕</span>
-      <span><b>Status</b> · 8 月開跑</span>
+      <span><b>Status</b> · 6 月開跑</span>
     </div>
 
     <nav class="toc" aria-label="目錄">
@@ -545,7 +594,7 @@
         <li><a href="#prizes"><span>04</span>獎品結構</a></li>
         <li><a href="#rules"><span>05</span>比賽規則</a></li>
         <li><a href="#scoring"><span>06</span>評分標準</a></li>
-        <li><a href="#timeline"><span>07</span>4 週時程</a></li>
+        <li><a href="#timeline"><span>07</span>月度時程</a></li>
         <li><a href="#survey"><span>08</span>前後問卷</a></li>
         <li><a href="#tips"><span>09</span>主辦提醒</a></li>
         <li><a href="#faq"><span>10</span>FAQ</a></li>
@@ -582,7 +631,7 @@
       </div>
       <div class="card">
         <div class="num">GOAL</div>
-        <h3>4 週後我們希望看到</h3>
+        <h3>3 個月後我們希望看到</h3>
         <p>多輪對話設計流程 · 把週期性任務丟給 AI · 跨同事用 AI 接力 · 開始建立部門共用的提示詞範本庫。</p>
       </div>
     </div>
@@ -593,56 +642,76 @@
 <section id="format">
   <div class="wrap">
     <div class="section-num">02 ‧ Format</div>
-    <h2>賽程設計:<em>4 週生產力衝刺</em></h2>
+    <h2>賽程設計:<em>3 個月、每月一次</em></h2>
     <p class="lead">
-      不要直接辦黑客松 — 那只會讓本來就會 AI 的人把獎全拿走。先教,再做,最後展示。
+      不要直接辦黑客松 — 那只會讓本來就會 AI 的人把獎全拿走。改成
+      <strong>每月一次的固定聚會,而且每個月都有一場小比賽、當月就頒獎(月度小賽「選做」)</strong>。
+      前兩個月門檻低、邊學邊做、慢慢累積,<strong>最大的獎壓軸在第 3 個月</strong>登場 ——
+      你有完整三個月可以慢慢準備、不一定要每月交件。全程<strong>由主辦人擔任評審,不採同事投票</strong>。先教,再做,最後展示。
     </p>
 
     <div class="timeline">
       <div class="wk">
-        <span class="pct">25%</span>
-        <span class="label">Week 01 · 8/3–8/7</span>
-        <h4>學習週</h4>
+        <span class="pct">小賽 ①</span>
+        <span class="label">6 月 · 上手月</span>
+        <h4>主題:我的第一個 AI 工作流</h4>
         <ul>
-          <li>2 場午餐學習會(算工時)</li>
-          <li>主題:多輪對話、上傳檔案、Projects 工作區、提問結構</li>
-          <li>現場一起做一個範例</li>
+          <li>前測問卷 + 第 1 次月聚(示範 + 分組)</li>
+          <li>用 AI 完成一件本來手動做的小任務</li>
+          <li>月底前想交就交 → 評審選出<strong>6 月月冠軍 + 佳作</strong></li>
         </ul>
       </div>
       <div class="wk">
-        <span class="pct">50%</span>
-        <span class="label">Week 02 · 8/10–8/14</span>
-        <h4>選題 + 規劃</h4>
+        <span class="pct">小賽 ②</span>
+        <span class="label">7 月 · 累積月</span>
+        <h4>主題:把它變成可重複的流程</h4>
         <ul>
-          <li>每人 / 每隊挑「真的會反覆做」的任務</li>
-          <li>個人或既有團隊報名,自由選擇</li>
-          <li>記錄「現在做要多久」當作 baseline</li>
+          <li>第 2 次月聚:頒 6 月獎 + 新一輪示範</li>
+          <li>做出 before/after 數字或可重複的 SOP</li>
+          <li>月底前想交就交 → 評審選出<strong>7 月月冠軍 + 佳作</strong></li>
         </ul>
       </div>
       <div class="wk">
-        <span class="pct">75%</span>
-        <span class="label">Week 03 · 8/17–8/21</span>
-        <h4>實作週</h4>
+        <span class="pct">大賽</span>
+        <span class="label">8 月 · 成果月</span>
+        <h4>成果發表 + 大獎</h4>
         <ul>
-          <li>用 AI 重新做一次同樣的任務</li>
-          <li>主辦單位 office hours 答疑</li>
-          <li>中段檢核點:簡短匯報進度</li>
-        </ul>
-      </div>
-      <div class="wk">
-        <span class="pct">100%</span>
-        <span class="label">Week 04 · 8/24–8/28</span>
-        <h4>發表 + 評審</h4>
-        <ul>
-          <li>每人 5 分鐘成果展示</li>
-          <li>同事投票 + 評審打分</li>
-          <li>頒獎 + 後測問卷</li>
+          <li>成果發表會:每人 / 每隊 5 分鐘</li>
+          <li>主辦人評審打分(不投票)</li>
+          <li>頒<strong>大獎 + 各組獎 + 最大進步獎</strong> + 後測問卷</li>
         </ul>
       </div>
     </div>
 
+    <div class="agenda">
+      <div class="agenda-head">
+        <h4>每月聚會流程(週四或週五擇一固定 · 約 1–1.5 小時)</h4>
+        <span class="dur">~60–75 min</span>
+      </div>
+      <div class="agenda-row">
+        <span class="time">5–10 min</span>
+        <span class="what"><b>開場 + 分享問卷 / 上月成果</b> — 用全公司基準線數字開場,讓大家看見集體進步。</span>
+      </div>
+      <div class="agenda-row">
+        <span class="time">15–20 min</span>
+        <span class="what"><b>AI 實戰示範</b> — 當月主題現場 demo(多輪對話、上傳檔案、Projects、跨步驟流程)。</span>
+      </div>
+      <div class="agenda-row">
+        <span class="time">20–30 min</span>
+        <span class="what"><b>分組討論(breakout,依部門)</b> — 各部門就自己的工作場景聊「哪裡能用 AI」。</span>
+      </div>
+      <div class="agenda-row">
+        <span class="time">~15 min</span>
+        <span class="what"><b>部門主管分享</b> — 主管帶頭講自己的專案想法或觀察,示範「主管也在用」。</span>
+      </div>
+      <div class="agenda-row act">
+        <span class="time">行動項目</span>
+        <span class="what"><b>會後作業</b> — 同事自由組成 2–4 人微團隊(或個人),提交一份「2 句話提案」:這個月想用 AI 解決哪件事。</span>
+      </div>
+    </div>
+
     <div class="note">
-      <strong>關鍵設計:</strong>第 1 週的學習會「算正式工時」,中年同事才不會覺得「上班還要花時間學 AI」。
+      <strong>關鍵設計:</strong>每月聚會「算正式工時」、提供餐點,中年同事才不會覺得「上班還要花時間學 AI」。
       比賽<strong>不強制配對</strong> — 可以個人報名,也可以用本來就在一起工作的小組報名,降低額外協作負擔。
       想嘗試跨部門合作的人,自行邀請隊友一起報「最佳跨團隊協作獎」。
     </div>
@@ -679,7 +748,7 @@
       <div class="card">
         <div class="num">CATEGORY 03</div>
         <h3>最有創意應用獎</h3>
-        <p>同事公開投票決定。發表會結束當場開放投票 48 小時。<br>
+        <p>由主辦人(評審)於 8 月成果發表會選出。<br>
           鼓勵跳脫框架的想法,不限部門。</p>
         <span class="who">最適合:腦洞大、敢嘗試的同事</span>
       </div>
@@ -689,7 +758,7 @@
         <h3>最佳跨團隊協作獎</h3>
         <p>2 人以上、跨部門的 AI 接力流程。<br>
           這組是「把人推離單輪 Q&amp;A」的關鍵,獎勵真的學會跟 AI「一起工作」的人。</p>
-        <span class="who">最適合:跨部門合作的小組</span>
+        <span class="who">限團隊(2 人以上)‧ 最適合跨部門合作的小組</span>
       </div>
 
       <div class="card" style="grid-column: span 2; border: 2px solid var(--accent); background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));">
@@ -699,7 +768,7 @@
           用比賽前/後的自評分數 + 主管或同事簽核共同決定。<strong>這是中年同事的主獎,也是公司最在乎的指標。</strong>
           從「我以前只會問問題」進步到「我每天工作都用 AI 接案」的同事,就是這個獎的得主。
         </p>
-        <span class="who">最適合:從零開始的人 — 起點越低,贏面越大</span>
+        <span class="who">限個人報名 ‧ 起點越低,贏面越大</span>
       </div>
     </div>
   </div>
@@ -711,9 +780,17 @@
     <div class="section-num">04 ‧ Prizes</div>
     <h2>獎品結構</h2>
     <p class="lead">
-      首獎簡單明瞭:<strong>現金 + 特休</strong>。其他獎項混合現金、工具權限、認可頭銜。
-      對中年同事來說,「公司看見我的努力 + 給我好工具用」常常比一筆現金更有感。
+      <strong>總獎金預算 USD $1,000(純現金)。</strong>因此刻意把重量放在<strong>特休與公開表揚</strong>上 ——
+      首獎是現金 + 特休,完賽者人人有證書與品牌小物。對中年同事來說,「公司看見我的努力」常常比一筆現金更有感,
+      也讓有限的預算花在刀口上。
     </p>
+
+    <div class="note">
+      <strong>發獎時程:</strong>每個月都有一場小比賽 ——
+      6 月、7 月由主辦人評審選出<strong>當月月冠軍 + 佳作</strong>,於次月聚會現場頒發、內部網站公告;
+      <strong>大獎、各組獎、最大進步獎則壓軸在 8 月大賽</strong>(前兩個月是上手期,先讓大家把 AI 用熟)。
+      全程由主辦人擔任評審,<strong>不採同事投票</strong>。
+    </div>
 
     <table class="prize-table">
       <thead>
@@ -725,27 +802,27 @@
       </thead>
       <tbody>
         <tr class="top">
-          <td>首獎 · Grand Prize</td>
+          <td>首獎 · Grand Prize<br><span style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-weight: 400;">8 月大賽</span></td>
           <td>1 名</td>
           <td>
-            <strong>USD $500 現金</strong> + <strong>2 天額外特休</strong>。<br>
-            <span style="font-family: var(--mono); font-size: 12px; color: var(--ink-soft);">— 簡單、實在、可以馬上花掉。</span>
+            <strong>USD $350 現金</strong> + <strong>2 天額外特休</strong>。<br>
+            <span style="font-family: var(--mono); font-size: 12px; color: var(--ink-soft);">— 特休扛份量,現金實在、可以馬上花掉。</span>
           </td>
         </tr>
         <tr>
-          <td>各組得主</td>
+          <td>各組得主<br><span style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-weight: 400;">8 月大賽</span></td>
           <td>5 名</td>
-          <td>每組第一名 <strong>USD $150 現金</strong>(或等值禮券)。</td>
+          <td>每組第一名 <strong>USD $60 現金</strong>(或等值禮券)。由主辦人評審選出。</td>
         </tr>
         <tr>
-          <td>最大進步獎(主軸)</td>
+          <td>最大進步獎(主軸)<br><span style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-weight: 400;">8 月大賽</span></td>
           <td>1 名</td>
-          <td><strong>USD $250 現金 + 1 天額外特休</strong>。中年同事的主獎。</td>
+          <td><strong>USD $150 現金 + 1 天額外特休</strong>。中年同事的主獎,特休讓份量不輸首獎。</td>
         </tr>
         <tr>
-          <td>「AI 教練」榮譽頭銜</td>
-          <td>前 3 名綜合分數最高</td>
-          <td>每月 <strong>USD $30 津貼</strong> + 內部網站專欄 + 成為公司內部 AI 導師,擔任未來新人 AI 入門指導。</td>
+          <td>月度小賽得主<br><span style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-weight: 400;">6 月、7 月</span></td>
+          <td>每月 1 名月冠軍 + 2 名佳作</td>
+          <td>每月小比賽由主辦人評審選出。月冠軍 <strong>USD $50 現金</strong>(或等值禮券)+ 公開表揚;佳作致贈<strong>品牌小物</strong>。用來維持上手期的熱度。</td>
         </tr>
         <tr>
           <td>參加獎(全員)</td>
@@ -758,12 +835,19 @@
       </tbody>
     </table>
 
+    <div class="note">
+      <strong>預算結算(純現金 ≤ USD $1,000):</strong>
+      首獎 $350 + 最大進步獎 $150 + 各組得主 5×$60 = $300 + 月冠軍 2×$50 = $100,
+      合計 <strong>$900 現金</strong>,保留約 $100 彈性(平手 / 加碼佳作)。
+      特休<strong>不佔現金預算</strong>;品牌小物、餐點走其他營運預算。
+    </div>
+
     <div class="callout">
       <p>
         <b>沒有現金的「認可」也是關鍵獎項:</b>
-        「AI 教練」頭銜雖然每月只有 USD $30 津貼,但會被列在內部網站專欄、公司年會點名表揚,
-        並擔任未來新人 AI 入門指導。對中年同事來說,「被公司看見」常常比一次性現金更有感、
-        也是讓他們持續使用 AI 的長期動力。
+        完賽證書、內部網站專欄、公司年會點名表揚<b>幾乎不花預算</b>,卻最有長期效果。
+        對中年同事來說,「被公司看見」常常比一次性現金更有感、也是讓他們持續使用 AI 的長期動力,
+        更幫我們把有限的 $1,000 留給首獎與最大進步獎。
       </p>
     </div>
   </div>
@@ -793,17 +877,28 @@
     <ul>
       <li>必須是「真的會做」的工作任務,不能編造</li>
       <li>「省下的時間」需主管或同部門同事簽核確認</li>
-      <li>多人團隊報名時,所有成員平分獎金</li>
+      <li>團隊報名時,現金獎由成員均分;表揚、證書、品牌小物則每人一份</li>
       <li>提示詞、流程必須可以重現(評審可能會抽測)</li>
     </ul>
 
     <h3>個人 / 團隊報名(<em style="font-style: normal; color: var(--accent);">不強制配對</em>)</h3>
     <ul>
-      <li><strong>個人報名:</strong>單獨完成,自由安排時間</li>
-      <li><strong>既有團隊報名:</strong>同部門或同小組 2–5 人為單位,用本來就在合作的關係即可,不用額外協作</li>
-      <li>不強制跨部門配對 — 中年同事時間寶貴,不增加多餘的協作負擔</li>
-      <li>想跨部門合作的人,自行邀請隊友一起報「最佳跨團隊協作獎」(Category 04)</li>
-      <li>同一人不能同時出現在多支隊伍中</li>
+      <li><strong>個人報名:</strong>單獨完成,自由安排時間。</li>
+      <li><strong>團隊報名:</strong>2–4 人為單位,用本來就在合作的同部門 / 同小組關係即可,不用額外協作。</li>
+      <li><strong>報名一次、節奏自選:</strong>任何時候都能報名(6 月就報也行),之後想用什麼節奏準備都可以。</li>
+      <li><strong>兩種參賽節奏:</strong>(1)<strong>月度小賽(選做)</strong> —— 6、7 月想交就交,搶月冠軍、拿快速成就感;(2)<strong>8 月大賽(主賽)</strong> —— 所有人的主舞台,<strong>6 月報名就能開始,一路準備到 8 月才交,不一定要每月交件</strong>。</li>
+      <li><strong>個人 / 團隊每月可切換:</strong>6 月個人、7 月揪團都行,以「當次提交」為單位 —— 低承諾,好參加。</li>
+      <li><strong>獎金分配:</strong>團隊現金獎由成員均分;表揚、證書、品牌小物則每人一份。</li>
+      <li>不強制跨部門配對 — 中年同事時間寶貴,不增加多餘的協作負擔;想跨部門合作的人,自行邀隊友報「最佳跨團隊協作獎」(Category 04)。</li>
+      <li>同一人同一個月最多只能掛在 1 支隊伍中。</li>
+    </ul>
+
+    <h3>個人 vs 團隊,怎麼比才公平(<em style="font-style: normal; color: var(--accent);">混合制</em>)</h3>
+    <ul>
+      <li><strong>大多數組別:個人與團隊「同池」評比</strong> —— 評分看「實際影響 / 可重複使用 / AI 深度」,不是看人多;一個漂亮的個人作品照樣贏過大團隊。</li>
+      <li><strong>最大進步獎:只限個人</strong> —— 這是個人成長獎,衡量「你自己」進步多少,團隊無法比較。</li>
+      <li><strong>最佳跨團隊協作獎:只限團隊</strong>(2 人以上,最好跨部門)。</li>
+      <li>月度小賽的月冠軍:個人 / 團隊同池;若某月個人作品特別多,主辦人可彈性加開「個人月冠軍」。</li>
     </ul>
   </div>
 </section>
@@ -814,7 +909,8 @@
     <div class="section-num">06 ‧ Scoring</div>
     <h2>評分標準</h2>
     <p class="lead">
-      評審 7 成 + 同事投票 3 成。評審組成建議:1 位高層、1 位 AI 熟悉的工程師、1 位非工程部門主管。
+      <strong>由主辦人擔任唯一評審,不採同事投票。</strong>每月小賽與 8 月大賽都用同一套標準。
+      若想更客觀,可選擇性邀請 1–2 位助審參考意見,但最終由主辦人定奪。
     </p>
 
     <div class="scoring">
@@ -824,7 +920,7 @@
 
       <div>實際影響</div>
       <div>有沒有真的省到時間 / 提升品質 / 解決真實痛點?可以量化最好。</div>
-      <div class="pct">35%</div>
+      <div class="pct">40%</div>
 
       <div>可重複使用性</div>
       <div>其他同事能不能直接抄?有沒有可以分享的範本 / SOP?</div>
@@ -832,14 +928,10 @@
 
       <div>AI 使用深度</div>
       <div>有沒有跳出「單輪問答」?用到多輪、檔案、Projects、跨步驟設計?</div>
-      <div class="pct">20%</div>
+      <div class="pct">25%</div>
 
       <div>呈現清晰度</div>
       <div>5 分鐘內能不能讓人聽懂?有沒有 before/after 對比?</div>
-      <div class="pct">10%</div>
-
-      <div>同事投票</div>
-      <div>發表後 48 小時開放全公司線上投票。</div>
       <div class="pct">10%</div>
     </div>
   </div>
@@ -849,65 +941,57 @@
 <section id="timeline">
   <div class="wrap">
     <div class="section-num">07 ‧ Timeline</div>
-    <h2>4 週詳細時程</h2>
+    <h2>月度詳細時程</h2>
     <p class="lead">
-      賽期定於 <strong>2026 年 8 月</strong>:啟動週於 7 月底,4 週競賽自 8/3 起至 8/28 結束,結果於 9/4 前公布。
-      已避開月初結帳與月底、季底等業務忙碌期。
+      賽期 <strong>2026 年 6–8 月</strong>,每月一次固定聚會(建議<strong>每月第三或第四個週四</strong>,
+      亦可改週五,擇一固定)。前兩個月為上手期,<strong>大獎壓軸在 8 月</strong>成果發表會頒發,結果於 9/4 前公布。
+      實際日期可依公司行事曆微調,建議避開月初結帳與季底忙碌期。
     </p>
 
     <table class="prize-table" style="margin-top: 28px;">
       <thead>
         <tr>
-          <th style="width: 14%;">週次</th>
+          <th style="width: 16%;">月份 / 階段</th>
           <th style="width: 22%;">關鍵活動</th>
           <th>細節 / 產出</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>啟動週<br><span style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-weight: 400;">T-1 · 7/27–7/31</span></td>
-          <td>報名 + 前測問卷</td>
+          <td>啟動<br><span style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-weight: 400;">6 月初</span></td>
+          <td>宣布 + 前測問卷</td>
           <td>
-            • 週一(7/27)Email + 海報全公司宣布<br>
-            • 開放報名 5 天(7/27–7/31)<br>
-            • 同步發送「AI 使用基準線」前測問卷(必填,5 分鐘)
+            • Email + 海報全公司宣布,開放報名<br>
+            • 發送「AI 使用基準線」前測問卷(必填,3 分鐘)<br>
+            • 建議報名 / 前測於 6/16(週二)前完成
           </td>
         </tr>
         <tr>
-          <td>Week 01<br><span style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-weight: 400;">8/3–8/7</span></td>
-          <td>學習週</td>
+          <td>M1 · 6 月<br><span style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-weight: 400;">上手月 · 6/18(四)</span></td>
+          <td>第 1 次月聚 + 小賽 ①</td>
           <td>
-            • 週二(8/4)午餐學習會 #1:多輪對話 + 上傳檔案<br>
-            • 週四(8/6)午餐學習會 #2:Projects / 自訂指令 / 提示詞結構<br>
-            • 週五(8/7)前確認報名單位(個人 / 既有團隊)
+            • 開場分享前測結果 + AI 實戰示範<br>
+            • 部門分組討論 + 主管分享<br>
+            • 6 月小賽「我的第一個 AI 工作流」,6/30 前提交 → 主辦人評審
           </td>
         </tr>
         <tr>
-          <td>Week 02<br><span style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-weight: 400;">8/10–8/14</span></td>
-          <td>選題 + 規劃</td>
+          <td>M2 · 7 月<br><span style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-weight: 400;">累積月 · 7/16(四)</span></td>
+          <td>第 2 次月聚 + 小賽 ②</td>
           <td>
-            • 每人 / 每隊選定要處理的「真實工作任務」<br>
-            • 主辦單位收集所有題目,確認沒有重複過多<br>
-            • 各部門小型分享會(15 分鐘):互相聽聽彼此要做什麼
+            • 現場頒發 6 月月冠軍 + 佳作<br>
+            • 進度分享 + 新一輪主題示範<br>
+            • 7 月小賽「把它變成可重複的流程」,7/31 前提交 → 主辦人評審
           </td>
         </tr>
         <tr>
-          <td>Week 03<br><span style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-weight: 400;">8/17–8/21</span></td>
-          <td>實作週</td>
+          <td>M3 · 8 月<br><span style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-weight: 400;">成果月 · 8/27(四)</span></td>
+          <td>成果發表 + 大獎</td>
           <td>
-            • 用 AI 重做任務<br>
-            • 中段檢核點(週三 8/19):每人 1 分鐘進度匯報<br>
-            • Office Hours(週五 8/21 下午):主辦單位 / AI 熟悉同事答疑
-          </td>
-        </tr>
-        <tr>
-          <td>Week 04<br><span style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-weight: 400;">8/24–8/28</span></td>
-          <td>發表 + 評審</td>
-          <td>
-            • 週二(8/25)、週四(8/27):全公司發表會(分上下半場)<br>
-            • 週五(8/28)中午:同事投票截止<br>
-            • 週五(8/28)傍晚:頒獎典禮 + 後測問卷<br>
-            • 9/4 前公布「省下時間總計」與基準線變化
+            • 8/27(四)成果發表會:每人 / 每隊 5 分鐘<br>
+            • 主辦人評審打分(不採同事投票)<br>
+            • 8/28(五)傍晚:頒大獎 + 各組獎 + 最大進步獎 + 公布 7 月得主<br>
+            • 同步進行後測問卷;9/4 前公布「省下時間總計」與基準線變化
           </td>
         </tr>
       </tbody>
@@ -921,51 +1005,70 @@
     <div class="section-num">08 ‧ Survey</div>
     <h2>前後問卷 — <em>真正的 KPI</em></h2>
     <p class="lead">
-      比賽結束時要跟經營層報告的,不是「誰得獎」,而是「全公司的 AI 使用基準線移動了多少」。
-      下面是建議的 6 題,前後各做一次,3 分鐘填完。
+      活動結束時要跟經營層報告的,不是「誰得獎」,而是「全公司的 AI 使用基準線移動了多少」。
+      下面是建議的 9 題,前後各做一次(部分題目僅前測或後測),約 3 分鐘填完。
     </p>
 
     <div class="survey-q">
-      <div class="qnum">Q1</div>
+      <div class="qnum">Q1 ‧ 前後皆測</div>
       <div class="q">過去 7 天,你使用 AI 工具(Claude / ChatGPT / Gemini …)幾次?</div>
       <div class="scale">0 / 1–2 / 3–5 / 6–10 / 10 次以上</div>
     </div>
 
     <div class="survey-q">
-      <div class="qnum">Q2</div>
+      <div class="qnum">Q2 ‧ 前後皆測</div>
       <div class="q">你最常用 AI 做什麼?(可複選)</div>
-      <div class="scale">□ 查資料 □ 寫文案 □ 翻譯 □ 整理會議紀錄 □ 寫程式 □ 分析 Excel/檔案 □ 規劃流程 □ 從來沒用過</div>
+      <div class="scale">□ 查資料 □ 寫文案 □ 翻譯 □ 整理會議紀錄 □ 寫程式 □ 分析 Excel/檔案 □ 規劃流程 □ 從來沒用過 □ 其他 ____________</div>
     </div>
 
     <div class="survey-q">
-      <div class="qnum">Q3</div>
+      <div class="qnum">Q3 ‧ 前後皆測</div>
       <div class="q">下面哪些功能你「實際用過」?(可複選)</div>
       <div class="scale">□ 多輪對話 □ 上傳檔案 / PDF □ Projects / 自訂指令 □ 圖片輸入 □ 一個都沒用過</div>
     </div>
 
     <div class="survey-q">
-      <div class="qnum">Q4</div>
+      <div class="qnum">Q4 ‧ 前測重點</div>
+      <div class="q">你最想了解或學習 AI 工具的什麼?(自由填寫,1–2 句話)</div>
+      <div class="scale">— 用來決定每月聚會的示範主題</div>
+    </div>
+
+    <div class="survey-q">
+      <div class="qnum">Q5 ‧ 前測重點</div>
+      <div class="q">在你的工作內容中,目前面臨的挑戰是什麼?(自由填寫,1–2 句話)</div>
+      <div class="scale">— 找出 AI 最能幫上忙的真實痛點</div>
+    </div>
+
+    <div class="survey-q">
+      <div class="qnum">Q6 ‧ 前後皆測</div>
       <div class="q">以 1–5 分自評,你對「用 AI 解決工作問題」的信心程度?</div>
       <div class="scale">1 = 完全不會 ‧ 5 = 很有信心,每天都用</div>
     </div>
 
     <div class="survey-q">
-      <div class="qnum">Q5</div>
+      <div class="qnum">Q7 ‧ 前後皆測</div>
       <div class="q">過去一個月,你估計 AI 幫你省下多少工作時數?</div>
       <div class="scale">0 / 1–3 / 4–10 / 11–20 / 20 小時以上</div>
     </div>
 
     <div class="survey-q">
-      <div class="qnum">Q6</div>
-      <div class="q">(後測題)經過這次比賽,你最大的收穫是?(自由填寫,1–2 句話)</div>
+      <div class="qnum">Q8 ‧ 前測填寫</div>
+      <div class="q">關於這次活動,你會想用哪種方式參加?有什麼會讓你更願意參加、或讓你猶豫?</div>
+      <div class="scale">□ 個人參加 □ 與同部門組隊 □ 跨部門組隊 □ 還不確定,想再看看<br>更願意 / 猶豫的原因(自由填寫):____________</div>
+    </div>
+
+    <div class="survey-q">
+      <div class="qnum">Q9 ‧ 後測才問</div>
+      <div class="q">經過這次活動,你最大的收穫是?(自由填寫,1–2 句話)</div>
       <div class="scale">— 質性回饋,後測才問</div>
     </div>
 
     <div class="callout">
       <p>
         <b>報告經營層的重點數字:</b>
-        Q1 平均次數變化、Q3 功能熟悉度涵蓋率、Q4 信心平均分數、Q5 總計省下工時。
-        這四個數字才是這次比賽的真正成績單。
+        Q1 平均次數變化、Q3 功能熟悉度涵蓋率、Q6 信心平均分數、Q7 總計省下工時 ——
+        這四個數字是這次活動的真正成績單。Q4 / Q5 / Q8 則是質性回饋,直接拿來
+        <b>設計每月示範主題、找出真實痛點、調整參加門檻</b>。
       </p>
     </div>
   </div>
@@ -983,10 +1086,11 @@
         <h3>該做的事</h3>
         <ul>
           <li>分組設計上預留給業務、行政、財務都能贏的賽道</li>
-          <li>第 1 週學習會必須算工時、提供餐點</li>
+          <li>每月聚會必須算工時、提供餐點,並提前一週發日曆邀請</li>
           <li>允許個人 / 既有團隊自由選擇參賽形式</li>
-          <li>Office Hours 排在週五下午,降低詢問門檻</li>
-          <li>發表會控時嚴格 — 一人 / 一隊 5 分鐘,設計倒數計時</li>
+          <li>兩次月聚之間開 Slack / Teams 頻道答疑,降低詢問門檻</li>
+          <li>用 6、7 月的「月度小賽 + 月獎」維持上手期熱度,別讓中間斷氣</li>
+          <li>8 月發表會控時嚴格 — 一人 / 一隊 5 分鐘,設計倒數計時</li>
         </ul>
       </div>
       <div class="card">
@@ -1013,7 +1117,7 @@
     <details>
       <summary>我從來沒用過 AI,可以參加嗎?</summary>
       <p>當然 — 而且你最有機會拿「最大進步獎」。從零開始的人,進步幅度幾乎一定贏在 AI 熟手前面。
-        第 1 週的學習會就是為了你而設計的。</p>
+        前兩個月的上手期與每月示範,就是為了你而設計的。</p>
     </details>
 
     <details>
@@ -1036,21 +1140,48 @@
 
     <details>
       <summary>我想跟我同部門的同事一起參賽,需要報誰決定?</summary>
-      <p>不用報備,自由組隊。建議 2–5 人為宜,用你們本來就在合作的關係即可,
-        不需要額外開會 — 重點是不要讓比賽變成多出來的工作負擔。
-        團隊報名後,所有成員均分獎金,評分標準與個人組相同。</p>
+      <p>不用報備,自由組隊,2–4 人為單位,用你們本來就在合作的關係即可,
+        不需要額外開會 — 重點是不要讓比賽變成多出來的工作負擔。團隊與個人「同池」評比、標準相同;
+        團隊獲獎時現金均分,表揚 / 證書 / 品牌小物則每人一份。每月也可自由切換個人或團隊。</p>
     </details>
 
     <details>
       <summary>我想找其他部門的人一起合作,怎麼辦?</summary>
       <p>歡迎自行邀請 — 這正是 Category 04「最佳跨團隊協作獎」要鼓勵的事。
-        主辦單位不會強制配對,但會在第 1 週學習會後開一個聯絡頻道(Slack / Teams),
+        主辦單位不會強制配對,但會在第 1 次月聚後開一個聯絡頻道(Slack / Teams),
         讓想跨部門組隊的人有地方互相找隊友。</p>
     </details>
 
     <details>
       <summary>我可以同時報名多組嗎?</summary>
       <p>可以,最多 3 組。但同一個專案不能重複報名兩組以上。</p>
+    </details>
+
+    <details>
+      <summary>為什麼拉長到 3 個月?大獎為什麼壓在最後一個月?</summary>
+      <p>因為大多數同事需要「上手期」。前兩個月(6、7 月)<strong>每個月都有一場小比賽與月獎</strong>,
+        慢慢帶大家邊學邊做、邊累積;到第 3 個月(8 月)大家手感都熱了,再把大獎、各組獎、最大進步獎集中頒發,
+        最公平也最有看頭。每月都有獎,動能才不會中間斷掉。</p>
+    </details>
+
+    <details>
+      <summary>我可以六月就報名,但慢慢準備、八月才交嗎?</summary>
+      <p>完全可以,而且很歡迎這樣 —— 6 月報名後,你有完整三個月慢慢磨一件作品,8 月大賽才交件就行,
+        不一定要參加 6、7 月的月度小賽。月度小賽是「<strong>選做</strong>」的:想搶月冠軍、拿快速成就感就交;
+        想專心準備 8 月也沒問題。只建議至少把每月聚會的「2 句話提案」交出來,讓自己保持節奏、別拖到最後一刻。</p>
+    </details>
+
+    <details>
+      <summary>得獎怎麼決定?有同事投票嗎?</summary>
+      <p>沒有投票 —— <strong>由主辦人擔任唯一評審</strong>,每月小賽與 8 月大賽都用同一套評分標準(見上方「評分標準」)。
+        若想更客觀,主辦人可自行邀請 1–2 位助審提供參考意見,但最終以主辦人裁定為準。</p>
+    </details>
+
+    <details>
+      <summary>每個月的聚會大概多長?一定要每場都到嗎?</summary>
+      <p>每場約 1–1.5 小時、固定在週四(或週五),算正式工時、有餐點。
+        建議盡量每場都參加(內容會接續),但真的有事缺席也沒關係 —— 會後的「2 句話提案」與實作才是重點,
+        缺席的場次我們會補發示範重點。</p>
     </details>
 
     <details>
@@ -1062,7 +1193,7 @@
 
 <footer>
   <div class="wrap">
-    <p>AI 生產力衝刺賽 ‧ 規則與計劃書 v1.0</p>
+    <p>AI 生產力養成賽 ‧ 規則與計劃書 v2.0</p>
     <p class="sig">Internal use only ‧ 〔主辦單位〕</p>
   </div>
 </footer>
