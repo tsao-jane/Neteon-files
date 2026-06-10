@@ -294,6 +294,38 @@
     color: var(--ink-mid);
   }
 
+  /* KEY LINE (demo 台詞) */
+  .line {
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px var(--radius-sm) var(--radius-sm) 4px;
+    padding: 12px 16px;
+    margin: 16px 0 6px;
+  }
+  .demo-step {
+    margin-top: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 14.5px;
+  }
+  .formula {
+    font-family: var(--mono);
+    font-size: 14px;
+    background: var(--bg-sub);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    margin: 8px 0;
+    color: var(--ink);
+    line-height: 1.9;
+  }
+  .formula b { color: var(--accent); font-weight: 600; }
+  .formula .eg { color: var(--ink-soft); font-size: 12.5px; }
+
   /* PRIZE TABLE */
   .prize-table {
     width: 100%;
@@ -596,8 +628,9 @@
         <li><a href="#scoring"><span>06</span>評分標準</a></li>
         <li><a href="#timeline"><span>07</span>月度時程</a></li>
         <li><a href="#survey"><span>08</span>前後問卷</a></li>
-        <li><a href="#tips"><span>09</span>主辦提醒</a></li>
-        <li><a href="#faq"><span>10</span>FAQ</a></li>
+        <li><a href="#demo"><span>09</span>示範腳本</a></li>
+        <li><a href="#tips"><span>10</span>主辦提醒</a></li>
+        <li><a href="#faq"><span>11</span>FAQ</a></li>
       </ol>
     </nav>
   </div>
@@ -1074,10 +1107,83 @@
   </div>
 </section>
 
-<!-- ═══════════ 09 提醒 ═══════════ -->
+<!-- ═══════════ 09 示範腳本 ═══════════ -->
+<section id="demo">
+  <div class="wrap">
+    <div class="section-num">09 ‧ Demo</div>
+    <h2>現場示範腳本:<em>同一個任務,三種做法</em></h2>
+    <p class="lead">
+      每月聚會的 15–20 分鐘示範,刻意用<strong>同一個工作任務</strong>演一次初階 → 中階 → 高階,
+      讓大家親眼看見從「問一次」到「跟 AI 一起工作」的進化。
+      <strong>依前測 Q3(功能熟悉度)決定主秀押在哪一階</strong> —— 哪一階人最多,就把那段講厚;
+      示範題材則直接從 Q4 / Q5 的自由填答裡,挑大家最有感的痛點。
+    </p>
+
+    <!-- 初階 -->
+    <div class="card" style="margin-top: 24px;">
+      <div class="num">LEVEL 01 ‧ 初階</div>
+      <h3>把 prompt 一次問好 · 用 Project 記住你</h3>
+      <p>給只會「問一次」的同事兩個能立刻帶走的技能。先示範「隨便問 vs 套公式問」的差距,再現場開一個 Project,讓 AI 記住背景、之後不用每次重貼。</p>
+
+      <p class="demo-step">① 萬用 prompt 公式</p>
+      <div class="formula">
+        <b>角色</b> + <b>背景</b> + <b>任務</b> + <b>格式</b><br>
+        <span class="eg">例:你是資深工業電腦業務(角色),對象是製造業客戶、產品是 MIC-770(背景),寫一段產品介紹(任務),條列、繁中、200 字內(格式)。</span>
+      </div>
+
+      <p class="demo-step">② 用 Project 做「Neteon 產品文案助手」</p>
+      <ul style="font-size:14.5px;">
+        <li>開一個 Project,設自訂指令:「你是 Neteon 工業電腦業務,語氣專業、繁中、面向製造業客戶」</li>
+        <li>上傳產品 spec、品牌語氣範例當參考檔</li>
+        <li>之後只打一句「幫 UNO-148 寫產品介紹」→ 它直接抓對語氣與規格,不用再解釋</li>
+      </ul>
+
+      <div class="line">「Prompt 是每次重講,Project 是它記得你。」</div>
+      <span class="who">對到前測 Q3 =「一個都沒用過」或只勾多輪 · 很可能是主秀</span>
+    </div>
+
+    <!-- 中階 -->
+    <div class="card" style="margin-top: 20px;">
+      <div class="num">LEVEL 02 ‧ 中階</div>
+      <h3>把單一任務串成可重複的流程</h3>
+      <ul style="font-size:14.5px;">
+        <li>丟一份 Advantech spec PDF 進去 → 請 AI 抽出關鍵規格</li>
+        <li>→ 生成型號比較表 → 改寫成產品頁文案 → 給回饋再修一輪</li>
+        <li>把整串步驟存成可重複的 playbook / 提示詞範本(正好對到 7 月主題與「最佳工作流程獎」)</li>
+      </ul>
+      <div class="line">「會用一次不稀奇,能重複用、別人能直接抄,才是流程。」</div>
+      <span class="who">對到前測 Q3 有勾 上傳檔案 / Projects,但還沒串成流程的人</span>
+    </div>
+
+    <!-- 高階 -->
+    <div class="card" style="margin-top: 20px; border:2px solid var(--accent); background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));">
+      <div class="num">LEVEL 03 ‧ 高階 ‧ 天花板展示</div>
+      <h3>讓 AI 自己跑完一整個流程</h3>
+      <p>這段是<strong>「給大家看天花板」,不是教學</strong> —— 只示範、不要求現場學會,目的是讓人想「原來可以這樣,我想學到那裡」。</p>
+      <ul style="font-size:14.5px;">
+        <li>現場給 AI 一個產品搜尋頁網址 → 它自己跑完兩頁、看過 24 個產品</li>
+        <li>→ 列出 12 個沒有產品照片的型號 → 還看出是「SKU 變體缺圖」的系統性問題</li>
+        <li>(可替換成:PIM 資料稽核,或 3 個月 LinkedIn 內容企劃自動生成 —— 看現場部門組成挑)</li>
+      </ul>
+      <div class="line">「我沒有一張一張看,是它自己看完 24 個產品回報給我。」</div>
+      <p style="margin-top:14px; font-size:14px; color:var(--ink-mid);">收尾一定要拉回比賽:<strong>「這需要學,但你現在看到值得往哪走 —— 這就是 8 月大賽我想看到的東西。」</strong></p>
+      <span class="who">不是教學目標 · 當壓軸的「哇」時刻</span>
+    </div>
+
+    <div class="callout">
+      <p>
+        <b>怎麼用問卷決定這段怎麼演:</b>
+        看 <b>Q3</b> 的功能勾選分布,定「主秀押哪一階」(多數人落在初階,就把初階講厚、講慢);
+        看 <b>Q4(想學什麼)/ Q5(工作挑戰)</b> 的自由填答,挑大家最有感的任務當示範題材,命中率最高。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 10 提醒 ═══════════ -->
 <section id="tips">
   <div class="wrap">
-    <div class="section-num">09 ‧ Notes for Organizer</div>
+    <div class="section-num">10 ‧ Notes for Organizer</div>
     <h2>主辦單位提醒</h2>
 
     <div class="grid-2">
@@ -1108,10 +1214,10 @@
   </div>
 </section>
 
-<!-- ═══════════ 10 FAQ ═══════════ -->
+<!-- ═══════════ 11 FAQ ═══════════ -->
 <section id="faq">
   <div class="wrap">
-    <div class="section-num">10 ‧ FAQ</div>
+    <div class="section-num">11 ‧ FAQ</div>
     <h2>常見問題</h2>
 
     <details>
