@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>From Prompt to Partner — AI Productivity Event</title>
+<meta name="description" content="A relaxed 3-month event to help everyone go from asking AI one-off questions to working alongside it. No pressure, no elimination — just a few friendly sessions and small wins." />
+<meta name="theme-color" content="#84d3df" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f4f9fa;
+    --bg-card: #ffffff;
+    --bg-sub: #eaf4f6;
+    --ink: #11201f;
+    --ink-mid: #324245;
+    --ink-soft: #56656a;
+    --rule: #e0ecee;
+    --rule-strong: #cce0e3;
+    --accent: #0e7d8c;          /* deep teal */
+    --accent-hi: #14a3b6;       /* brighter teal for hover / gradients */
+    --accent-2: #d9663f;        /* warm coral, used sparingly */
+    --accent-soft: #e0f4f7;
+    --theme: #84d3df;           /* survey theme color */
+    --highlight: #fff2e8;
+    --shadow-sm: 0 1px 2px rgba(13,40,44,.05);
+    --shadow: 0 1px 2px rgba(13,40,44,.04), 0 10px 30px -8px rgba(13,40,44,.12);
+    --shadow-lg: 0 2px 4px rgba(13,40,44,.04), 0 24px 60px -16px rgba(13,40,44,.18);
+    --radius: 14px;
+    --radius-sm: 10px;
+    --ease: cubic-bezier(.22,.61,.36,1);
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 24px; -webkit-text-size-adjust: 100%; }
+  html, body { margin: 0; padding: 0; }
+  ::selection { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 28px; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 100px 0 72px;
+    border-bottom: 1px solid var(--rule);
+    background:
+      radial-gradient(ellipse 60% 55% at 12% -5%, rgba(132,211,223,.30), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 100% 12%, rgba(14,125,140,.10), transparent 55%),
+      linear-gradient(180deg, #fbfdfe, var(--bg));
+    overflow: hidden;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -1px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: .3;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+    padding: 6px 13px;
+    border-radius: 999px;
+    box-shadow: var(--shadow-sm);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+  }
+  h1 {
+    font-weight: 700;
+    font-size: clamp(40px, 6.4vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin: 26px 0 20px;
+    max-width: 16ch;
+  }
+  h1 em {
+    font-style: normal;
+    background: linear-gradient(120deg, var(--accent), var(--accent-hi));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .lede {
+    font-size: 20px;
+    line-height: 1.62;
+    color: var(--ink-mid);
+    max-width: 58ch;
+    margin: 0;
+  }
+  .lede strong { color: var(--ink); font-weight: 600; }
+  .meta {
+    margin-top: 38px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .meta span {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 7px;
+    background: color-mix(in srgb, var(--bg-card) 70%, transparent);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 7px 14px;
+    backdrop-filter: blur(4px);
+  }
+  .meta b { color: var(--ink); font-weight: 600; }
+
+  /* SECTIONS */
+  section { padding: 80px 0; border-bottom: 1px solid var(--rule); }
+  .section-num {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .16em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .section-num::before {
+    content: "";
+    width: 22px; height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  h2 {
+    font-size: clamp(26px, 4vw, 36px);
+    line-height: 1.16;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    margin: 0 0 18px;
+  }
+  h2 em { font-style: normal; color: var(--accent); }
+  h3 {
+    font-size: 19px;
+    line-height: 1.35;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 28px 0 8px;
+  }
+  p { margin: 12px 0; color: var(--ink-mid); }
+  .lead { font-size: 17.5px; line-height: 1.7; color: var(--ink-mid); max-width: 66ch; }
+  .lead strong { color: var(--ink); }
+  ul, ol { color: var(--ink-mid); padding-left: 22px; }
+  li { margin: 8px 0; }
+  li::marker { color: var(--accent); }
+  strong { color: var(--ink); }
+
+  /* CARDS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  @media (max-width: 760px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    h1 { font-size: 38px; }
+    h2 { font-size: 26px; }
+    section { padding: 56px 0; }
+    .wrap { padding: 0 22px; }
+  }
+  .card {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 26px 28px;
+    box-shadow: var(--shadow);
+    transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease);
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--rule-strong);
+  }
+  .card .num {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    color: var(--accent);
+    padding-bottom: 2px;
+    border-bottom: 2px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+  .card h3 { margin-top: 12px; }
+  .card p { font-size: 14.5px; line-height: 1.65; }
+
+  /* STEPS */
+  .steps { counter-reset: step; margin-top: 28px; display: grid; gap: 14px; }
+  .step {
+    display: grid;
+    grid-template-columns: 46px 1fr;
+    gap: 18px;
+    align-items: start;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    box-shadow: var(--shadow-sm);
+    transition: transform .18s var(--ease), box-shadow .18s var(--ease);
+  }
+  .step:hover { transform: translateX(3px); box-shadow: var(--shadow); }
+  .step::before {
+    counter-increment: step;
+    content: counter(step);
+    width: 38px; height: 38px;
+    display: grid; place-items: center;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-hi));
+    color: #fff;
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 16px;
+  }
+  .step h4 { margin: 4px 0 4px; font-size: 16px; font-weight: 600; color: var(--ink); }
+  .step p { margin: 0; font-size: 14.5px; line-height: 1.6; }
+
+  /* CALLOUT */
+  .callout {
+    position: relative;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--highlight) 70%, #fff), var(--highlight));
+    border: 1px solid color-mix(in srgb, var(--accent-2) 22%, transparent);
+    border-left: 4px solid var(--accent-2);
+    padding: 22px 26px;
+    border-radius: 4px var(--radius-sm) var(--radius-sm) 4px;
+    margin: 28px 0;
+    box-shadow: var(--shadow-sm);
+  }
+  .callout p { color: var(--ink); margin: 0; line-height: 1.7; }
+  .callout b { color: var(--accent-2); }
+
+  /* PRIZE BANNER */
+  .prize-banner {
+    margin-top: 26px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-hi));
+    border-radius: var(--radius);
+    padding: 38px 34px;
+    color: #fff;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+  }
+  .prize-banner::after {
+    content: "";
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 220px; height: 220px;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(132,211,223,.45), transparent 65%);
+  }
+  .prize-banner .amount {
+    font-size: clamp(38px, 7vw, 56px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    position: relative;
+  }
+  .prize-banner .amount small { font-size: 18px; font-weight: 500; opacity: .85; letter-spacing: 0; }
+  .prize-banner p { color: rgba(255,255,255,.92); margin: 14px 0 0; max-width: 54ch; position: relative; font-size: 15.5px; }
+
+  .note {
+    background: var(--bg-sub);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--rule-strong);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-mid);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 60px 0 86px;
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 13px;
+    background: radial-gradient(ellipse 50% 80% at 50% 100%, rgba(132,211,223,.18), transparent 70%);
+  }
+  footer .sig {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    margin-top: 10px;
+    color: var(--accent);
+    opacity: .85;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Open to everyone · any level</span>
+    <h1>From Prompt to <em>Partner</em></h1>
+    <p class="lede">
+      A relaxed, low-key event to help all of us go from asking AI the occasional question to
+      actually <strong>working alongside it</strong>. No pressure and no elimination —
+      just a few friendly sessions, live demos, and small wins you can use at work.
+      Come exactly as you are.
+    </p>
+    <div class="meta">
+      <span><b>Format</b> · 3 sessions</span>
+      <span><b>Who</b> · Everyone, any level</span>
+      <span><b>When</b> · Jun–Aug 2026</span>
+      <span><b>Prize pool</b> · USD $5,000 in value</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════ 01 THE IDEA ═══════════ -->
+<section id="idea">
+  <div class="wrap">
+    <div class="section-num">01 · The idea</div>
+    <h2>What this is about</h2>
+    <p class="lead">
+      Most of us use AI like a search box — one question, one answer, done. That's barely
+      scratching the surface. Over a few months, we want to help everyone take one comfortable
+      step further: using AI as a <strong>hands-on helper for real work</strong> — drafting,
+      translating, summarizing, organizing, planning. It's easier than it looks; you just need
+      someone to walk you through it once.
+    </p>
+    <p class="lead" style="margin-top: 16px;">
+      <strong>By the end, you'll be comfortable using AI for everyday work</strong> — writing an
+      email, translating a product description, summarizing a long thread, or turning a messy
+      file into something tidy in minutes.
+    </p>
+    <div class="note" style="border-left-color: var(--accent); background: var(--accent-soft);">
+      <strong>A real example:</strong> writing and translating product descriptions for the
+      catalog used to take a colleague about <strong>2 hours</strong> for a batch. With a little
+      AI help, it now takes around <strong>15 minutes</strong> to draft — they just review and
+      polish. Same result, hours back every week. Small change, real difference.
+    </div>
+    <div class="callout">
+      <p>
+        <b>The whole point:</b> this isn't about finding the "best." It's about everyone
+        feeling a little more confident with AI by the end. If you're starting from zero,
+        you're exactly who we built this for.
+      </p>
+    </div>
+
+    <h3 style="margin-top: 38px;">Where we are → where we're heading</h3>
+    <div class="grid-2" style="margin-top: 16px;">
+      <div class="card">
+        <div class="num">TODAY</div>
+        <h3>How most of us use AI now</h3>
+        <p>Like a search box — one question, one answer. We look something up or fix a typo, but rarely upload a file, set up a Project, or let AI handle more than one step at a time.</p>
+      </div>
+      <div class="card">
+        <div class="num">A FEW MONTHS FROM NOW</div>
+        <h3>What we'd love to see</h3>
+        <p>Using AI across several steps, handing recurring tasks to it, passing work between teammates — and starting a shared library of prompts your team can reuse.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 02 HOW IT WORKS ═══════════ -->
+<section id="how">
+  <div class="wrap">
+    <div class="section-num">02 · How it works</div>
+    <h2>Three sessions, <em>your pace</em></h2>
+    <p class="lead">
+      We'll get together <strong>three times</strong> over the few months. Each one is short, runs
+      during work hours, and opens with a live demo — so you'll always pick up something new
+      before you try it on your own work.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <div>
+          <h4>Every session opens with a live demo</h4>
+          <p>At each of the three sessions, we'll demo a real AI workflow on screen — from a simple version up to the more advanced stuff, so there's something for every level. Then we explore ideas together in small groups.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div>
+          <h4>Sign up whenever you're ready</h4>
+          <p>There's no fixed deadline to register. You can sign up at the very first session and take the whole time to work on your entry — or jump in later, totally up to you.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div>
+          <h4>Share once, by the final session</h4>
+          <p>Hand in your one-page result any time up to the last session. You only submit once — and that final get-together is where we celebrate and hand out everything together.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      In short: <strong>three sessions, a demo at each, sign up any time, submit one entry by the
+      last session</strong> — where we wrap up and recognize everyone together.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 03 WHAT WE LOOK FOR ═══════════ -->
+<section id="looking">
+  <div class="wrap">
+    <div class="section-num">03 · What we're looking for</div>
+    <h2>Five ways to <em>shine</em></h2>
+    <p class="lead">
+      There's no single winner. We'll be looking at five different things people do with AI —
+      so there's a lane for everyone, whatever your role or starting point.
+    </p>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div class="card">
+        <div class="num">01</div>
+        <h3>Real impact</h3>
+        <p>Did AI genuinely save you time or take a chore off your plate? Even a small, concrete win counts.</p>
+      </div>
+      <div class="card">
+        <div class="num">02</div>
+        <h3>Something reusable</h3>
+        <p>Could a colleague copy your approach and get the same result? A handy prompt or simple routine others can borrow.</p>
+      </div>
+      <div class="card">
+        <div class="num">03</div>
+        <h3>A creative use</h3>
+        <p>A fresh or unexpected way to put AI to work — something that makes people go "oh, I hadn't thought of that."</p>
+      </div>
+      <div class="card">
+        <div class="num">04</div>
+        <h3>Teamwork</h3>
+        <p>AI used across people or departments — passing work along, not just solo. Great for small groups.</p>
+      </div>
+      <div class="card" style="grid-column: span 2; border: 2px solid var(--accent); background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));">
+        <div class="num">05</div>
+        <h3>Biggest growth</h3>
+        <p>How far you've come from where you started. This one isn't about being an expert — it's about progress. If you begin at zero, you have the most room to shine here.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 04 PRIZES ═══════════ -->
+<section id="prizes">
+  <div class="wrap">
+    <div class="section-num">04 · Prizes</div>
+    <h2>Worth showing up for</h2>
+
+    <div class="prize-banner">
+      <div class="amount">USD $5,000 <small>in total value</small></div>
+      <p>
+        A mix of cash, gift cards, and extra paid time off — spread across everyone who takes
+        part, not just one person. We'll share the details as we go; for now, just know there's
+        plenty of reason to join in.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 05 HOW TO TAKE PART ═══════════ -->
+<section id="enter">
+  <div class="wrap">
+    <div class="section-num">05 · How to take part</div>
+    <h2>Joining is easy</h2>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div class="card">
+        <div class="num">SHARE</div>
+        <h3>Just one slide</h3>
+        <p>When you're ready, share a <strong>single-page slide</strong> showing what you did with AI. No long reports, ever — we just want to see your win.</p>
+      </div>
+      <div class="card">
+        <div class="num">SOLO OR TEAM</div>
+        <h3>On your own or together</h3>
+        <p>Take part <strong>solo</strong>, or team up with colleagues — whichever feels comfortable. Both are equally welcome.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 20px;">
+      <div class="num">ON YOUR SLIDE</div>
+      <h3>Four quick things to cover</h3>
+      <p>To keep it simple, your one slide just needs:</p>
+      <ul style="font-size: 14.5px;">
+        <li><strong>The task</strong> — what you were trying to get done</li>
+        <li><strong>Before</strong> — how you used to do it</li>
+        <li><strong>With AI</strong> — how you did it this time</li>
+        <li><strong>The result</strong> — what changed (a number, or a quick before / after)</li>
+      </ul>
+    </div>
+
+    <div class="note">
+      No experience needed, and no deadlines to stress about. Just pick a <strong>real task you
+      actually worked on</strong> — turn up, try a little, and share what you find. We'll help
+      you the rest of the way.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>From Prompt to Partner · AI Productivity Event 2026</p>
+    <p class="sig">For our team · come as you are</p>
+  </div>
+</footer>
+
+</body>
+</html>
