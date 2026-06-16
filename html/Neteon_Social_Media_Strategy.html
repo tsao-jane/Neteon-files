@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neteon · Social Media Strategy — Field Manual № 01</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f0e7;
+    --paper2:#faf7f0;
+    --card:#fffdf8;
+    --ink:#1b2a38;
+    --ink2:#3c4f5e;
+    --mut:#6d7d89;
+    --mut2:#9aa6ad;
+    --rule:#e2dccd;
+    --rule2:#cfc6b2;
+    --teal:#0c6e62;
+    --teal2:#0a8576;
+    --terra:#bb5a30;
+    --gold:#b08433;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',-apple-system,system-ui,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:rgba(12,110,98,.16)}
+
+  .serif{font-family:'Fraunces','Noto Serif TC',serif;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .tc{font-family:'Noto Serif TC',serif;color:var(--mut);font-weight:400;}
+  a{color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(12,110,98,.3)}
+  a:hover{border-color:var(--teal)}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 32px;}
+  .narrow{max-width:760px;}
+
+  .kicker{
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:3.5px;
+    text-transform:uppercase;color:var(--teal);font-weight:500;
+    display:inline-flex;align-items:center;gap:14px;
+  }
+  .kicker::before{content:"";width:30px;height:1px;background:var(--teal);display:inline-block}
+
+  /* ---------- NAV ---------- */
+  nav.bar{position:sticky;top:0;z-index:50;background:rgba(244,240,231,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);}
+  nav.bar .wrap{display:flex;align-items:center;height:62px;gap:18px;}
+  .brand{display:flex;align-items:baseline;gap:11px;font-weight:700;letter-spacing:1px;font-size:15px}
+  .brand b{font-family:'Fraunces',serif;font-weight:900;font-size:19px;letter-spacing:0}
+  .brand span{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--mut);text-transform:uppercase}
+  .navlinks{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap}
+  .navlinks a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mut);padding:5px 9px;border-radius:6px;letter-spacing:.5px;border:none}
+  .navlinks a:hover{color:var(--ink);background:rgba(0,0,0,.04)}
+  @media(max-width:1040px){.navlinks{display:none}}
+
+  /* ---------- COVER ---------- */
+  .cover{padding:104px 0 80px;position:relative;}
+  .cover::after{content:"№ 01";position:absolute;top:60px;right:32px;font-family:'Fraunces',serif;font-size:clamp(80px,16vw,200px);font-weight:900;color:rgba(27,42,56,.04);line-height:1;pointer-events:none;letter-spacing:-4px}
+  .cover h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(48px,9vw,108px);line-height:.94;letter-spacing:-2.5px;margin-top:30px;position:relative}
+  .cover h1 em{font-style:italic;font-weight:400;color:var(--teal)}
+  .rulebar{width:64px;height:3px;background:var(--ink);margin:34px 0 26px}
+  .cover .sub{font-size:20px;color:var(--ink2);max-width:600px;font-weight:400}
+  .cover .subtc{font-size:15px;margin-top:8px;line-height:1.8}
+
+  .specs{margin-top:54px;max-width:560px;border-top:1px solid var(--rule2)}
+  .specs .row{display:flex;align-items:baseline;gap:14px;padding:15px 0;border-bottom:1px solid var(--rule)}
+  .specs .row .k{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--mut);white-space:nowrap}
+  .specs .row .dots{flex:1;border-bottom:1px dotted var(--rule2);transform:translateY(-4px)}
+  .specs .row .v{font-family:'Fraunces',serif;font-weight:600;font-size:17px;color:var(--ink)}
+  .specs .row .v em{font-style:normal;color:var(--teal)}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:88px 0;border-top:1px solid var(--rule);}
+  .chead{margin-bottom:18px}
+  .chap-no{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:3px;color:var(--teal);font-weight:500}
+  h2.chap{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(32px,5vw,52px);line-height:1.02;letter-spacing:-1.2px;margin-top:8px}
+  h2.chap .tc{display:block;font-size:18px;margin-top:8px;font-weight:400}
+  .lead{color:var(--ink2);font-size:19px;max-width:720px;margin-top:20px;line-height:1.7}
+  .lead.tc{font-size:15.5px;color:var(--mut);margin-top:10px}
+
+  h3{font-family:'Fraunces',serif;font-weight:600;font-size:22px;letter-spacing:-.3px}
+  h4{font-family:'Fraunces',serif;font-weight:600;font-size:17px;letter-spacing:-.2px}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:880px){.grid-2,.grid-3{grid-template-columns:1fr}}
+
+  /* ---------- CARDS ---------- */
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:30px;transition:.25s}
+  .card:hover{border-color:var(--rule2);box-shadow:0 18px 40px -28px rgba(27,42,56,.4)}
+  .label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);font-weight:500;display:block;margin-bottom:16px}
+  .card .sublab{font-family:'Noto Serif TC',serif;color:var(--mut2);font-size:13px;margin:2px 0 4px}
+  .card ul{list-style:none;margin-top:16px}
+  .card ul li{padding:11px 0;border-bottom:1px solid var(--rule);color:var(--ink2);font-size:14.5px;line-height:1.55}
+  .card ul li:last-child{border-bottom:none;padding-bottom:0}
+  .card ul li b{color:var(--ink);font-weight:600}
+  .grid-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:36px}
+  @media(max-width:880px){.grid-cards{grid-template-columns:1fr}}
+
+  /* ---------- PULL QUOTE / BIG IDEA ---------- */
+  .pull{margin:46px 0;padding:40px 48px;background:var(--paper2);border-left:3px solid var(--teal);border-radius:0 6px 6px 0;position:relative}
+  .pull .mark{font-family:'Fraunces',serif;font-size:80px;color:var(--teal);line-height:.5;opacity:.18;position:absolute;top:34px;left:18px}
+  .pull p{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(22px,3.2vw,30px);line-height:1.25;letter-spacing:-.5px;color:var(--ink)}
+  .pull .tc{display:block;font-family:'Noto Serif TC',serif;font-weight:400;font-size:16px;color:var(--mut);margin-top:14px;line-height:1.7}
+
+  /* ---------- TABLES ---------- */
+  .tbl-wrap{overflow-x:auto;margin-top:30px}
+  table{width:100%;border-collapse:collapse;min-width:600px;font-size:14.5px}
+  thead th{text-align:left;padding:0 18px 14px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);font-weight:600;border-bottom:2px solid var(--ink);white-space:nowrap}
+  tbody td{padding:17px 18px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}
+  tbody tr:hover{background:var(--paper2)}
+  tbody td b{color:var(--ink);font-weight:600}
+  .pill{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;padding:3px 10px;border-radius:20px;letter-spacing:.5px;border:1px solid var(--rule2);color:var(--mut)}
+  .pill.p{background:rgba(12,110,98,.08);border-color:rgba(12,110,98,.4);color:var(--teal)}
+  .pill.s{background:rgba(187,90,48,.08);border-color:rgba(187,90,48,.4);color:var(--terra)}
+
+  .bar{height:5px;background:var(--rule);border-radius:20px;overflow:hidden;min-width:120px;margin-top:6px}
+  .bar i{display:block;height:100%;background:var(--teal);border-radius:20px}
+  .barnum{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mut);margin-top:5px}
+
+  /* ---------- KPI ---------- */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:36px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+  @media(max-width:880px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:var(--card);padding:26px 24px}
+  .kpi .n{font-family:'Fraunces',serif;font-weight:700;font-size:38px;letter-spacing:-1.5px;color:var(--ink);line-height:1}
+  .kpi .n span{color:var(--teal);font-size:22px}
+  .kpi .l{font-size:13px;color:var(--ink2);margin-top:8px}
+  .kpi .lt{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--mut2);margin-top:10px;text-transform:uppercase;letter-spacing:1.5px}
+  .kpi.star{background:linear-gradient(180deg,#fffdf8,rgba(12,110,98,.05))}
+  .kpi.star .lt{color:var(--teal)}
+
+  /* ---------- FUNNEL ---------- */
+  .funnel{margin-top:34px;display:flex;flex-direction:column;gap:14px;align-items:center}
+  .layer{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:24px 30px;display:flex;align-items:center;gap:28px;width:100%}
+  .layer .lvl{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);min-width:118px;font-weight:600}
+  .layer .body{flex:1}
+  .layer .body b{font-family:'Fraunces',serif;font-size:19px;font-weight:600}
+  .layer .body .tc{font-family:'Noto Serif TC',serif;font-weight:400;font-size:14px;color:var(--mut2)}
+  .layer .body p{color:var(--mut);font-size:14px;margin-top:4px}
+  .layer .goal{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink);text-align:right;line-height:1.7}
+  .layer.l2{width:86%}
+  .layer.l3{width:72%;border-color:var(--teal);background:linear-gradient(180deg,#fffdf8,rgba(12,110,98,.04))}
+  @media(max-width:880px){.layer{flex-direction:column;align-items:flex-start;gap:12px}.layer.l2,.layer.l3{width:100%}.layer .goal{text-align:left}}
+
+  /* ---------- CALENDAR ---------- */
+  .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-top:34px}
+  @media(max-width:880px){.cal{grid-template-columns:repeat(2,1fr)}}
+  .day{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:16px;min-height:160px}
+  .day .dn{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--mut2);padding-bottom:10px;margin-bottom:12px;border-bottom:1px solid var(--rule)}
+  .slot{font-size:12.5px;line-height:1.4;padding:9px 11px;border-radius:5px;margin-bottom:8px;background:var(--paper2);border-left:3px solid var(--teal);color:var(--ink2)}
+  .slot .ch{display:block;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--mut2);margin-bottom:3px}
+  .slot.yt{border-color:var(--terra)} .slot.x{border-color:var(--mut2)} .slot.eml{border-color:var(--gold)} .slot.ops{border-color:var(--ink2)}
+
+  /* ---------- HOOKS ---------- */
+  .hook{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:20px 22px;margin-bottom:14px}
+  .hook .form{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:9px}
+  .hook .q{font-family:'Fraunces',serif;font-size:16.5px;line-height:1.4;color:var(--ink);font-weight:500}
+  .colhead{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:18px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+
+  /* ---------- ROADMAP ---------- */
+  .road{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:36px}
+  @media(max-width:880px){.road{grid-template-columns:1fr}}
+  .phase{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:30px;position:relative}
+  .phase.final{border-color:var(--teal);box-shadow:0 20px 50px -34px rgba(12,110,98,.6)}
+  .phase .pn{font-family:'Fraunces',serif;font-size:46px;font-weight:900;color:var(--rule2);line-height:1;letter-spacing:-2px}
+  .phase.final .pn{color:rgba(12,110,98,.35)}
+  .phase .ph{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-top:8px}
+  .phase .days{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mut2);margin-top:2px}
+  .phase h3{margin:14px 0 0}
+  .phase ul{list-style:none;margin-top:18px}
+  .phase ul li{font-size:14px;color:var(--ink2);padding:10px 0 10px 22px;position:relative;border-bottom:1px solid var(--rule);line-height:1.5}
+  .phase ul li:last-child{border-bottom:none}
+  .phase ul li::before{content:"";position:absolute;left:0;top:17px;width:7px;height:7px;border:1.5px solid var(--teal);border-radius:50%}
+
+  /* ---------- DO / DONT ---------- */
+  .dodont{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:30px}
+  @media(max-width:880px){.dodont{grid-template-columns:1fr}}
+  .do{border-top:3px solid var(--teal)} .dont{border-top:3px solid var(--terra)}
+  .do .label{color:var(--teal)} .dont .label{color:var(--terra)}
+  .do ul li::before,.dont ul li::before{font-family:'IBM Plex Mono',monospace;margin-right:8px;font-weight:600}
+  .do ul li{padding-left:0} .dont ul li{padding-left:0}
+
+  .note{font-size:13.5px;color:var(--mut);margin-top:18px;font-style:italic;max-width:720px}
+
+  footer{padding:70px 0 90px;text-align:center}
+  footer .brand{justify-content:center;margin-bottom:18px}
+  .orn{color:var(--teal);letter-spacing:8px;font-size:13px;margin:14px 0}
+  footer p{color:var(--mut);font-size:13.5px}
+  footer .mono{font-size:11px;letter-spacing:1px;color:var(--mut2);margin-top:6px}
+  footer .tagline{font-family:'Fraunces',serif;font-style:italic;font-size:18px;color:var(--ink2);margin-top:8px}
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="bar">
+  <div class="wrap">
+    <div class="brand"><b>Neteon</b><span>Field Manual № 01</span></div>
+    <div class="navlinks">
+      <a href="#overview">01</a><a href="#northstar">02</a><a href="#personas">03</a>
+      <a href="#voice">04</a><a href="#pillars">05</a><a href="#platforms">06</a>
+      <a href="#calendar">07</a><a href="#hooks">08</a><a href="#repurpose">09</a>
+      <a href="#engagement">10</a><a href="#kpi">11</a><a href="#roadmap">12</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== COVER ===== -->
+<header class="cover">
+  <div class="wrap">
+    <div class="kicker">Social Media Strategy · 社群媒體策略</div>
+    <h1>Engineering Trust<br>at the <em>Edge.</em></h1>
+    <div class="rulebar"></div>
+    <p class="sub">A channel-by-channel operating system that turns Neteon's industrial expertise into qualified pipeline.</p>
+    <p class="sub subtc tc">將 Neteon 的工業專業，轉化為合格商機的頻道操作手冊 —— 為系統整合商、OEM、EPC 與關鍵基礎設施營運者打造。</p>
+
+    <div class="specs">
+      <div class="row"><span class="k">North Star</span><span class="dots"></span><span class="v"><em>40 RFQs</em> / quarter</span></div>
+      <div class="row"><span class="k">Primary Channel</span><span class="dots"></span><span class="v">LinkedIn + Showcase</span></div>
+      <div class="row"><span class="k">Audience</span><span class="dots"></span><span class="v">SI · OEM · EPC · Asset Owners</span></div>
+      <div class="row"><span class="k">Horizon</span><span class="dots"></span><span class="v">90-Day Rollout</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== 01 OVERVIEW ===== -->
+<section id="overview">
+  <div class="wrap">
+    <div class="chead">
+      <div class="chap-no">CHAPTER 01</div>
+      <h2 class="chap">Strategy Overview<span class="tc">策略總覽</span></h2>
+    </div>
+    <p class="lead">Neteon doesn't sell impulse purchases. We sell rugged, mission-critical infrastructure into 6–18 month engineering cycles. Social media's job is not to go viral — it is to be <b>present, credible, and technically right</b> at every step a specifier takes from "I have a problem" to "send me a quote."</p>
+    <p class="lead tc">Neteon 銷售的是進入 6–18 個月工程週期的關鍵任務基礎設施。社群的任務不是爆紅，而是在規格制定者從「我有問題」走到「請報價」的每一步，都保持在場、可信、技術正確。</p>
+
+    <div class="pull">
+      <span class="mark">“</span>
+      <p>All roads lead to the RFQ and the Knowledge Hub.
+        <span class="tc">所有路徑都通向詢價（RFQ）與知識中心。每一則貼文、影片與電子報，最終都導向一個可被追蹤的工程轉換。</span>
+      </p>
+    </div>
+
+    <div class="grid-cards">
+      <div class="card">
+        <span class="label">Where we are · 現況</span>
+        <h4>The current state</h4>
+        <ul>
+          <li>LinkedIn: <b>~664 followers</b> — posting, but under-leveraged</li>
+          <li>Showcase "Industrial Computing": <b>~27 followers</b></li>
+          <li>Knowledge Hub live, but <b>not GEO/AEO-optimized</b></li>
+          <li><b>No active YouTube / X</b> — video proof is missing</li>
+          <li>26,000+ customers, 1M+ devices — <b>under-told</b></li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="label">The gap · 問題</span>
+        <h4>Why it matters</h4>
+        <ul>
+          <li>Specifiers research <b>silently</b> for months before contact</li>
+          <li>Competitors (Moxa, Belden, Cisco IE) own the conversation</li>
+          <li>Technical buyers trust <b>demos &amp; data</b>, not slogans</li>
+          <li>AI search now <b>shapes the shortlist</b> before you're called</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="label">The play · 對策</span>
+        <h4>Our response</h4>
+        <ul>
+          <li>Make LinkedIn the <b>industrial authority feed</b></li>
+          <li>Build a <b>video proof library</b> on YouTube</li>
+          <li>Turn the Knowledge Hub into a <b>citation magnet</b></li>
+          <li>Re-activate the <b>installed base</b> by newsletter</li>
+          <li>Give every asset a <b>traceable CTA</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 02 NORTH STAR ===== -->
+<section id="northstar">
+  <div class="wrap">
+    <div class="chead">
+      <div class="chap-no">CHAPTER 02</div>
+      <h2 class="chap">North Star &amp; KPIs<span class="tc">北極星指標</span></h2>
+    </div>
+    <p class="lead">One number governs the strategy. Everything above it is a leading indicator; everything below it is execution.</p>
+
+    <div class="pull">
+      <span class="mark">★</span>
+      <p>40 social-sourced RFQs &amp; demo requests per quarter.
+        <span class="tc">北極星 —— 每季 40 件來自社群與內容的詢價／需求洽談。這是唯一能將社群活動連結到營收的指標。</span>
+      </p>
+    </div>
+
+    <p class="lead">Because the industrial sales cycle is long, we instrument a <b>three-layer funnel</b> — so we can see momentum months before revenue lands.</p>
+
+    <div class="funnel">
+      <div class="layer l1">
+        <div class="lvl">Awareness</div>
+        <div class="body"><b>Reach &amp; video proof</b> <span class="tc">觸及與影片證明</span><p>Impressions, follower growth, video view-through.</p></div>
+        <div class="goal">250k impressions / qtr<br>+1,500 followers</div>
+      </div>
+      <div class="layer l2">
+        <div class="lvl">Engagement</div>
+        <div class="body"><b>Trust &amp; dialogue</b> <span class="tc">信任與對話</span><p>Substantive comments, saves, profile visits, DMs from named accounts.</p></div>
+        <div class="goal">≥3.5% engagement<br>30+ qualified DMs / mo</div>
+      </div>
+      <div class="layer l3">
+        <div class="lvl">Conversion</div>
+        <div class="body"><b>Pipeline</b> <span class="tc">商機</span><p>RFQs, demo/quote requests, gated downloads, sign-ups.</p></div>
+        <div class="goal">40 RFQs / qtr<br>300 subscribers / qtr</div>
+      </div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="n">250<span>k</span></div><div class="l">Quarterly impressions</div><div class="lt">Awareness</div></div>
+      <div class="kpi"><div class="n">+1.5<span>k</span></div><div class="l">LinkedIn followers / qtr</div><div class="lt">Awareness</div></div>
+      <div class="kpi"><div class="n">35<span>%</span></div><div class="l">Video view-through</div><div class="lt">Awareness</div></div>
+      <div class="kpi"><div class="n">3.5<span>%</span></div><div class="l">Engagement rate</div><div class="lt">Engagement</div></div>
+      <div class="kpi"><div class="n">30<span>+</span></div><div class="l">Qualified DMs / month</div><div class="lt">Engagement</div></div>
+      <div class="kpi"><div class="n">300<span>/q</span></div><div class="l">Newsletter sign-ups</div><div class="lt">Conversion</div></div>
+      <div class="kpi"><div class="n">12<span>/q</span></div><div class="l">Gated whitepaper DLs</div><div class="lt">Conversion</div></div>
+      <div class="kpi star"><div class="n">40<span>/q</span></div><div class="l">RFQ / demo requests</div><div class="lt">★ North Star</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 03 PERSONAS ===== -->
+<section id="personas">
+  <div class="wrap">
+    <div class="chead">
+      <div class="chap-no">CHAPTER 03</div>
+      <h2 class="chap">Personas<span class="tc">目標受眾</span></h2>
+    </div>
+    <p class="lead">We write for three buyers who almost never share a job title — but who all touch the same purchase order.</p>
+
+    <div class="grid-cards">
+      <div class="card">
+        <span class="label">Persona 01 · Specifier</span>
+        <h3>The SI / EPC Engineer</h3>
+        <div class="sublab">系統整合商／EPC 工程師</div>
+        <ul>
+          <li><b>Role:</b> Designs &amp; specs OT networks for energy, rail, oil &amp; gas projects</li>
+          <li><b>Pain:</b> Reliability at −40°C / in hazardous zones; lead times that wreck schedules</li>
+          <li><b>Pain:</b> OT/IT convergence and IEC 62443 compliance pressure</li>
+          <li><b>Trigger:</b> A new tender, a failed legacy switch, a cyber-audit finding</li>
+          <li><b>Wins on:</b> Spec sheets, ruggedness proof, application diagrams</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="label">Persona 02 · Builder</span>
+        <h3>The OEM Product Engineer</h3>
+        <div class="sublab">OEM 產品工程師</div>
+        <ul>
+          <li><b>Role:</b> Embeds industrial computing / edge AI into their own machines</li>
+          <li><b>Pain:</b> Long-term part availability &amp; revision control</li>
+          <li><b>Pain:</b> Fitting Jetson / Core Ultra compute into a fanless, certified box</li>
+          <li><b>Trigger:</b> A new product line, an edge-AI feature roadmap</li>
+          <li><b>Wins on:</b> Benchmarks, thermal data, design-in support, roadmaps</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="label">Persona 03 · Owner</span>
+        <h3>The Asset Owner / Ops Lead</h3>
+        <div class="sublab">資產擁有者／營運主管</div>
+        <ul>
+          <li><b>Role:</b> Runs the plant, substation, BESS site, or data center</li>
+          <li><b>Pain:</b> Uptime, OT security blind spots, remote monitoring</li>
+          <li><b>Pain:</b> Justifying CapEx; fear of unplanned downtime</li>
+          <li><b>Trigger:</b> An outage, an expansion, a security mandate</li>
+          <li><b>Wins on:</b> Outcome stories, ROI / TCO, peer case studies</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">Secondary audiences: distributors / resellers (channel enablement) and government / defense procurement (compliance &amp; provenance) — served with the same content, reframed for resale or audit.</p>
+  </div>
+</section>
+
+<!-- ===== 04 VOICE ===== -->
+<section id="voice">
+  <div class="wrap">
+    <div class="chead">
+      <div class="chap-no">CHAPTER 04</div>
+      <h2 class="chap">Voice &amp; Messaging<span class="tc">語調與訊息</span></h2>
+    </div>
+    <p class="lead">Engineers can smell marketing a mile away. We sound like a senior field application engineer who respects the reader's time — precise, proof-backed, never hype.</p>
+
+    <div class="grid-2" style="margin-top:34px">
+      <div class="card">
+        <span class="label">Three core messages · 三大核心訊息</span>
+        <ul>
+          <li><b>Built for where it breaks.</b> Hardened for the heat, dust, vibration and voltage that kill commercial gear. <span class="tc">為極端環境而生。</span></li>
+          <li><b>Expertise you can call.</b> 20+ years, 1M+ devices — real FAEs, fast turnaround, design-in support. <span class="tc">可以打電話找到的專業。</span></li>
+          <li><b>From the floor to the AI data center.</b> One partner to collect, convert &amp; network critical operational data. <span class="tc">從產線到 AI 資料中心，一站串接。</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="label">Tone dials · 語調設定</span>
+        <ul>
+          <li><b>Technical, not academic</b> — depth, but readable in 30 seconds</li>
+          <li><b>Confident, not boastful</b> — let the spec and the outcome talk</li>
+          <li><b>Helpful first</b> — teach the problem before naming the product</li>
+          <li><b>Specific</b> — model numbers, °C, Gbps, IEC standards, real sites</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="dodont">
+      <div class="card do">
+        <span class="label">Do · 應該</span>
+        <ul>
+          <li>"This M12 switch held link at −40°C through a 6-month substation pilot."</li>
+          <li>Lead with the failure mode the reader fears</li>
+          <li>Show wiring diagrams, racks, and real deployments</li>
+          <li>Cite standards: IEC 62443, IEEE 1613, ATEX / UL Class I Div 2</li>
+        </ul>
+      </div>
+      <div class="card dont">
+        <span class="label">Don't · 避免</span>
+        <ul>
+          <li>"Revolutionize your business with cutting-edge synergy!"</li>
+          <li>Emoji-stuffed hype or stock-photo handshakes</li>
+          <li>Feature lists with no application context</li>
+          <li>Claims with no number, standard, or real site behind them</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 05 PILLARS ===== -->
+<section id="pillars">
+  <div class="wrap">
+    <div class="chead">
+      <div class="chap-no">CHAPTER 05</div>
+      <h2 class="chap">Content Pillars<span class="tc">內容支柱</span></h2>
+    </div>
+    <p class="lead">Five pillars, mixed differently per audience — shifting the balance between earning trust (education) and driving action (proof &amp; CTA).</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Pillar</th><th>What it is</th><th>Specifier / Owner</th><th>OEM</th></tr></thead>
+        <tbody>
+          <tr><td><b>Application Stories</b><br><span class="tc">應用案例</span></td><td>Deployed solutions: substation automation, BESS, microgrid, rail ITS, port, data-center liquid cooling.</td><td><b>30%</b></td><td>20%</td></tr>
+          <tr><td><b>Technical Education</b><br><span class="tc">技術教學</span></td><td>OT cybersecurity (IEC 62443), edge AI, protocol conversion, OT/IT convergence — the "SOP" of our field.</td><td>25%</td><td><b>30%</b></td></tr>
+          <tr><td><b>Industry Insight</b><br><span class="tc">產業洞察</span></td><td>AI CapEx, energy transition, grid modernization, market &amp; standards trends.</td><td>20%</td><td>15%</td></tr>
+          <tr><td><b>Product Spotlight</b><br><span class="tc">產品聚焦</span></td><td>Moxa, Neousys, Planet lines — benchmarks, certifications, design-in notes.</td><td>15%</td><td><b>25%</b></td></tr>
+          <tr><td><b>Behind the Brand</b><br><span class="tc">品牌幕後</span></td><td>COMPUTEX / Data Center World, team, FAE culture, "1M+ devices since 2002."</td><td>10%</td><td>10%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Rule of thumb: ~80% teach &amp; prove, ~20% direct CTA. Trust is the inventory; the RFQ is the sale.</p>
+  </div>
+</section>
+
+<!-- ===== 06 PLATFORMS ===== -->
+<section id="platforms">
+  <div class="wrap">
+    <div class="chead">
+      <div class="chap-no">CHAPTER 06</div>
+      <h2 class="chap">Platform Strategy<span class="tc">頻道策略矩陣</span></h2>
+    </div>
+    <p class="lead">Each channel has one job. We don't post everywhere equally — we concentrate force where industrial buyers actually are.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Channel</th><th>Role</th><th>Audience</th><th>Content</th><th>Cadence</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td><b>LinkedIn — Company</b><br><a href="https://www.linkedin.com/company/neteon/">/company/neteon</a></td><td>Industrial authority feed &amp; pipeline engine</td><td>All personas + partners</td><td>Application stories, insight, carousels, native video</td><td><b>4 / wk</b></td><td><span class="pill p">Primary</span></td></tr>
+          <tr><td><b>LinkedIn — Showcase</b><br>"Industrial Computing"</td><td>Edge-AI / computing deep-dive sub-brand</td><td>OEM engineers</td><td>Benchmarks, design-in, Neousys / edge-AI spotlights</td><td><b>2 / wk</b></td><td><span class="pill p">Primary</span></td></tr>
+          <tr><td><b>LinkedIn — Leadership</b><br>founder / FAE voices</td><td>Human credibility (dual-track)</td><td>Specifiers, owners</td><td>POV on trends, lessons from the field, reshares</td><td><b>3 / wk</b></td><td><span class="pill p">Primary</span></td></tr>
+          <tr><td><b>YouTube</b><br><span class="tc">影片證明庫</span></td><td>Video proof library &amp; SEO asset</td><td>Specifiers, OEMs</td><td>Demos, install walkthroughs, conference recaps, explainers</td><td><b>2 / mo</b> → wkly</td><td><span class="pill s">Build</span></td></tr>
+          <tr><td><b>Knowledge Hub / Blog</b><br>neteon.net</td><td>SEO + GEO / AEO citation magnet</td><td>Silent researchers + AI search</td><td>Pillar pages, technical guides, selection &amp; comparison content</td><td><b>2 / mo</b></td><td><span class="pill p">Primary</span></td></tr>
+          <tr><td><b>Email — "The Signal"</b><br><span class="tc">電子報</span></td><td>Activate the installed base (26k+)</td><td>Customers, subscribers</td><td>Monthly digest: best story + guide + product + event</td><td><b>1 / mo</b></td><td><span class="pill p">Primary</span></td></tr>
+          <tr><td><b>X / Twitter</b></td><td>Industry-news commentary &amp; conference live</td><td>Tech talent, press, ecosystem</td><td>Threads on standards / trends, live event posts</td><td><b>2 / wk</b></td><td><span class="pill s">Test</span></td></tr>
+          <tr><td><b>Facebook</b></td><td>Regional / legacy presence</td><td>Regional resellers</td><td>Repurposed highlights only</td><td><b>1 / wk</b></td><td><span class="pill">Maintain</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:54px">Baseline Snapshot <span class="tc" style="font-size:15px;font-weight:400">基線快照 · June 2026</span></h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Channel</th><th>Current</th><th>90-Day Goal</th><th>Progress</th></tr></thead>
+        <tbody>
+          <tr><td><b>LinkedIn Company</b></td><td>~664 followers</td><td>2,200 followers</td><td><div class="bar"><i style="width:30%"></i></div><div class="barnum">30%</div></td></tr>
+          <tr><td><b>Showcase (Computing)</b></td><td>~27 followers</td><td>400 followers</td><td><div class="bar"><i style="width:7%"></i></div><div class="barnum">7%</div></td></tr>
+          <tr><td><b>YouTube</b></td><td>0 / inactive</td><td>Launch + 8 videos</td><td><div class="bar"><i style="width:3%"></i></div><div class="barnum">3%</div></td></tr>
+          <tr><td><b>Knowledge Hub (GEO-ready)</b></td><td>~0 optimized</td><td>12 pillar / AEO pages</td><td><div class="bar"><i style="width:5%"></i></div><div class="barnum">5%</div></td></tr>
+          <tr><td><b>Newsletter subscribers</b></td><td>List dormant</td><td>1,000 active opt-ins</td><td><div class="bar"><i style="width:12%"></i></div><div class="barnum">12%</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Numbers are starting estimates from a public scan — confirm against native analytics before locking targets.</p>
+  </div>
+</section>
+
+<!-- ===== 07 CALENDAR ===== -->
+<section id="calendar">
+  <div class="wrap">
+    <div class="chead">
+      <div class="chap-no">CHAPTER 07</div>
+      <h2 class="chap">Weekly Operating Rhythm<span class="tc">每週節奏</span></h2>
+    </div>
+    <p class="lead">Produced in one Friday batch, scheduled ahead, with a mid-week buffer for industry news. Consistency beats intensity.</p>
+
+    <div class="cal">
+      <div class="day"><div class="dn">Mon</div><div class="slot"><span class="ch">LinkedIn</span>Application story</div><div class="slot x"><span class="ch">X</span>Standards / trend thread</div></div>
+      <div class="day"><div class="dn">Tue</div><div class="slot"><span class="ch">Showcase</span>Edge-AI / OEM spotlight</div><div class="slot eml"><span class="ch">Email</span>Build digest (monthly)</div></div>
+      <div class="day"><div class="dn">Wed</div><div class="slot"><span class="ch">LinkedIn</span>Technical education carousel</div><div class="slot yt"><span class="ch">YouTube</span>Demo / walkthrough</div></div>
+      <div class="day"><div class="dn">Thu</div><div class="slot"><span class="ch">Leadership</span>Founder / FAE POV</div><div class="slot x"><span class="ch">X</span>Engage / reshare</div></div>
+      <div class="day"><div class="dn">Fri</div><div class="slot"><span class="ch">LinkedIn</span>Industry insight / data</div><div class="slot"><span class="ch">Hub</span>Pillar page (bi-weekly)</div></div>
+      <div class="day"><div class="dn">Sat</div><div class="slot ops"><span class="ch">All</span>Light evergreen reshare</div></div>
+      <div class="day"><div class="dn">Sun</div><div class="slot ops"><span class="ch">Ops</span>Friday batch + schedule</div></div>
+    </div>
+
+    <div class="card" style="margin-top:28px">
+      <span class="label">Friday batch checklist · 週五批量製作</span>
+      <ul>
+        <li><b>4</b> LinkedIn company posts &nbsp;·&nbsp; <b>2</b> Showcase posts &nbsp;·&nbsp; <b>3</b> leadership drafts</li>
+        <li><b>1</b> YouTube video edited &amp; titled with SEO keywords — or 2 short clips from it</li>
+        <li><b>2</b> X threads &nbsp;·&nbsp; <b>1</b> Knowledge Hub draft in progress (bi-weekly)</li>
+        <li>All scheduled via <b>Buffer / Metricool / Sprout</b>; 30-min daily window reserved for live news</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 08 HOOKS ===== -->
+<section id="hooks">
+  <div class="wrap">
+    <div class="chead">
+      <div class="chap-no">CHAPTER 08</div>
+      <h2 class="chap">Hook Formulas<span class="tc">開場句公式</span></h2>
+    </div>
+    <p class="lead">The first line decides whether a busy engineer keeps scrolling. Lead with the failure they fear or the number they want.</p>
+
+    <div class="grid-2" style="margin-top:34px">
+      <div>
+        <div class="colhead">For Specifiers &amp; Owners · 規格／營運</div>
+        <div class="hook"><div class="form">Failure-mode</div><div class="q">"At −40°C, most 'industrial' switches drop link. Here's the one that didn't — through a 6-month substation pilot."</div></div>
+        <div class="hook"><div class="form">Cost-of-downtime</div><div class="q">"One hour of unplanned downtime at this BESS site costs more than the entire network refresh. So we redesigned it."</div></div>
+        <div class="hook"><div class="form">Compliance</div><div class="q">"Your OT network probably can't pass an IEC 62443 audit yet. Three gaps we see on every site visit."</div></div>
+        <div class="hook"><div class="form">Contrarian</div><div class="q">"Stop buying commercial switches for the plant floor. The math doesn't work — here's the spreadsheet."</div></div>
+      </div>
+      <div>
+        <div class="colhead">For OEM Engineers · OEM 工程師</div>
+        <div class="hook"><div class="form">Spec-tease</div><div class="q">"Jetson-class edge AI, fanless, −25 to 70°C, zero moving parts. The thermal data is wilder than the spec sheet."</div></div>
+        <div class="hook"><div class="form">Longevity</div><div class="q">"The #1 reason design-ins fail in year 3: the part went EOL. Here's our 7-year availability commitment."</div></div>
+        <div class="hook"><div class="form">How-to</div><div class="q">"How to fit Intel Core Ultra compute into a sealed enclosure without thermal throttling — a design walkthrough."</div></div>
+        <div class="hook"><div class="form">Benchmark</div><div class="q">"We ran the same edge-AI inference on three platforms. The price-per-watt winner surprised us."</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 09 REPURPOSE ===== -->
+<section id="repurpose">
+  <div class="wrap">
+    <div class="chead">
+      <div class="chap-no">CHAPTER 09</div>
+      <h2 class="chap">The Repurpose Engine<span class="tc">內容再利用引擎</span></h2>
+    </div>
+    <p class="lead">One serious asset feeds every channel. We never create single-use content — we create a source, then atomize it.</p>
+
+    <div class="pull">
+      <span class="mark">”</span>
+      <p>Every pillar page or video becomes nine or more social assets.
+        <span class="tc">每一篇支柱文章或一支影片，都拆解成 9 件以上的社群素材。</span>
+      </p>
+    </div>
+
+    <div class="grid-3" style="margin-top:8px">
+      <div class="card">
+        <span class="label">Source · 來源</span>
+        <h4>One application case study</h4>
+        <ul>
+          <li>A deployed project (e.g. microgrid control)</li>
+          <li>Problem → solution → measured outcome</li>
+          <li>Customer-approved, with real data &amp; diagrams</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="label">Atomize · 拆解</span>
+        <h4>Becomes…</h4>
+        <ul>
+          <li><b>2</b> LinkedIn posts (story + lesson)</li>
+          <li><b>1</b> carousel (the diagram, step by step)</li>
+          <li><b>1</b> YouTube walkthrough + <b>2</b> short clips</li>
+          <li><b>1</b> X thread · <b>1</b> newsletter feature</li>
+          <li><b>1</b> Knowledge Hub case page (GEO-optimized)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="label">Compound · 複利</span>
+        <h4>Why it works</h4>
+        <ul>
+          <li>Specifiers need <b>5–7 touches</b> before they reach out</li>
+          <li>One case, seen across channels, becomes the touches</li>
+          <li>The Hub page earns search + AI citations <b>for years</b></li>
+          <li>Cuts production load — quality over volume</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 10 ENGAGEMENT ===== -->
+<section id="engagement">
+  <div class="wrap">
+    <div class="chead">
+      <div class="chap-no">CHAPTER 10</div>
+      <h2 class="chap">Engagement SOP<span class="tc">互動標準流程</span></h2>
+    </div>
+    <p class="lead">In B2B, the comment section and DMs are where pipeline actually starts. Thirty focused minutes a day, every weekday.</p>
+
+    <div class="grid-2" style="margin-top:34px">
+      <div class="card">
+        <span class="label">Daily 30-min routine · 每日 30 分鐘</span>
+        <ul>
+          <li><b>5 min</b> — Reply to every comment on our posts, same day</li>
+          <li><b>15 min</b> — Comment with substance on 10 target accounts (SIs, OEMs, partners, industry voices)</li>
+          <li><b>5 min</b> — Reshare 1 relevant industry item + add Neteon's expert POV</li>
+          <li><b>5 min</b> — Open a conversation with 2–3 new relevant followers (no pitch)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="label">DM → RFQ handoff · 私訊轉商機</span>
+        <ul>
+          <li>Qualify softly: application, environment, timeline, volume</li>
+          <li>Lead with help — share the right guide or spec first</li>
+          <li>When intent is clear, route to <b>FAE / sales with full context</b></li>
+          <li>Log every qualified DM in CRM (HubSpot); tag source = social</li>
+          <li>Never let a named-account question sit beyond <b>4 business hours</b></li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">Principle: engagement is sales prospecting that doesn't feel like prospecting. Be the most helpful expert in the thread.</p>
+  </div>
+</section>
+
+<!-- ===== 11 KPI ===== -->
+<section id="kpi">
+  <div class="wrap">
+    <div class="chead">
+      <div class="chap-no">CHAPTER 11</div>
+      <h2 class="chap">Measurement Cadence<span class="tc">衡量節奏</span></h2>
+    </div>
+    <p class="lead">What gets reviewed gets improved. Three loops: weekly pulse, monthly deep-dive, quarterly steering.</p>
+
+    <div class="grid-3" style="margin-top:34px">
+      <div class="card">
+        <span class="label">Weekly · 每週</span>
+        <h4>Pulse — 15 min</h4>
+        <ul>
+          <li>Top &amp; bottom post by engagement</li>
+          <li>Follower delta per channel</li>
+          <li>New qualified DMs logged</li>
+          <li>One thing to double down on next week</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="label">Monthly · 每月</span>
+        <h4>Deep-dive — 60 min</h4>
+        <ul>
+          <li>Funnel: impressions → engagement → RFQ</li>
+          <li>Which pillar &amp; channel drove pipeline</li>
+          <li>YouTube view-through &amp; Hub traffic / citations</li>
+          <li>Newsletter open / click trends</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="label">Quarterly · 每季</span>
+        <h4>Steering</h4>
+        <ul>
+          <li>North Star: RFQs vs. the 40 target</li>
+          <li>Re-set goals &amp; budget allocation</li>
+          <li>Kill or scale the X experiment</li>
+          <li>Publish the flagship whitepaper</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:24px">
+      <span class="label">Attribution that survives a long cycle · 長週期歸因</span>
+      <ul>
+        <li>UTM-tag every social → site link; dedicated landing pages per campaign</li>
+        <li>"How did you hear about us?" field on every RFQ / contact form</li>
+        <li>HubSpot: first-touch + last-touch source on each deal</li>
+        <li>Accept that social is often the <b>silent first touch</b> — credit assisted pipeline, not just last-click</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 12 ROADMAP ===== -->
+<section id="roadmap">
+  <div class="wrap">
+    <div class="chead">
+      <div class="chap-no">CHAPTER 12</div>
+      <h2 class="chap">90-Day Roadmap<span class="tc">90 天路線圖</span></h2>
+    </div>
+    <p class="lead">Three 30-day phases: build the foundation, scale reach, then convert. No phase starts before the previous one is real.</p>
+
+    <div class="road">
+      <div class="phase">
+        <div class="pn">01</div>
+        <div class="ph">基礎建立 · Foundation</div>
+        <div class="days">Days 1–30</div>
+        <h3>Get the house in order</h3>
+        <ul>
+          <li>Refresh LinkedIn company + Showcase (banner, about, CTA, pinned post)</li>
+          <li>Activate dual-track: company + 1–2 leadership voices</li>
+          <li>Define the visual system (colors, templates, carousel kit)</li>
+          <li>Batch-produce 20 baseline assets across pillars</li>
+          <li>Launch lead magnet #1: "Industrial Network Selection Guide" (gated)</li>
+          <li>Stand up YouTube + first 2 demo videos</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="pn">02</div>
+        <div class="ph">擴大觸及 · Scale</div>
+        <div class="days">Days 31–60</div>
+        <h3>Build authority &amp; reach</h3>
+        <ul>
+          <li>Lock in weekly application-story cadence</li>
+          <li>Ship 4 Knowledge Hub pillar pages (GEO / AEO-optimized)</li>
+          <li>Weekly YouTube + short clips repurposed everywhere</li>
+          <li>2–3 partner / KOL collaborations (Moxa, Neousys, industry voices)</li>
+          <li>Launch "The Signal" newsletter to the installed base</li>
+          <li>Small LinkedIn ad test (US$1.5–3k) on the best case</li>
+        </ul>
+      </div>
+      <div class="phase final">
+        <div class="pn">03</div>
+        <div class="ph">驅動轉換 · Convert</div>
+        <div class="days">Days 61–90</div>
+        <h3>Turn attention into RFQs</h3>
+        <ul>
+          <li>"Free OT network / security health check" as soft sales entry</li>
+          <li>Retarget engaged audiences to gated whitepaper + demo CTA</li>
+          <li>Publish flagship: "2026 Industrial Edge &amp; OT Networking Trends"</li>
+          <li>Tighten DM → RFQ handoff with sales; review attribution</li>
+          <li>Q-review: scale what converts, cut what doesn't, set Q3</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin-top:60px">Risks &amp; Mitigations <span class="tc" style="font-size:15px;font-weight:400">風險與對策</span></h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Risk</th><th>Why it bites</th><th>Mitigation</th></tr></thead>
+        <tbody>
+          <tr><td><b>Long cycle hides ROI</b></td><td>Leadership loses patience before RFQs show up</td><td>Report leading indicators monthly; frame social as assisted pipeline, not last-click</td></tr>
+          <tr><td><b>Too technical OR too fluffy</b></td><td>Loses engineers either way</td><td>FAE reviews accuracy; marketing reviews clarity. Both sign off.</td></tr>
+          <tr><td><b>Algorithm dependency</b></td><td>A reach drop tanks the funnel</td><td>Own the audience: newsletter + Knowledge Hub are the durable assets</td></tr>
+          <tr><td><b>Production capacity</b></td><td>Cadence slips, consistency dies</td><td>Repurpose engine (1→9) + Friday batch + scheduler reduce the load</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== APPENDIX ===== -->
+<section id="team" style="border-bottom:none">
+  <div class="wrap">
+    <div class="chead">
+      <div class="chap-no">APPENDIX</div>
+      <h2 class="chap">Team &amp; Tools<span class="tc">團隊與工具</span></h2>
+    </div>
+    <div class="grid-2" style="margin-top:34px">
+      <div class="card">
+        <span class="label">Lean operating team · 精實團隊</span>
+        <ul>
+          <li><b>Owner / Strategist</b> — calendar, North Star, reporting</li>
+          <li><b>FAE / SME</b> — technical accuracy, story sourcing (part-time)</li>
+          <li><b>Designer / Editor</b> — carousels, video edits (in-house or freelance)</li>
+          <li><b>Leadership voices</b> — 15 min / week on personal posts</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="label">Tool stack · 工具</span>
+        <ul>
+          <li><b>Scheduling:</b> Buffer / Metricool / Sprout Social</li>
+          <li><b>CRM &amp; attribution:</b> HubSpot (source tagging, deal touch)</li>
+          <li><b>Design:</b> Canva / Figma + branded template kit</li>
+          <li><b>Video:</b> CapCut / Premiere + captions for sound-off feeds</li>
+          <li><b>SEO / GEO:</b> Ahrefs / Semrush + AEO checks in ChatGPT &amp; Perplexity</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="brand"><b>Neteon</b><span>Field Manual № 01</span></div>
+  <div class="orn">✦ ✦ ✦</div>
+  <p class="tagline">From the manufacturing floor to the AI data center.</p>
+  <p class="mono">Social Media Strategy · v1.0 · 2026</p>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.style.opacity=1;
+        e.target.style.transform='translateY(0)';
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.1});
+  document.querySelectorAll('.card,.kpi,.phase,.layer,.day,.hook,.pull').forEach((el,i)=>{
+    el.style.opacity=0;
+    el.style.transform='translateY(16px)';
+    el.style.transition='opacity .6s ease '+(i%6*0.04)+'s, transform .6s ease '+(i%6*0.04)+'s, border-color .25s, box-shadow .25s';
+    io.observe(el);
+  });
+  const bio = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const i=e.target.querySelector('i');
+        const w=i.style.width;i.style.width='0';
+        requestAnimationFrame(()=>{i.style.transition='width 1.2s cubic-bezier(.2,.8,.2,1)';i.style.width=w;});
+        bio.unobserve(e.target);
+      }
+    });
+  },{threshold:.6});
+  document.querySelectorAll('.bar').forEach(b=>bio.observe(b));
+</script>
+</body>
+</html>
