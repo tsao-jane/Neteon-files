@@ -4,345 +4,431 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>From Prompt to Partner — AI Productivity Event</title>
-<meta name="description" content="A relaxed 3-month event to help everyone go from asking AI one-off questions to working alongside it. No pressure, no elimination — just a few friendly sessions and small wins." />
+<meta name="description" content="A hands-on 3-month event to help everyone move from asking AI one-off questions to working alongside it. Joining is up to you, and there's no elimination — just guided sessions, live demos, and real wins you can use at work." />
 <meta name="theme-color" content="#84d3df" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg: #f4f9fa;
-    --bg-card: #ffffff;
-    --bg-sub: #eaf4f6;
-    --ink: #11201f;
-    --ink-mid: #324245;
-    --ink-soft: #56656a;
-    --rule: #e0ecee;
-    --rule-strong: #cce0e3;
-    --accent: #0e7d8c;          /* deep teal */
-    --accent-hi: #14a3b6;       /* brighter teal for hover / gradients */
-    --accent-2: #d9663f;        /* warm coral, used sparingly */
-    --accent-soft: #e0f4f7;
-    --theme: #84d3df;           /* survey theme color */
-    --highlight: #fff2e8;
-    --shadow-sm: 0 1px 2px rgba(13,40,44,.05);
-    --shadow: 0 1px 2px rgba(13,40,44,.04), 0 10px 30px -8px rgba(13,40,44,.12);
-    --shadow-lg: 0 2px 4px rgba(13,40,44,.04), 0 24px 60px -16px rgba(13,40,44,.18);
-    --radius: 14px;
-    --radius-sm: 10px;
+    --paper:      #f4f9fa;   /* cool teal-white — from the original */
+    --paper-2:    #eaf4f6;   /* teal section wash */
+    --card:       #ffffff;
+    --ink:        #11201f;
+    --ink-mid:    #324245;
+    --ink-soft:   #56656a;
+
+    --rule:       #e0ecee;
+    --rule-soft:  #eef5f6;
+
+    /* the signature shift: before (dim grey-teal) → after (teal) */
+    --before:     #8aa3a6;   /* muted grey-teal — the "prompt" state */
+    --before-ink: #56656a;
+    --before-bg:  #eef4f4;
+    --before-line:#d3e1e2;
+
+    --after:      #14a3b6;   /* brighter teal — energy / the "partner" spark */
+    --after-deep: #0e7d8c;   /* deep teal — for text + emphasis */
+    --after-bg:   #e0f4f7;
+    --after-line: #bfe6ec;
+
+    --sage:       #d9663f;   /* warm coral — used sparingly, the "growth" pop */
+    --sage-bg:    #fdeee6;
+
+    --shadow-sm: 0 1px 2px rgba(60,48,30,.05);
+    --shadow:    0 1px 2px rgba(60,48,30,.04), 0 14px 34px -14px rgba(60,48,30,.16);
+    --shadow-lg: 0 2px 6px rgba(60,48,30,.05), 0 30px 60px -22px rgba(60,48,30,.22);
+
+    --radius:    18px;
+    --radius-sm: 12px;
     --ease: cubic-bezier(.22,.61,.36,1);
-    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    --display: "Fraunces", Georgia, "Times New Roman", serif;
+    --sans: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; scroll-padding-top: 24px; -webkit-text-size-adjust: 100%; }
   html, body { margin: 0; padding: 0; }
-  ::selection { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+  ::selection { background: var(--after-bg); }
   body {
-    background: var(--bg);
+    background: var(--paper);
     color: var(--ink);
     font-family: var(--sans);
+    font-size: 17px;          /* generous base — readable for every age */
     font-weight: 400;
-    line-height: 1.65;
+    line-height: 1.68;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
-  .wrap { max-width: 920px; margin: 0 auto; padding: 0 28px; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 30px; }
 
-  /* HERO */
-  .hero {
-    position: relative;
-    padding: 100px 0 72px;
-    border-bottom: 1px solid var(--rule);
-    background:
-      radial-gradient(ellipse 60% 55% at 12% -5%, rgba(132,211,223,.30), transparent 60%),
-      radial-gradient(ellipse 50% 40% at 100% 12%, rgba(14,125,140,.10), transparent 55%),
-      linear-gradient(180deg, #fbfdfe, var(--bg));
-    overflow: hidden;
-  }
-  .hero::after {
-    content: "";
-    position: absolute;
-    left: 0; right: 0; bottom: -1px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    opacity: .3;
-  }
-  .eyebrow {
+  /* ── the signature: a before → after "shift" device ───────────────── */
+  .shift {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: var(--accent);
-    background: var(--accent-soft);
-    border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
-    padding: 6px 13px;
-    border-radius: 999px;
-    box-shadow: var(--shadow-sm);
+    gap: .55em;
+    font-weight: 600;
   }
-  .eyebrow::before {
+  .shift .from { color: var(--before); }
+  .shift .to   { color: var(--after-deep); }
+  .shift .arrow {
+    width: 1.5em; height: 1px;
+    position: relative;
+    background: linear-gradient(90deg, var(--before-line), var(--after-line));
+    flex: none;
+  }
+  .shift .arrow::after {
     content: "";
+    position: absolute; right: 0; top: 50%;
     width: 6px; height: 6px;
-    border-radius: 999px;
-    background: var(--accent);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+    border-top: 1px solid var(--after); border-right: 1px solid var(--after);
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  /* eyebrow — small caps, no mono, no terminal vibe */
+  .kicker {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--after-deep);
+    display: inline-block;
+  }
+  .kicker.cool { color: var(--before); }
+  .kicker.sage { color: var(--sage); }
+
+  /* ── HERO ──────────────────────────────────────────────────────────── */
+  .hero { position: relative; padding: 92px 0 70px; overflow: hidden; }
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 55% 50% at 88% -8%, var(--after-bg), transparent 62%),
+      radial-gradient(ellipse 50% 45% at -5% 0%, var(--before-bg), transparent 60%);
+    opacity: .8;
+    z-index: 0;
+  }
+  .hero .wrap { position: relative; z-index: 1; }
+
+  .invite {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 19px;
+    color: var(--ink-mid);
+    margin: 0 0 22px;
   }
   h1 {
-    font-weight: 700;
-    font-size: clamp(40px, 6.4vw, 64px);
-    line-height: 1.05;
-    letter-spacing: -0.025em;
-    margin: 26px 0 20px;
-    max-width: 16ch;
+    font-family: var(--display);
+    font-weight: 500;
+    font-optical-sizing: auto;
+    font-size: clamp(46px, 8.5vw, 88px);
+    line-height: .98;
+    letter-spacing: -0.015em;
+    margin: 0 0 6px;
   }
-  h1 em {
-    font-style: normal;
-    background: linear-gradient(120deg, var(--accent), var(--accent-hi));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  h1 .word-prompt  { color: var(--before); }
+  h1 .word-partner { color: var(--after-deep); font-style: italic; }
+  h1 .to {
+    display: inline-block;
+    font-size: .42em;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--ink-soft);
+    vertical-align: middle;
+    margin: 0 .18em;
   }
   .lede {
     font-size: 20px;
-    line-height: 1.62;
+    line-height: 1.6;
     color: var(--ink-mid);
-    max-width: 58ch;
-    margin: 0;
+    max-width: 56ch;
+    margin: 28px 0 0;
   }
   .lede strong { color: var(--ink); font-weight: 600; }
-  .meta {
-    margin-top: 38px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--ink-soft);
-  }
-  .meta span {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 7px;
-    background: color-mix(in srgb, var(--bg-card) 70%, transparent);
-    border: 1px solid var(--rule);
-    border-radius: 999px;
-    padding: 7px 14px;
-    backdrop-filter: blur(4px);
-  }
-  .meta b { color: var(--ink); font-weight: 600; }
 
-  /* SECTIONS */
-  section { padding: 80px 0; border-bottom: 1px solid var(--rule); }
-  .section-num {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: .16em;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin-bottom: 14px;
+  .facts {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
   }
-  .section-num::before {
-    content: "";
-    width: 22px; height: 2px;
-    background: var(--accent);
-    border-radius: 2px;
+  .facts .fact {
+    flex: 1 1 0;
+    min-width: 150px;
+    padding: 18px 22px 18px 0;
+    border-right: 1px solid var(--rule-soft);
   }
+  .facts .fact:last-child { border-right: 0; }
+  .facts .fact .k {
+    font-size: 12px; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-soft);
+  }
+  .facts .fact .v {
+    font-family: var(--display);
+    font-size: 21px; font-weight: 500;
+    color: var(--ink); margin-top: 4px; line-height: 1.2;
+  }
+
+  /* ── SECTIONS ──────────────────────────────────────────────────────── */
+  .section { padding: 74px 0; border-top: 1px solid var(--rule); }
+  .section.wash { background: var(--paper-2); }
   h2 {
-    font-size: clamp(26px, 4vw, 36px);
-    line-height: 1.16;
-    letter-spacing: -0.02em;
-    font-weight: 600;
-    margin: 0 0 18px;
-  }
-  h2 em { font-style: normal; color: var(--accent); }
-  h3 {
-    font-size: 19px;
-    line-height: 1.35;
-    font-weight: 600;
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(30px, 5vw, 46px);
+    line-height: 1.08;
     letter-spacing: -0.01em;
-    margin: 28px 0 8px;
+    margin: 14px 0 20px;
+    max-width: 20ch;
   }
-  p { margin: 12px 0; color: var(--ink-mid); }
-  .lead { font-size: 17.5px; line-height: 1.7; color: var(--ink-mid); max-width: 66ch; }
-  .lead strong { color: var(--ink); }
-  ul, ol { color: var(--ink-mid); padding-left: 22px; }
-  li { margin: 8px 0; }
-  li::marker { color: var(--accent); }
+  h2 em { font-style: italic; color: var(--after-deep); }
+  h3 {
+    font-family: var(--display);
+    font-size: 22px; font-weight: 500; line-height: 1.25;
+    margin: 0 0 8px; color: var(--ink);
+  }
+  p { margin: 14px 0; color: var(--ink-mid); }
+  .lead { font-size: 19px; line-height: 1.65; color: var(--ink-mid); max-width: 60ch; }
+  .lead strong { color: var(--ink); font-weight: 600; }
+  ul { color: var(--ink-mid); padding-left: 0; list-style: none; }
+  ul li { margin: 12px 0; padding-left: 26px; position: relative; }
+  ul li::before {
+    content: ""; position: absolute; left: 4px; top: .62em;
+    width: 7px; height: 7px; border-radius: 999px;
+    background: var(--after); opacity: .8;
+  }
   strong { color: var(--ink); }
 
-  /* CARDS */
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-  @media (max-width: 760px) {
-    .grid-2, .grid-3 { grid-template-columns: 1fr; }
-    h1 { font-size: 38px; }
-    h2 { font-size: 26px; }
-    section { padding: 56px 0; }
-    .wrap { padding: 0 22px; }
+  /* ── the before→after panel (reuses the signature at full size) ─────── */
+  .threshold {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: stretch;
+    gap: 0;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--card);
+    box-shadow: var(--shadow);
   }
+  .threshold .side { padding: 30px 30px; }
+  .threshold .side.before { background: var(--before-bg); }
+  .threshold .side.after  { background: var(--after-bg); }
+  .threshold .side .tag {
+    font-size: 12px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .threshold .side.before .tag { color: var(--before); }
+  .threshold .side.after  .tag { color: var(--after-deep); }
+  .threshold .side h3 { font-size: 19px; }
+  .threshold .side p { font-size: 15px; margin: 8px 0 0; }
+  .threshold .mid {
+    display: grid; place-items: center;
+    width: 64px;
+    background: linear-gradient(180deg, var(--before-bg), var(--after-bg));
+  }
+  .threshold .mid svg { width: 26px; height: 26px; }
+
+  /* ── cards ─────────────────────────────────────────────────────────── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 26px; }
+  .lanes  { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 28px; }
   .card {
-    position: relative;
-    background: var(--bg-card);
+    background: var(--card);
     border: 1px solid var(--rule);
     border-radius: var(--radius);
     padding: 26px 28px;
-    box-shadow: var(--shadow);
-    transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease);
+    box-shadow: var(--shadow-sm);
+    transition: transform .22s var(--ease), box-shadow .22s var(--ease), border-color .22s var(--ease);
   }
   .card:hover {
     transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--rule-strong);
+    box-shadow: var(--shadow);
+    border-color: var(--after-line);
   }
-  .card .num {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .14em;
-    color: var(--accent);
-    padding-bottom: 2px;
-    border-bottom: 2px solid color-mix(in srgb, var(--accent) 30%, transparent);
-  }
-  .card h3 { margin-top: 12px; }
-  .card p { font-size: 14.5px; line-height: 1.65; }
+  .card p { font-size: 15px; line-height: 1.6; margin: 6px 0 0; }
 
-  /* STEPS */
-  .steps { counter-reset: step; margin-top: 28px; display: grid; gap: 14px; }
+  /* a "lane" = a way to shine. Marked by a keyword, not a number. */
+  .lane .label {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--sage);
+    margin-bottom: 2px;
+  }
+  .lane.feature {
+    grid-column: span 2;
+    background: linear-gradient(120deg, var(--sage-bg), var(--card) 70%);
+    border-color: var(--after-line);
+  }
+  .lane.feature .label { color: var(--sage); }
+
+  /* ── the "real example" — a quiet, human proof, not a banner ────────── */
+  .proof {
+    margin-top: 30px;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--after);
+    border-radius: 4px var(--radius-sm) var(--radius-sm) 4px;
+    padding: 26px 30px;
+    box-shadow: var(--shadow-sm);
+  }
+  .proof .metric {
+    font-family: var(--display);
+    font-size: clamp(22px, 4vw, 30px);
+    font-weight: 500;
+    line-height: 1.1;
+    margin: 0 0 10px;
+    color: var(--ink);
+  }
+  .proof .metric .from { color: var(--before); }
+  .proof .metric .to { color: var(--after-deep); font-style: italic; }
+  .proof .metric .arrow {
+    display: inline-block; margin: 0 .35em; color: var(--ink-soft); font-style: italic;
+    font-size: .7em;
+  }
+  .proof p { margin: 0; font-size: 15.5px; color: var(--ink-mid); }
+
+  /* ── steps (these ARE a real sequence, so they keep order) ──────────── */
+  .steps { margin-top: 28px; display: grid; gap: 0; }
   .step {
     display: grid;
-    grid-template-columns: 46px 1fr;
-    gap: 18px;
-    align-items: start;
-    background: var(--bg-card);
+    grid-template-columns: 30px 1fr;
+    gap: 22px;
+    padding: 24px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .step:last-child { border-bottom: 1px solid var(--rule); }
+  .step .ord {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--after-deep);
+    line-height: 1.3;
+  }
+  .step h3 { font-size: 19px; margin-bottom: 4px; }
+  .step p { margin: 0; font-size: 15.5px; }
+
+  /* ── prizes — warm spread, deliberately NOT one giant number ────────── */
+  .prizes {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .prize {
+    background: var(--card);
     border: 1px solid var(--rule);
     border-radius: var(--radius);
-    padding: 20px 24px;
-    box-shadow: var(--shadow-sm);
-    transition: transform .18s var(--ease), box-shadow .18s var(--ease);
-  }
-  .step:hover { transform: translateX(3px); box-shadow: var(--shadow); }
-  .step::before {
-    counter-increment: step;
-    content: counter(step);
-    width: 38px; height: 38px;
-    display: grid; place-items: center;
-    border-radius: 999px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-hi));
-    color: #fff;
-    font-family: var(--mono);
-    font-weight: 600;
-    font-size: 16px;
-  }
-  .step h4 { margin: 4px 0 4px; font-size: 16px; font-weight: 600; color: var(--ink); }
-  .step p { margin: 0; font-size: 14.5px; line-height: 1.6; }
-
-  /* CALLOUT */
-  .callout {
-    position: relative;
-    background: linear-gradient(180deg, color-mix(in srgb, var(--highlight) 70%, #fff), var(--highlight));
-    border: 1px solid color-mix(in srgb, var(--accent-2) 22%, transparent);
-    border-left: 4px solid var(--accent-2);
-    padding: 22px 26px;
-    border-radius: 4px var(--radius-sm) var(--radius-sm) 4px;
-    margin: 28px 0;
+    padding: 26px 24px;
     box-shadow: var(--shadow-sm);
   }
-  .callout p { color: var(--ink); margin: 0; line-height: 1.7; }
-  .callout b { color: var(--accent-2); }
-
-  /* PRIZE BANNER */
-  .prize-banner {
-    margin-top: 26px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-hi));
-    border-radius: var(--radius);
-    padding: 38px 34px;
-    color: #fff;
-    box-shadow: var(--shadow-lg);
-    position: relative;
-    overflow: hidden;
+  .prize .ico { font-size: 26px; line-height: 1; }
+  .prize h3 { font-size: 18px; margin: 14px 0 4px; }
+  .prize p { font-size: 14.5px; margin: 0; }
+  .prize-note {
+    margin-top: 20px;
+    font-size: 15.5px;
+    color: var(--ink-mid);
   }
-  .prize-banner::after {
-    content: "";
-    position: absolute;
-    right: -40px; top: -40px;
-    width: 220px; height: 220px;
-    border-radius: 999px;
-    background: radial-gradient(circle, rgba(132,211,223,.45), transparent 65%);
-  }
-  .prize-banner .amount {
-    font-size: clamp(38px, 7vw, 56px);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1;
-    position: relative;
-  }
-  .prize-banner .amount small { font-size: 18px; font-weight: 500; opacity: .85; letter-spacing: 0; }
-  .prize-banner p { color: rgba(255,255,255,.92); margin: 14px 0 0; max-width: 54ch; position: relative; font-size: 15.5px; }
+  .prize-note strong { color: var(--after-deep); }
 
   .note {
-    background: var(--bg-sub);
+    background: var(--paper-2);
     border: 1px solid var(--rule);
-    border-left: 3px solid var(--rule-strong);
     border-radius: var(--radius-sm);
-    padding: 16px 20px;
-    margin: 20px 0;
-    font-size: 14px;
+    padding: 18px 24px;
+    margin: 26px 0 0;
+    font-size: 15.5px;
     line-height: 1.7;
     color: var(--ink-mid);
   }
+  .note strong { color: var(--ink); }
 
-  /* FOOTER */
+  /* ── footer ────────────────────────────────────────────────────────── */
   footer {
-    padding: 60px 0 86px;
+    padding: 64px 0 90px;
     text-align: center;
-    color: var(--ink-soft);
-    font-size: 13px;
-    background: radial-gradient(ellipse 50% 80% at 50% 100%, rgba(132,211,223,.18), transparent 70%);
+    border-top: 1px solid var(--rule);
   }
+  footer .mark {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 26px;
+    color: var(--ink);
+  }
+  footer .mark .from { color: var(--before); font-style: normal; }
+  footer .mark .to { color: var(--after-deep); }
+  footer p { color: var(--ink-soft); font-size: 14px; margin: 12px 0 0; }
   footer .sig {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    margin-top: 10px;
-    color: var(--accent);
-    opacity: .85;
+    font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--sage); margin-top: 8px;
+  }
+
+  /* ── responsive ──────────────────────────────────────────────────────── */
+  @media (max-width: 720px) {
+    .wrap { padding: 0 22px; }
+    .section { padding: 54px 0; }
+    .hero { padding: 64px 0 52px; }
+    .grid-2, .lanes, .prizes { grid-template-columns: 1fr; }
+    .lane.feature { grid-column: auto; }
+    .facts { flex-direction: column; }
+    .facts .fact { border-right: 0; border-bottom: 1px solid var(--rule-soft); padding: 14px 0; }
+    .facts .fact:last-child { border-bottom: 0; }
+    .threshold { grid-template-columns: 1fr; }
+    .threshold .mid { width: auto; height: 56px; background: linear-gradient(90deg, var(--before-bg), var(--after-bg)); }
+    .threshold .mid svg { transform: rotate(90deg); }
+  }
+
+  /* ── motion: one deliberate page-load reveal, then quiet ──────────────── */
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .hero .invite { animation: rise .6s var(--ease) both; }
+  .hero h1      { animation: rise .7s var(--ease) .08s both; }
+  .hero .lede   { animation: rise .7s var(--ease) .18s both; }
+  .hero .facts  { animation: rise .7s var(--ease) .28s both; }
+
+  a:focus-visible, .card:focus-visible { outline: 2px solid var(--after); outline-offset: 3px; border-radius: 6px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; scroll-behavior: auto; }
+    .card:hover, .step:hover { transform: none; }
   }
 </style>
 </head>
 <body>
 
-<!-- ═══════════ HERO ═══════════ -->
+<!-- ── HERO ──────────────────────────────────────────────────────────── -->
 <header class="hero">
   <div class="wrap">
-    <span class="eyebrow">Open to everyone · any level</span>
-    <h1>From Prompt to <em>Partner</em></h1>
+    <p class="invite">Open to everyone — whatever your starting point</p>
+    <h1>
+      <span class="word-prompt">Prompt</span>
+      <span class="to">becomes</span>
+      <span class="word-partner">Partner</span>
+    </h1>
     <p class="lede">
-      A relaxed, low-key event to help all of us go from asking AI the occasional question to
-      actually <strong>working alongside it</strong>. No pressure and no elimination —
-      just a few friendly sessions, live demos, and small wins you can use at work.
-      Come exactly as you are.
+      A hands-on event to help all of us go from asking AI the occasional question
+      to actually <strong>working alongside it</strong>. Joining is up to you and there's no
+      elimination — just a few guided sessions, live demos, and real wins you can put to work.
     </p>
-    <div class="meta">
-      <span><b>Format</b> · 3 sessions</span>
-      <span><b>Who</b> · Everyone, any level</span>
-      <span><b>When</b> · Jun–Aug 2026</span>
-      <span><b>Prize pool</b> · USD $5,000 in value</span>
+    <div class="facts">
+      <div class="fact"><div class="k">Format</div><div class="v">3 sessions</div></div>
+      <div class="fact"><div class="k">Who</div><div class="v">Everyone, any level</div></div>
+      <div class="fact"><div class="k">When</div><div class="v">Jun–Aug 2026</div></div>
+      <div class="fact"><div class="k">Prizes</div><div class="v">For everyone who joins</div></div>
     </div>
   </div>
 </header>
 
-<!-- ═══════════ 01 THE IDEA ═══════════ -->
-<section id="idea">
+<!-- ── THE IDEA ──────────────────────────────────────────────────────── -->
+<section class="section" id="idea">
   <div class="wrap">
-    <div class="section-num">01 · The idea</div>
-    <h2>What this is about</h2>
+    <span class="kicker">The idea</span>
+    <h2>From a search box to a <em>colleague</em></h2>
     <p class="lead">
       Most of us use AI like a search box — one question, one answer, done. That's barely
       scratching the surface. Over a few months, we want to help everyone take one comfortable
@@ -350,46 +436,61 @@
       translating, summarizing, organizing, planning. It's easier than it looks; you just need
       someone to walk you through it once.
     </p>
-    <p class="lead" style="margin-top: 16px;">
+    <p class="lead" style="margin-top:14px;">
       <strong>By the end, you'll be comfortable using AI for everyday work</strong> — writing an
       email, translating a product description, summarizing a long thread, or turning a messy
       file into something tidy in minutes.
     </p>
-    <div class="note" style="border-left-color: var(--accent); background: var(--accent-soft);">
-      <strong>A real example:</strong> writing and translating product descriptions for the
-      catalog used to take a colleague about <strong>2 hours</strong> for a batch. With a little
-      AI help, it now takes around <strong>15 minutes</strong> to draft — they just review and
-      polish. Same result, hours back every week. Small change, real difference.
-    </div>
-    <div class="callout">
+
+    <div class="proof">
+      <div class="metric">
+        <span class="from">about 2 hours</span><span class="arrow">becomes</span><span class="to">about 15 minutes</span>
+      </div>
       <p>
-        <b>The whole point:</b> this isn't about finding the "best." It's about everyone
-        feeling a little more confident with AI by the end. If you're starting from zero,
-        you're exactly who we built this for.
+        Writing and translating product descriptions for the catalog used to take a colleague
+        roughly two hours a batch. With a little AI help it's now a quick draft they just review
+        and polish — same result, hours back every week. Small change, real difference.
       </p>
     </div>
 
-    <h3 style="margin-top: 38px;">Where we are → where we're heading</h3>
-    <div class="grid-2" style="margin-top: 16px;">
-      <div class="card">
-        <div class="num">TODAY</div>
-        <h3>How most of us use AI now</h3>
-        <p>Like a search box — one question, one answer. We look something up or fix a typo, but rarely upload a file, set up a Project, or let AI handle more than one step at a time.</p>
+    <p class="lead" style="margin-top:30px;">
+      And the point isn't to crown the "best." It's that <strong>everyone feels a little more
+      confident with AI by the end</strong>. If you're starting from zero, you're exactly who we
+      built this for.
+    </p>
+  </div>
+</section>
+
+<!-- ── WHERE WE'RE HEADING (the signature, full size) ────────────────── -->
+<section class="section wash" id="heading">
+  <div class="wrap">
+    <span class="kicker cool">Where we're heading</span>
+    <h2>Today, and a few months from now</h2>
+    <div class="threshold">
+      <div class="side before">
+        <div class="tag">Today</div>
+        <h3>AI as a search box</h3>
+        <p>One question, one answer. We look something up or fix a typo, but rarely upload a file, set up a Project, or let AI handle more than one step at a time.</p>
       </div>
-      <div class="card">
-        <div class="num">A FEW MONTHS FROM NOW</div>
-        <h3>What we'd love to see</h3>
+      <div class="mid" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0e7d8c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 12h15"/><path d="M13 6l6 6-6 6"/>
+        </svg>
+      </div>
+      <div class="side after">
+        <div class="tag">A few months from now</div>
+        <h3>AI as a working partner</h3>
         <p>Using AI across several steps, handing recurring tasks to it, passing work between teammates — and starting a shared library of prompts your team can reuse.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ 02 HOW IT WORKS ═══════════ -->
-<section id="how">
+<!-- ── HOW IT WORKS ───────────────────────────────────────────────────── -->
+<section class="section" id="how">
   <div class="wrap">
-    <div class="section-num">02 · How it works</div>
-    <h2>Three sessions, <em>your pace</em></h2>
+    <span class="kicker">How it works</span>
+    <h2>Three sessions, at <em>your</em> pace</h2>
     <p class="lead">
       We'll get together <strong>three times</strong> over the few months. Each one is short, runs
       during work hours, and opens with a live demo — so you'll always pick up something new
@@ -398,20 +499,23 @@
 
     <div class="steps">
       <div class="step">
+        <div class="ord">First</div>
         <div>
-          <h4>Every session opens with a live demo</h4>
-          <p>At each of the three sessions, we'll demo a real AI workflow on screen — from a simple version up to the more advanced stuff, so there's something for every level. Then we explore ideas together in small groups.</p>
+          <h3>Every session opens with a live demo</h3>
+          <p>At each of the three sessions we'll demo a real AI workflow on screen — from a simple version up to the more advanced stuff, so there's something for every level. Then we explore ideas together in small groups.</p>
         </div>
       </div>
       <div class="step">
+        <div class="ord">Then</div>
         <div>
-          <h4>Sign up whenever you're ready</h4>
-          <p>There's no fixed deadline to register. You can sign up at the very first session and take the whole time to work on your entry — or jump in later, totally up to you.</p>
+          <h3>Sign up whenever you're ready</h3>
+          <p>There's no fixed deadline to register. You can sign up at the very first session and take the whole time to work on your entry — or jump in later. Totally up to you.</p>
         </div>
       </div>
       <div class="step">
+        <div class="ord">Last</div>
         <div>
-          <h4>Share once, by the final session</h4>
+          <h3>Share once, by the final session</h3>
           <p>Hand in your one-page result any time up to the last session. You only submit once — and that final get-together is where we celebrate and hand out everything together.</p>
         </div>
       </div>
@@ -424,87 +528,99 @@
   </div>
 </section>
 
-<!-- ═══════════ 03 WHAT WE LOOK FOR ═══════════ -->
-<section id="looking">
+<!-- ── WAYS TO SHINE ──────────────────────────────────────────────────── -->
+<section class="section wash" id="looking">
   <div class="wrap">
-    <div class="section-num">03 · What we're looking for</div>
-    <h2>Five ways to <em>shine</em></h2>
+    <span class="kicker sage">What we're looking for</span>
+    <h2>Five ways to <em>shine</em> — pick your lane</h2>
     <p class="lead">
       There's no single winner. We'll be looking at five different things people do with AI —
       so there's a lane for everyone, whatever your role or starting point.
     </p>
 
-    <div class="grid-2" style="margin-top: 24px;">
-      <div class="card">
-        <div class="num">01</div>
-        <h3>Real impact</h3>
-        <p>Did AI genuinely save you time or take a chore off your plate? Even a small, concrete win counts.</p>
+    <div class="lanes">
+      <div class="card lane">
+        <div class="label">Real impact</div>
+        <h3>Did it save you time?</h3>
+        <p>Did AI genuinely take a chore off your plate? Even a small, concrete win counts.</p>
       </div>
-      <div class="card">
-        <div class="num">02</div>
-        <h3>Something reusable</h3>
-        <p>Could a colleague copy your approach and get the same result? A handy prompt or simple routine others can borrow.</p>
+      <div class="card lane">
+        <div class="label">Reusable</div>
+        <h3>Could a colleague copy it?</h3>
+        <p>A handy prompt or simple routine others can borrow and get the same result.</p>
       </div>
-      <div class="card">
-        <div class="num">03</div>
-        <h3>A creative use</h3>
-        <p>A fresh or unexpected way to put AI to work — something that makes people go "oh, I hadn't thought of that."</p>
+      <div class="card lane">
+        <div class="label">Creative</div>
+        <h3>An unexpected use</h3>
+        <p>A fresh way to put AI to work — something that makes people go "oh, I hadn't thought of that."</p>
       </div>
-      <div class="card">
-        <div class="num">04</div>
-        <h3>Teamwork</h3>
-        <p>AI used across people or departments — passing work along, not just solo. Great for small groups.</p>
+      <div class="card lane">
+        <div class="label">Teamwork</div>
+        <h3>Used across people</h3>
+        <p>AI passed along between teammates or departments, not just solo. Great for small groups.</p>
       </div>
-      <div class="card" style="grid-column: span 2; border: 2px solid var(--accent); background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));">
-        <div class="num">05</div>
-        <h3>Biggest growth</h3>
-        <p>How far you've come from where you started. This one isn't about being an expert — it's about progress. If you begin at zero, you have the most room to shine here.</p>
+      <div class="card lane feature">
+        <div class="label">Biggest growth — the one we care about most</div>
+        <h3>How far you've come from where you started</h3>
+        <p>This one isn't about being an expert — it's about progress. If you begin at zero, you have the most room to shine here.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ 04 PRIZES ═══════════ -->
-<section id="prizes">
+<!-- ── PRIZES ─────────────────────────────────────────────────────────── -->
+<section class="section" id="prizes">
   <div class="wrap">
-    <div class="section-num">04 · Prizes</div>
-    <h2>Worth showing up for</h2>
-
-    <div class="prize-banner">
-      <div class="amount">USD $5,000 <small>in total value</small></div>
-      <p>
-        A mix of cash, gift cards, and extra paid time off — spread across everyone who takes
-        part, not just one person. We'll share the details as we go; for now, just know there's
-        plenty of reason to join in.
-      </p>
+    <span class="kicker">Prizes</span>
+    <h2>Worth showing up for — and <em>shared around</em></h2>
+    <p class="lead">
+      Not one big prize for one person. A mix of rewards spread across everyone who takes part,
+      so there's plenty of reason to join in.
+    </p>
+    <div class="prizes">
+      <div class="prize">
+        <div class="ico">💵</div>
+        <h3>Cash</h3>
+        <p>Real cash rewards for standout entries across the five lanes.</p>
+      </div>
+      <div class="prize">
+        <div class="ico">🎁</div>
+        <h3>Gift cards</h3>
+        <p>Smaller pick-me-ups so taking part is always worth it.</p>
+      </div>
+      <div class="prize">
+        <div class="ico">🌴</div>
+        <h3>Time off</h3>
+        <p>Extra paid time off — because hours saved should come back to you.</p>
+      </div>
     </div>
+    <p class="prize-note">
+      <strong>Plenty to go around.</strong> We'll share the exact breakdown as we get closer —
+      for now, just know rewards reach far beyond a single winner.
+    </p>
   </div>
 </section>
 
-<!-- ═══════════ 05 HOW TO TAKE PART ═══════════ -->
-<section id="enter">
+<!-- ── HOW TO TAKE PART ───────────────────────────────────────────────── -->
+<section class="section wash" id="enter">
   <div class="wrap">
-    <div class="section-num">05 · How to take part</div>
-    <h2>Joining is easy</h2>
+    <span class="kicker">How to take part</span>
+    <h2>Joining is <em>easy</em></h2>
 
-    <div class="grid-2" style="margin-top: 24px;">
+    <div class="grid-2">
       <div class="card">
-        <div class="num">SHARE</div>
         <h3>Just one slide</h3>
-        <p>When you're ready, share a <strong>single-page slide</strong> showing what you did with AI. No long reports, ever — we just want to see your win.</p>
+        <p>When you're ready, share a single-page slide showing what you did with AI. No long reports, ever — we just want to see your win.</p>
       </div>
       <div class="card">
-        <div class="num">SOLO OR TEAM</div>
         <h3>On your own or together</h3>
-        <p>Take part <strong>solo</strong>, or team up with colleagues — whichever feels comfortable. Both are equally welcome.</p>
+        <p>Take part solo, or team up with colleagues — whichever feels comfortable. Both are equally welcome.</p>
       </div>
     </div>
 
-    <div class="card" style="margin-top: 20px;">
-      <div class="num">ON YOUR SLIDE</div>
-      <h3>Four quick things to cover</h3>
-      <p>To keep it simple, your one slide just needs:</p>
-      <ul style="font-size: 14.5px;">
+    <div class="card" style="margin-top:18px;">
+      <h3>Four quick things to put on your slide</h3>
+      <ul>
         <li><strong>The task</strong> — what you were trying to get done</li>
         <li><strong>Before</strong> — how you used to do it</li>
         <li><strong>With AI</strong> — how you did it this time</li>
@@ -513,17 +629,18 @@
     </div>
 
     <div class="note">
-      No experience needed, and no deadlines to stress about. Just pick a <strong>real task you
-      actually worked on</strong> — turn up, try a little, and share what you find. We'll help
-      you the rest of the way.
+      No experience needed, and you set your own pace. Just pick a <strong>real task you
+      actually worked on</strong> — show up, give it a try, and share what you find. We'll help you
+      the rest of the way.
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <p>From Prompt to Partner · AI Productivity Event 2026</p>
-    <p class="sig">For our team · come as you are</p>
+    <p class="mark"><span class="from">Prompt</span> → <span class="to">Partner</span></p>
+    <p>AI Productivity Event · 2026</p>
+    <p class="sig">For our team · whatever your starting point</p>
   </div>
 </footer>
 
