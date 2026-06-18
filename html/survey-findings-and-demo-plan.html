@@ -1,0 +1,891 @@
+<!doctype html>
+<html lang="zh-Hant" data-lang="zh">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>問卷結果與示範建議 · Survey Results &amp; Demo Notes — From Prompt to Partner</title>
+<meta name="description" content="From Prompt to Partner 活動前問卷（9 份回覆）的結果統整與現場示範建議。Pre-event survey results (9 responses) and detailed suggestions for the live demos." />
+<meta name="theme-color" content="#0e7d8c" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet" />
+<script>
+  (function () {
+    try {
+      var l = localStorage.getItem('fp2p-lang') || 'zh';
+      document.documentElement.setAttribute('data-lang', l);
+      document.documentElement.setAttribute('lang', l === 'zh' ? 'zh-Hant' : 'en');
+    } catch (e) {}
+  })();
+</script>
+<style>
+  :root {
+    --paper:      #f4f9fa;
+    --paper-2:    #eaf4f6;
+    --card:       #ffffff;
+    --ink:        #11201f;
+    --ink-mid:    #324245;
+    --ink-soft:   #56656a;
+
+    --rule:       #e0ecee;
+    --rule-soft:  #eef5f6;
+
+    --teal:       #0e7d8c;
+    --teal-hi:    #14a3b6;
+    --teal-bg:    #e0f4f7;
+    --teal-line:  #bfe6ec;
+
+    --slate:      #8aa3a6;
+    --coral:      #c2552f;
+    --coral-bg:   #fcefe8;
+
+    --dot-empty:  #d2e3e4;
+
+    --shadow-sm: 0 1px 2px rgba(13,40,44,.05);
+    --shadow:    0 1px 2px rgba(13,40,44,.04), 0 14px 34px -14px rgba(13,40,44,.16);
+    --shadow-lg: 0 2px 6px rgba(13,40,44,.05), 0 30px 60px -22px rgba(13,40,44,.20);
+
+    --radius:    18px;
+    --radius-sm: 12px;
+    --ease: cubic-bezier(.22,.61,.36,1);
+
+    --display: "Fraunces", "Noto Serif TC", Georgia, serif;
+    --sans: "Hanken Grotesk", "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  html, body { margin: 0; padding: 0; }
+  ::selection { background: var(--teal-bg); }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 30px; }
+
+  /* ── language switch ──────────────────────────────────────────────── */
+  .langwrap { display: none; }
+  html[data-lang="zh"] .langwrap[data-lang-content="zh"] { display: block; }
+  html[data-lang="en"] .langwrap[data-lang-content="en"] { display: block; }
+
+  .langtoggle {
+    position: fixed; top: 16px; right: 16px; z-index: 50;
+    display: inline-flex; gap: 2px; padding: 3px;
+    background: color-mix(in srgb, var(--card) 86%, transparent);
+    border: 1px solid var(--rule); border-radius: 999px;
+    box-shadow: var(--shadow); backdrop-filter: blur(8px);
+  }
+  .langtoggle button {
+    font-family: var(--sans); font-size: 13px; font-weight: 600;
+    color: var(--ink-soft); background: transparent;
+    border: 0; border-radius: 999px; padding: 7px 15px; cursor: pointer;
+    transition: background .18s var(--ease), color .18s var(--ease);
+  }
+  .langtoggle button:hover { color: var(--teal); }
+  .langtoggle button.on { background: var(--teal); color: #fff; }
+  .langtoggle button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+  .kicker { font-size: 13px; font-weight: 600; letter-spacing: .1em; color: var(--teal); display: inline-block; }
+  .kicker.coral { color: var(--coral); }
+  .kicker.slate { color: var(--slate); }
+
+  /* ── signature dots ───────────────────────────────────────────────── */
+  .dots { display: inline-flex; gap: 5px; align-items: center; }
+  .dot { width: 14px; height: 14px; border-radius: 999px; background: var(--dot-empty); flex: none; }
+  .dot.on  { background: var(--teal-hi); }
+  .dot.key { background: var(--coral); }
+  .dot.lo  { background: var(--slate); }
+
+  .stat { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px 20px; padding: 15px 0; border-top: 1px solid var(--rule); }
+  .stat:last-child { border-bottom: 1px solid var(--rule); }
+  .stat .lab { font-size: 15.5px; color: var(--ink-mid); }
+  .stat .lab b { color: var(--ink); font-weight: 600; }
+  .stat .viz { display: flex; align-items: center; gap: 14px; justify-self: end; }
+  .stat .count { font-family: var(--display); font-size: 19px; font-weight: 500; color: var(--teal); white-space: nowrap; min-width: 3.2em; text-align: right; }
+  @media (max-width: 640px) { .stat { grid-template-columns: 1fr; } .stat .viz { justify-self: start; } }
+
+  .subhead { font-family: var(--display); font-size: 18px; font-weight: 600; color: var(--ink); margin: 34px 0 4px; }
+  .subnote { font-size: 13.5px; color: var(--ink-soft); margin: 0 0 6px; }
+
+  /* ── hero ─────────────────────────────────────────────────────────── */
+  .hero { position: relative; padding: 84px 0 58px; overflow: hidden; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 55% 50% at 90% -8%, var(--teal-bg), transparent 62%),
+      radial-gradient(ellipse 45% 40% at -5% 0%, var(--coral-bg), transparent 60%);
+    opacity: .7;
+  }
+  .hero .wrap { position: relative; z-index: 1; }
+  .eyebrow { font-family: var(--display); font-style: normal; font-size: 19px; color: var(--ink-mid); margin: 0 0 14px; }
+  h1 { font-family: var(--display); font-weight: 600; font-optical-sizing: auto; font-size: clamp(36px, 5.6vw, 56px); line-height: 1.12; letter-spacing: -0.005em; margin: 0 0 20px; max-width: 20ch; }
+  h1 em { font-style: normal; color: var(--teal); }
+  .lede { font-size: 19px; line-height: 1.7; color: var(--ink-mid); max-width: 44ch; margin: 0; }
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  .runmeta { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .runmeta .m { flex: 1 1 0; min-width: 130px; padding: 16px 22px 16px 0; border-right: 1px solid var(--rule-soft); }
+  .runmeta .m:last-child { border-right: 0; }
+  .runmeta .k { font-size: 12px; font-weight: 600; letter-spacing: .04em; color: var(--ink-soft); }
+  .runmeta .v { font-family: var(--display); font-size: 19px; color: var(--ink); margin-top: 3px; }
+  @media (max-width: 640px) { .runmeta { flex-direction: column; } .runmeta .m { border-right: 0; border-bottom: 1px solid var(--rule-soft); } .runmeta .m:last-child { border-bottom: 0; } }
+
+  /* ── gap viz ──────────────────────────────────────────────────────── */
+  .gap-panel { margin-top: 16px; background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius); padding: 30px 32px 26px; box-shadow: var(--shadow-sm); }
+  .gap-row { display: grid; grid-template-columns: 190px 1fr; gap: 22px; align-items: center; padding: 12px 0; }
+  .gap-row .side { font-size: 15px; }
+  .gap-row .side b { font-family: var(--display); font-size: 17px; font-weight: 600; color: var(--ink); display: block; }
+  .gap-row .side span { color: var(--ink-soft); font-size: 13.5px; }
+  .gap-row .track { display: flex; align-items: center; gap: 14px; }
+  .gap-row .track .count { font-family: var(--display); font-size: 24px; font-weight: 500; }
+  .gap-row.want .track .count { color: var(--teal); }
+  .gap-row.have .track .count { color: var(--coral); }
+  .gap-row .dot { width: 18px; height: 18px; }
+  @media (max-width: 640px) { .gap-row { grid-template-columns: 1fr; gap: 8px; } .gap-row .dot { width: 16px; height: 16px; } }
+
+  /* ── sections ─────────────────────────────────────────────────────── */
+  .section { padding: 64px 0; border-top: 1px solid var(--rule); }
+  .section.wash { background: var(--paper-2); }
+  h2 { font-family: var(--display); font-weight: 600; font-size: clamp(25px, 4.2vw, 36px); line-height: 1.24; letter-spacing: -0.005em; margin: 12px 0 14px; max-width: 26ch; }
+  h2 em { font-style: normal; color: var(--teal); }
+  .lead { font-size: 17.5px; line-height: 1.72; color: var(--ink-mid); max-width: 48ch; }
+  .lead strong { color: var(--ink); font-weight: 600; }
+  p { color: var(--ink-mid); }
+
+  .findings { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 26px; }
+  .find { background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius); padding: 24px 26px; box-shadow: var(--shadow-sm); transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease); }
+  .find:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--teal-line); }
+  .find .tag { font-family: var(--display); font-style: normal; font-size: 15px; color: var(--teal); }
+  .find h3 { font-family: var(--display); font-size: 20px; font-weight: 600; margin: 6px 0 9px; line-height: 1.3; color: var(--ink); }
+  .find p { font-size: 14.5px; line-height: 1.7; margin: 0; }
+  .find.flag { grid-column: span 2; border: 2px solid var(--coral); background: var(--coral-bg); }
+  .find.flag .tag { color: var(--coral); }
+  @media (max-width: 640px) { .findings { grid-template-columns: 1fr; } .find.flag { grid-column: auto; } }
+
+  .persona { margin-top: 18px; background: var(--card); border: 1px solid var(--rule); border-left: 4px solid var(--coral); border-radius: 4px var(--radius-sm) var(--radius-sm) 4px; padding: 24px 28px; box-shadow: var(--shadow-sm); }
+  .persona .q { font-family: var(--display); font-style: normal; font-size: clamp(17px, 2.6vw, 21px); line-height: 1.55; color: var(--ink); margin: 0; }
+  .persona .who { margin-top: 12px; font-size: 14px; color: var(--ink-soft); }
+  .persona .who b { color: var(--coral); }
+
+  /* ── strategy box ─────────────────────────────────────────────────── */
+  .strat { margin-top: 26px; background: linear-gradient(180deg, #fff, var(--teal-bg)); border: 1px solid var(--teal-line); border-left: 4px solid var(--teal); border-radius: 4px var(--radius) var(--radius) 4px; padding: 28px 30px; box-shadow: var(--shadow-sm); }
+  .strat h3 { font-family: var(--display); font-size: 20px; font-weight: 600; margin: 0 0 6px; color: var(--teal); }
+  .strat > p { font-size: 15px; margin: 0 0 6px; }
+  .strat ol { margin: 14px 0 0; padding-left: 22px; }
+  .strat ol li { font-size: 15px; line-height: 1.7; margin: 12px 0; color: var(--ink-mid); }
+  .strat ol li b { color: var(--ink); font-weight: 600; }
+  .strat ol li::marker { color: var(--teal); font-weight: 700; }
+
+  /* ── demo rounds (run of show) ────────────────────────────────────── */
+  .plan { margin-top: 28px; display: grid; gap: 18px; }
+  .ses { background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius); padding: 28px 30px; box-shadow: var(--shadow-sm); display: grid; grid-template-columns: 130px 1fr; gap: 26px; }
+  .ses .when .mo { font-family: var(--display); font-size: 22px; font-weight: 600; color: var(--teal); line-height: 1.1; }
+  .ses .when .ph { font-size: 13px; color: var(--ink-soft); margin-top: 3px; }
+  .ses .alt { font-size: 13px; font-weight: 600; letter-spacing: .01em; color: var(--teal); margin-bottom: 8px; }
+  .ses h3 { font-family: var(--display); font-size: 21px; font-weight: 600; margin: 0 0 6px; color: var(--ink); line-height: 1.25; }
+  .ses .goal { font-size: 15px; color: var(--ink-mid); margin: 0 0 4px; }
+  .ses .goal b { color: var(--ink); }
+  .subtag { display: block; font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 18px 0 6px; }
+  .runsteps { margin: 0; padding-left: 20px; counter-reset: rs; list-style: none; }
+  .runsteps li { font-size: 14.5px; line-height: 1.6; margin: 8px 0; color: var(--ink-mid); position: relative; padding-left: 8px; }
+  .runsteps li::before { counter-increment: rs; content: counter(rs); position: absolute; left: -20px; top: 0; font-family: var(--display); font-size: 13px; font-weight: 600; color: var(--teal); }
+  .sayline { margin: 8px 0 0; padding: 12px 16px; background: var(--teal-bg); border-left: 3px solid var(--teal); border-radius: 4px var(--radius-sm) var(--radius-sm) 4px; font-size: 14.5px; color: var(--ink); font-weight: 500; line-height: 1.6; }
+  .cmd { margin: 7px 0; padding: 11px 14px; background: var(--paper-2); border: 1px dashed var(--teal-line); border-radius: var(--radius-sm); font-size: 13.5px; line-height: 1.55; color: var(--ink); }
+  html[data-lang="zh"] .cmd::before { content: "貼上 › "; color: var(--teal); font-weight: 700; }
+  html[data-lang="en"] .cmd::before { content: "Paste › "; color: var(--teal); font-weight: 700; }
+  .mini { font-size: 14px; line-height: 1.65; color: var(--ink-mid); margin: 6px 0 0; }
+  .mini b { color: var(--ink); }
+  .ses .src { display: inline-block; margin-top: 18px; font-size: 12.5px; color: var(--ink-soft); background: var(--teal-bg); border: 1px solid var(--teal-line); border-radius: 999px; padding: 4px 12px; }
+  @media (max-width: 640px) { .ses { grid-template-columns: 1fr; gap: 12px; padding: 24px 22px; } }
+
+  .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 26px; }
+  .box { background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius); padding: 24px 26px; box-shadow: var(--shadow-sm); }
+  .box.skip { background: var(--paper-2); }
+  .box h3 { font-family: var(--display); font-size: 18px; font-weight: 600; margin: 0 0 12px; }
+  .box.use h3 { color: var(--teal); }
+  .box.skip h3 { color: var(--slate); }
+  .box ul { list-style: none; padding: 0; margin: 0; }
+  .box li { font-size: 14.5px; margin: 9px 0; padding-left: 24px; position: relative; color: var(--ink-mid); line-height: 1.6; }
+  .box.use li::before { content: "→"; position: absolute; left: 0; color: var(--teal); font-weight: 700; }
+  .box.skip li::before { content: "×"; position: absolute; left: 2px; color: var(--slate); font-weight: 700; }
+  @media (max-width: 640px) { .twocol { grid-template-columns: 1fr; } }
+
+  .note { margin-top: 26px; background: var(--paper-2); border: 1px solid var(--rule); border-radius: var(--radius-sm); padding: 18px 24px; font-size: 15px; line-height: 1.8; color: var(--ink-mid); }
+  .note strong { color: var(--ink); }
+
+  /* ── Claude feature-timing table ──────────────────────────────────── */
+  .ftable { margin-top: 18px; border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; background: var(--card); box-shadow: var(--shadow-sm); }
+  .frow { display: grid; grid-template-columns: 190px 1fr 1.15fr; border-top: 1px solid var(--rule); }
+  .frow:first-child { border-top: 0; }
+  .frow > div { padding: 15px 18px; font-size: 14.5px; line-height: 1.6; }
+  .frow .feat { font-family: var(--display); font-weight: 600; color: var(--teal); border-right: 1px solid var(--rule-soft); }
+  .frow .when { color: var(--ink); border-right: 1px solid var(--rule-soft); }
+  .frow .eg { color: var(--ink-soft); }
+  .frow.head > div { background: var(--paper-2); font-family: var(--sans); font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+  .frow.head .feat { color: var(--ink-soft); }
+  @media (max-width: 640px) {
+    .frow { grid-template-columns: 1fr; padding: 6px 0; }
+    .frow > div { border-right: 0; padding: 4px 18px; }
+    .frow.head { display: none; }
+    .frow .feat { padding-top: 12px; }
+    .frow .eg { padding-bottom: 12px; }
+  }
+  .featin { display: inline-block; margin: 0 0 10px; font-size: 12.5px; font-weight: 600; color: var(--teal); background: var(--teal-bg); border: 1px solid var(--teal-line); border-radius: 999px; padding: 3px 12px; }
+
+  footer { padding: 54px 0 80px; text-align: center; border-top: 1px solid var(--rule); }
+  footer .mark { font-family: var(--display); font-style: italic; font-size: 22px; color: var(--teal); }
+  footer p { color: var(--ink-soft); font-size: 13.5px; margin: 10px 0 0; }
+
+  html[data-lang="en"] .eyebrow,
+  html[data-lang="en"] h1 em,
+  html[data-lang="en"] h2 em,
+  html[data-lang="en"] .find .tag,
+  html[data-lang="en"] .persona .q { font-style: italic; }
+  html[data-lang="en"] .lede { max-width: 56ch; }
+  html[data-lang="en"] .lead { max-width: 64ch; }
+  html[data-lang="en"] body { line-height: 1.66; }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  .hero .eyebrow { animation: rise .55s var(--ease) both; }
+  .hero h1 { animation: rise .65s var(--ease) .07s both; }
+  .hero .lede { animation: rise .65s var(--ease) .16s both; }
+  .hero .runmeta { animation: rise .65s var(--ease) .26s both; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; scroll-behavior: auto; }
+    .find:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="langtoggle" role="group" aria-label="Language / 語言">
+  <button type="button" data-set="zh">中文</button>
+  <button type="button" data-set="en">EN</button>
+</div>
+
+<!-- ════════════════════════ 中文 ════════════════════════ -->
+<div class="langwrap" data-lang-content="zh">
+
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">活動前問卷 · From Prompt to Partner</p>
+      <h1>問卷結果與<em>示範建議</em></h1>
+      <p class="lede">
+        這份問卷收到 <strong>9 份回覆</strong>。下面先把結果統整一遍,再談對現場示範的具體建議。
+        每一個圓點,代表一位填答的同事。
+      </p>
+      <div class="runmeta">
+        <div class="m"><div class="k">回覆數</div><div class="v">9 份</div></div>
+        <div class="m"><div class="k">部門分布</div><div class="v">業務 6 · 行銷 2 · 營運 1</div></div>
+        <div class="m"><div class="k">每週使用</div><div class="v">9 人中 7 人 · 10 次以上</div></div>
+        <div class="m"><div class="k">資料截至</div><div class="v">2026/06/18</div></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 結果統整 -->
+  <section class="section">
+    <div class="wrap">
+      <span class="kicker">結果統整</span>
+      <h2>9 份回覆,先看數字</h2>
+      <p class="lead">以下皆以 9 位填答者為基準。先呈現結果,觀察與建議放在後面。</p>
+
+      <p class="subhead">使用頻率與功能</p>
+      <div class="stat">
+        <div class="lab"><b>每週使用 AI 10 次以上</b> — 重度日常使用者</div>
+        <div class="viz"><span class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot lo"></span><span class="dot lo"></span></span><span class="count">7 / 9</span></div>
+      </div>
+      <div class="stat">
+        <div class="lab"><b>進階功能「一個都沒用過」</b> — 沒用過多輪、檔案、Projects、代理人</div>
+        <div class="viz"><span class="dots"><span class="dot lo"></span><span class="dot lo"></span><span class="dot lo"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><span class="count">3 / 9</span></div>
+      </div>
+      <div class="stat">
+        <div class="lab">用過 <b>Projects / 自訂指令</b></div>
+        <div class="viz"><span class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><span class="count">4 / 9</span></div>
+      </div>
+      <div class="stat">
+        <div class="lab">上傳過 <b>檔案 / PDF</b></div>
+        <div class="viz"><span class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><span class="count">4 / 9</span></div>
+      </div>
+      <div class="stat">
+        <div class="lab">自評信心(1–5)平均</div>
+        <div class="viz"><span class="count" style="color:var(--ink);">3.8 / 5</span></div>
+      </div>
+
+      <p class="subhead">最想學的主題(Q4)</p>
+      <p class="subnote">最多人提到的是「AI 代理人 / 多步驟任務」,但目前只有一位實際用過代理人。</p>
+      <div class="gap-panel">
+        <div class="gap-row want">
+          <div class="side"><b>想學 AI 代理人 / 多步驟</b><span>最多人提到的學習目標</span></div>
+          <div class="track">
+            <span class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
+            <span class="count">4 / 9</span>
+          </div>
+        </div>
+        <div class="gap-row have">
+          <div class="side"><b>實際用過代理人</b><span>來自功能勾選(Q3)</span></div>
+          <div class="track">
+            <span class="dots"><span class="dot key"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
+            <span class="count">1 / 9</span>
+          </div>
+        </div>
+      </div>
+      <p class="subnote" style="margin-top:14px;">其他被提到的主題:提示詞調校、業務開發效率、整併資料、日常排程。</p>
+
+      <p class="subhead">參加意願與方式(Q9)</p>
+      <p class="subnote">這題問的是「<b>會怎麼參加</b>」,不是「是否確定參加」——僅代表當下的傾向。</p>
+      <div class="stat">
+        <div class="lab">傾向 <b>單獨參加</b></div>
+        <div class="viz"><span class="dots"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><span class="count">1 / 9</span></div>
+      </div>
+      <div class="stat">
+        <div class="lab">傾向 <b>和同部門組隊</b></div>
+        <div class="viz"><span class="dots"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><span class="count">1 / 9</span></div>
+      </div>
+      <div class="stat">
+        <div class="lab"><b>還不確定</b></div>
+        <div class="viz"><span class="dots"><span class="dot lo"></span><span class="dot lo"></span><span class="dot lo"></span><span class="dot lo"></span><span class="dot lo"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><span class="count">5 / 9</span></div>
+      </div>
+      <div class="stat">
+        <div class="lab"><b>可能不參加</b></div>
+        <div class="viz"><span class="dots"><span class="dot key"></span><span class="dot key"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><span class="count">2 / 9</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 觀察 -->
+  <section class="section wash">
+    <div class="wrap">
+      <span class="kicker">幾個觀察</span>
+      <h2>從這些數字,我們讀到什麼</h2>
+      <div class="findings">
+        <div class="find">
+          <div class="tag">該為誰設計</div>
+          <h3>業務是多數</h3>
+          <p>9 份回覆中業務佔 6、行銷 2、營運 1。示範案例偏向業務情境,比較容易打中多數人。</p>
+        </div>
+        <div class="find">
+          <div class="tag">能力分布</div>
+          <h3>兩極,不是平滑曲線</h3>
+          <p>3 人完全沒用過進階功能,另一群已經會 Projects、上傳檔案。中間幾乎是空的。</p>
+        </div>
+        <div class="find">
+          <div class="tag">想學 vs. 會用</div>
+          <h3>代理人是最大的缺口</h3>
+          <p>最多人想學「代理人 / 多步驟」,但只有一位真的用過。這是大家最想看、也最缺的一塊。</p>
+        </div>
+        <div class="find">
+          <div class="tag">信心分數</div>
+          <h3>平均 3.8,但要保留看</h3>
+          <p>有兩位自評「5 分」的人其實幾乎沒用過 AI。信心和實際能力不一定一致。</p>
+        </div>
+        <div class="find flag">
+          <div class="tag">最重要的一點</div>
+          <h3>真正的新手,沒出現在這份問卷裡</h3>
+          <p>我們相信公司裡其實有<strong>更多新手</strong>,但他們對 AI 還沒興趣,所以也沒填問卷。結果填答的人偏向已經很上手的同事。換句話說,這份問卷代表的是「已經願意用的人」,<strong>不是全公司</strong>——而那些沒填的人,正是這個活動最想帶動的對象。</p>
+        </div>
+      </div>
+      <div class="persona">
+        <p class="q">「我每天都在用 AI —— 但我從沒上傳過檔案、沒設過 Project,我也不覺得這個比賽是為我辦的。」</p>
+        <p class="who"><b>會場裡很可能有很多這種人</b> —— 由一份真實回覆還原。連「有填問卷」的人都這樣想,沒填的人更是如此。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 示範建議 -->
+  <section class="section">
+    <div class="wrap">
+      <span class="kicker">示範建議</span>
+      <h2>我們建議<em>怎麼示範</em></h2>
+      <p class="lead">
+        示範由我(主辦)現場操作,並會<strong>錄成影片</strong> —— 沒到場或想複習的人,之後都看得到。
+        三個 round <strong>各示範不同的內容</strong>(不是重複同一場)。既然<strong>業務填得最多(6/9)</strong>,
+        主線用<strong>業務情境</strong>,行銷、營運替換題材即可。
+      </p>
+
+      <p class="subhead" style="margin-top:40px;">哪個 Claude 功能、什麼時候用</p>
+      <p class="subnote">示範時邊做邊講「這一步該用哪個功能、為什麼」,比單獨介紹功能更有感。</p>
+      <div class="ftable">
+        <div class="frow head"><div class="feat">功能</div><div class="when">什麼時候用</div><div class="eg">業務情境例子</div></div>
+        <div class="frow"><div class="feat">一般對話(單則)</div><div class="when">快速、用完即丟、不需要它記得</div><div class="eg">查一個規格、翻一句話、快速改一句</div></div>
+        <div class="frow"><div class="feat">多輪對話</div><div class="when">第一個答案只是起點,要來回修</div><div class="eg">把開發信改三版、追問、調整語氣</div></div>
+        <div class="frow"><div class="feat">Projects + 自訂指令</div><div class="when">同一類任務、同一套背景,一直重複做</div><div class="eg">「我的業務桌」:存產品線卡、你的語氣、ICP,之後不用每次重貼</div></div>
+        <div class="frow"><div class="feat">上傳檔案 / PDF</div><div class="when">答案就在某份文件裡</div><div class="eg">客戶 RFQ、規格表、報價單、名單 Excel、會議逐字稿</div></div>
+        <div class="frow"><div class="feat">Artifacts(成品)</div><div class="when">產出你會反覆編輯、要拿去用</div><div class="eg">型號比較表、開發信、一頁式提案</div></div>
+        <div class="frow"><div class="feat">連到你的工具(Cowork)</div><div class="when">需要 Claude 進到你自己的瀏覽器 / 電腦 / 工具裡做事 —— 讀你登入的網站、翻你電腦裡的檔案 —— 而不是把東西貼進聊天框</div><div class="eg">在瀏覽器裡幫你讀供應商 / 客戶入口網站抓規格;整理你電腦裡那一疊產品 PDF</div></div>
+        <div class="frow"><div class="feat">代理人(Agent)</div><div class="when">規則清楚、可整包交辦的多步驟;你交辦 → 它跑完 → 你驗收(中途可離開)</div><div class="eg">研究 10 家目標公司 → 整併成一張表 → 各擬一封信</div></div>
+      </div>
+
+      <p class="subhead" style="margin-top:40px;">三場示範:碰得到的範圍,一場比一場深</p>
+      <p class="subnote">同一條業務主線(查資料、比規格、整理客戶),reach 一路從<b>聊天框 → 瀏覽器 → 你的電腦</b>。行銷 / 營運可替換題材。</p>
+      <p class="subnote" style="margin-top:10px;"><b>關於 cowork —— chat 裡也能用 Project,差別不在那。</b>cowork 真正的差別是<b>Claude 進到你自己的環境裡做事</b>:<b>Round 2</b> 進你的瀏覽器(大家動手跟著裝、跟著做),<b>Round 3</b> 進你的電腦、把成品存成檔案(權限大、偏進階,當天花板由你示範就好)。</p>
+
+      <div class="plan">
+        <!-- Round 1 -->
+        <div class="ses">
+          <div class="when"><div class="mo">Round 1</div><div class="ph">上手</div></div>
+          <div>
+            <div class="alt">第 1 階主秀 · 一封你每週要寫好幾次的開發信</div>
+            <span class="featin">帶到的功能:一般對話 → 多輪對話 → Projects</span>
+            <h3>把每天都在寫的開發信,交給 AI</h3>
+            <p class="goal"><b>目標:</b>讓零基礎的業務當場做出一封能用的信,並願意再來。</p>
+
+            <span class="subtag">現場流程</span>
+            <ol class="runsteps">
+              <li>先「隨便問」:貼「幫我寫封開發信」,給出空泛、罐頭味很重的版本。</li>
+              <li>換成公式 —— 角色(Neteon 工業電腦業務)+ 背景(對象是工廠自動化整合商、產品 Nuvo-XXXX)+ 任務(第一封開發信)+ 格式(英文、簡短、一個明確 CTA)。同一件事立刻變得能用,當場對比。</li>
+              <li>多輪修:請它「再短一點、加一句點出對方痛點、語氣再像人一點」,示範來回調。</li>
+              <li>開一個 Project「我的業務桌」:上傳產品線卡 + 兩三封你寫過最好的信(你的語氣)+ ICP 筆記,設自訂指令「你是我的業務助理,用我的語氣、美國 B2B 口吻」。之後只打「幫我對 ___ 公司寫第一封信」就好。</li>
+            </ol>
+
+            <span class="subtag">關鍵台詞</span>
+            <p class="sayline">「一般對話是用完即丟;Project 是它記得你的產品、你的語氣 —— 不用每次重貼。」</p>
+
+            <span class="subtag">進階加碼(給已經會的人)</span>
+            <p class="mini">把 Project 串上第二個檔(價目表),30 秒帶過,當成「你的下一步」。</p>
+
+            <span class="subtag">帶走</span>
+            <p class="mini">每位業務當天建好自己的「我的業務桌」Project,並抄走那條提示詞公式。</p>
+
+            <span class="src">對到 業務最常用「查資料 / 寫文案」+ Q5「customer outreach」「調對 prompt」</span>
+          </div>
+        </div>
+
+        <!-- Round 2 -->
+        <div class="ses">
+          <div class="when"><div class="mo">Round 2</div><div class="ph">瀏覽器 · Cowork</div></div>
+          <div>
+            <div class="alt">第 2 階主秀 · 讓 Claude 在你的瀏覽器裡幫你找 / 讀資料</div>
+            <span class="featin">帶到的功能:Claude in Chrome(reach:你的瀏覽器)</span>
+            <h3>比規格、查客戶:從你複製貼上,到它直接讀頁面</h3>
+            <p class="goal"><b>目標:</b>這就是 cowork —— Claude 進到你打開的網頁裡幫你做事。這場大家<b>動手跟著裝、跟著做</b>。</p>
+
+            <span class="subtag">現場 ① 先教安裝(3–5 分)</span>
+            <ol class="runsteps">
+              <li>用 <b>Chrome 或 Edge</b>(Brave / Arc 不支援)。</li>
+              <li>Chrome 線上應用程式商店搜尋「Claude in Chrome」→ <b>加到 Chrome</b>(或從 claude.com/claude-for-chrome 進)。</li>
+              <li>用 Claude 帳號<b>登入</b>(要付費方案才有功能;先確認現場誰能跟著裝)。</li>
+              <li>點工具列拼圖圖示 → <b>釘選</b> Claude;之後一鍵開側欄。</li>
+              <li>第一次會要<b>權限</b>(讀網頁、控制瀏覽器)→ 選「動作前先問」。</li>
+            </ol>
+            <p class="mini"><b>安全一句:</b>它能幫你點、打字、截圖 —— 只在<b>公開頁面</b>示範,別在登入了內部系統、或有客戶個資的分頁上跑。</p>
+
+            <span class="subtag">現場 ② 任務:讀競品頁、比 Neteon(8–10 分)</span>
+            <ol class="runsteps">
+              <li>打開一個<b>公開</b>的競品 / 供應商工業電腦產品頁,點開側欄。</li>
+              <li>讓它<b>直接讀你螢幕上這一頁</b>抽規格、做表 —— 你完全沒複製貼上。</li>
+              <li>再開 Neteon 對應型號頁,做並排比較、標出 Neteon 贏在哪。</li>
+            </ol>
+
+            <span class="subtag">逐字指令(直接貼)</span>
+            <p class="cmd">在競品頁:讀這一頁的產品規格,整理成表格 —— 欄位:型號、CPU、記憶體、儲存、工作溫度、電源、I/O、擴充槽、認證;頁面沒寫的標「未列」,不要猜。</p>
+            <p class="cmd">切到 Neteon〔Nuvo-XXXX〕頁:這頁是 Neteon〔Nuvo-XXXX〕。用同樣欄位跟剛剛那台做並排比較,最後一列用一句話點出 Neteon 的優勢。</p>
+            <p class="cmd">收尾:給我一份能貼進 email 的純文字比較表,再加兩句給美國製造業客戶的銷售重點,語氣專業、別誇大。</p>
+
+            <span class="subtag">關鍵台詞</span>
+            <p class="sayline">「注意,我不是在側欄打字問它 —— 我是<b>讓它去讀我打開的這一頁</b>。貼進聊天框只是 chat;它去讀、去動我打開的頁面,才是 cowork。」</p>
+
+            <span class="subtag">帶走 / 卡住怎麼辦</span>
+            <p class="mini"><b>帶走:</b>裝好 Claude in Chrome,挑一個公開頁讓它「讀這頁 → 摘三點」。<b>卡住:</b>退回「截圖 / 存 PDF 上傳」的 chat 版,順便講差別。</p>
+
+            <span class="src">Cowork 主秀 · 付費方案 · 限 Chrome / Edge · Team/Enterprise 可能被管理員關閉,先確認</span>
+          </div>
+        </div>
+
+        <!-- Round 3 -->
+        <div class="ses">
+          <div class="when"><div class="mo">Round 3</div><div class="ph">你的電腦 · 天花板</div></div>
+          <div>
+            <div class="alt">第 3 階主秀 · 讓 Claude 連進你的電腦,抓資料 + 存成檔案</div>
+            <span class="featin">帶到的功能:Claude 桌面版 + 檔案系統連接器(reach:你的電腦)</span>
+            <h3>它不只告訴你,還把成品存進你的電腦</h3>
+            <p class="goal"><b>目標:</b>看天花板 —— reach 從瀏覽器再進一步到你的電腦:它抓完資料,直接幫你存成檔案。<b>由你(或預錄)示範,不要求全場安裝。</b></p>
+
+            <span class="subtag">事前(只有你要設定)</span>
+            <p class="mini">用 <b>Claude 桌面版</b> 接上<b>檔案系統連接器(MCP)</b>,只授權<b>一個指定資料夾</b>(別開放整台電腦)。這比裝 Chrome 擴充更進階、權限更大(它會寫你的檔案)。</p>
+
+            <span class="subtag">現場流程</span>
+            <ol class="runsteps">
+              <li>承接 Round 2:把幾個競品 / 潛在客戶的資料,讓 Claude 整併成一張比較表 / 名單。</li>
+              <li>下指令讓它<b>存成檔案</b>(例如 .csv 或 .md)到你授權的資料夾。</li>
+              <li>打開那個資料夾 —— 檔案真的在你電腦裡了,不是只停在對話框。</li>
+            </ol>
+
+            <span class="subtag">逐字指令(直接貼)</span>
+            <p class="cmd">把這份比較表存成 CSV,檔名 neteon-vs-competitor.csv,放到我授權的那個資料夾;存好後告訴我完整路徑。</p>
+
+            <span class="subtag">關鍵台詞</span>
+            <p class="sayline">「Round 2 它出去幫我<b>讀</b>到資料;Round 3 它把資料<b>帶回來、寫成我電腦上的檔案</b>。reach 一路從聊天框 → 瀏覽器 → 我的電腦。」</p>
+
+            <span class="subtag">怎麼演</span>
+            <p class="mini">這階是天花板:給大家看「原來可以到這」,<b>不要求當場跟上</b>。權限大 —— 只授權單一資料夾、用非機密的範例資料。</p>
+
+            <span class="src">Claude 桌面版 + 檔案系統 MCP · 權限較大,只授權指定資料夾</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="twocol">
+        <div class="box use">
+          <h3>適合的示範題材</h3>
+          <ul>
+            <li>業務開發:研究名單、寫第一封信(業務)</li>
+            <li>客戶 RFQ / 報價:對規格、出比較表(業務)</li>
+            <li>會議紀錄整理與跟進信(業務 / 全體)</li>
+            <li>產品資料與型錄文案(行銷)</li>
+            <li>每日排程 / 出貨規劃(營運)</li>
+          </ul>
+        </div>
+        <div class="box skip">
+          <h3>該避開的題材</h3>
+          <ul>
+            <li>任何偏寫程式的東西 —— 沒人提出這需求</li>
+            <li>會強化「這是給工程師的」這種距離感</li>
+            <li>沒接到真實任務的抽象功能導覽</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>一句話收尾:</strong>代理人負責<strong>激發嚮往</strong>、留住進階的人;一個快速、貼近工作、
+        明天就能做的小成果,才是真正把新手<strong>拉進門</strong>的關鍵。兩件事每一場都要有。
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p class="mark">Prompt → Partner</p>
+      <p>活動前問卷結果與示範建議 · 9 份回覆 · 2026/06/18 · 內部使用</p>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ════════════════════════ ENGLISH ════════════════════════ -->
+<div class="langwrap" data-lang-content="en">
+
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Pre-event survey · From Prompt to Partner</p>
+      <h1>Survey results &amp; <em>demo notes</em></h1>
+      <p class="lede">
+        The survey received <strong>9 responses</strong>. Below is a summary of the results first,
+        then concrete suggestions for the live demos. Each dot is one colleague who responded.
+      </p>
+      <div class="runmeta">
+        <div class="m"><div class="k">Responses</div><div class="v">9</div></div>
+        <div class="m"><div class="k">Departments</div><div class="v">Sales 6 · Mktg 2 · Ops 1</div></div>
+        <div class="m"><div class="k">Use AI weekly</div><div class="v">7 of 9 · 10+ times</div></div>
+        <div class="m"><div class="k">As of</div><div class="v">18 Jun 2026</div></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- results summary -->
+  <section class="section">
+    <div class="wrap">
+      <span class="kicker">Results summary</span>
+      <h2>9 responses — the numbers first</h2>
+      <p class="lead">All figures are out of the 9 people who responded. Results here; observations and recommendations come after.</p>
+
+      <p class="subhead">Usage &amp; features</p>
+      <div class="stat">
+        <div class="lab"><b>Use AI 10+ times a week</b> — heavy daily users</div>
+        <div class="viz"><span class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot lo"></span><span class="dot lo"></span></span><span class="count">7 / 9</span></div>
+      </div>
+      <div class="stat">
+        <div class="lab"><b>Used "none of" the deeper features</b> — no multi-turn, files, Projects, agents</div>
+        <div class="viz"><span class="dots"><span class="dot lo"></span><span class="dot lo"></span><span class="dot lo"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><span class="count">3 / 9</span></div>
+      </div>
+      <div class="stat">
+        <div class="lab">Have used <b>Projects / custom instructions</b></div>
+        <div class="viz"><span class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><span class="count">4 / 9</span></div>
+      </div>
+      <div class="stat">
+        <div class="lab">Have uploaded a <b>file / PDF</b></div>
+        <div class="viz"><span class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><span class="count">4 / 9</span></div>
+      </div>
+      <div class="stat">
+        <div class="lab">Self-rated confidence (1–5), average</div>
+        <div class="viz"><span class="count" style="color:var(--ink);">3.8 / 5</span></div>
+      </div>
+
+      <p class="subhead">What they most want to learn (Q4)</p>
+      <p class="subnote">The most-named topic is "AI agents / multi-step tasks" — yet only one person has actually used an agent.</p>
+      <div class="gap-panel">
+        <div class="gap-row want">
+          <div class="side"><b>Want to learn agents / multi-step</b><span>most-named learning goal</span></div>
+          <div class="track">
+            <span class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
+            <span class="count">4 / 9</span>
+          </div>
+        </div>
+        <div class="gap-row have">
+          <div class="side"><b>Have used an agent</b><span>from feature checklist (Q3)</span></div>
+          <div class="track">
+            <span class="dots"><span class="dot key"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
+            <span class="count">1 / 9</span>
+          </div>
+        </div>
+      </div>
+      <p class="subnote" style="margin-top:14px;">Other topics named: tuning prompts, sales-prospecting efficiency, consolidating data, daily scheduling.</p>
+
+      <p class="subhead">How people would take part (Q9)</p>
+      <p class="subnote">This question asks "<b>how would you join</b>," not "will you definitely join" — it's only a current leaning.</p>
+      <div class="stat">
+        <div class="lab">Leaning toward <b>joining solo</b></div>
+        <div class="viz"><span class="dots"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><span class="count">1 / 9</span></div>
+      </div>
+      <div class="stat">
+        <div class="lab">Leaning toward <b>a team within their department</b></div>
+        <div class="viz"><span class="dots"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><span class="count">1 / 9</span></div>
+      </div>
+      <div class="stat">
+        <div class="lab"><b>Not sure yet</b></div>
+        <div class="viz"><span class="dots"><span class="dot lo"></span><span class="dot lo"></span><span class="dot lo"></span><span class="dot lo"></span><span class="dot lo"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><span class="count">5 / 9</span></div>
+      </div>
+      <div class="stat">
+        <div class="lab"><b>Probably won't join</b></div>
+        <div class="viz"><span class="dots"><span class="dot key"></span><span class="dot key"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><span class="count">2 / 9</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- observations -->
+  <section class="section wash">
+    <div class="wrap">
+      <span class="kicker">A few observations</span>
+      <h2>What we read from the numbers</h2>
+      <div class="findings">
+        <div class="find">
+          <div class="tag">Who to design for</div>
+          <h3>Sales is the majority</h3>
+          <p>6 of 9 responses are Sales, 2 Marketing, 1 Operations. Sales-flavoured demo examples land with most of the room.</p>
+        </div>
+        <div class="find">
+          <div class="tag">Skill spread</div>
+          <h3>Bimodal, not a smooth curve</h3>
+          <p>3 people have used none of the deeper features; another group already uses Projects and file upload. Little in between.</p>
+        </div>
+        <div class="find">
+          <div class="tag">Want vs. use</div>
+          <h3>Agents are the biggest gap</h3>
+          <p>Agents / multi-step is the most-wanted topic, but only one person has used one. The most-wanted and least-experienced area.</p>
+        </div>
+        <div class="find">
+          <div class="tag">Confidence</div>
+          <h3>Average 3.8 — read with caution</h3>
+          <p>Two who rated themselves "5" have barely used AI. Confidence and actual ability don't always line up.</p>
+        </div>
+        <div class="find flag">
+          <div class="tag">The most important point</div>
+          <h3>The real beginners aren't in this survey</h3>
+          <p>We believe there are <strong>many more beginners</strong> in the company — but they aren't interested in AI yet, so they didn't fill in the survey. The people who did respond skew toward the already-capable. In other words, this survey represents "the people already willing to use AI," <strong>not the whole company</strong> — and the people who didn't answer are exactly the ones this event most wants to move.</p>
+        </div>
+      </div>
+      <div class="persona">
+        <p class="q">"I use AI every day — but I've never uploaded a file, never set up a Project, and I don't think the competition is for me."</p>
+        <p class="who"><b>The room probably has many of these</b> — reconstructed from one real response. If even a survey responder feels this way, the non-responders feel it more.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- demo recommendations -->
+  <section class="section">
+    <div class="wrap">
+      <span class="kicker">Demo recommendations</span>
+      <h2>How we suggest <em>running the demos</em></h2>
+      <p class="lead">
+        The demos are run live by the organizer and <strong>recorded to video</strong> — so anyone who missed
+        it or wants a refresher can watch later. Each of the three rounds shows <strong>something
+        different</strong> (not the same demo repeated). Since <strong>Sales filled in the most (6/9)</strong>,
+        the main storyline is Sales — Marketing and Ops just swap the material.
+      </p>
+
+      <p class="subhead" style="margin-top:40px;">Which Claude feature, and when to use it</p>
+      <p class="subnote">Narrate "which feature this step needs, and why" as you go — far stickier than a standalone feature tour.</p>
+      <div class="ftable">
+        <div class="frow head"><div class="feat">Feature</div><div class="when">When to use it</div><div class="eg">Sales example</div></div>
+        <div class="frow"><div class="feat">Plain chat (one message)</div><div class="when">Quick, throwaway, no need for it to remember</div><div class="eg">Look up a spec, translate a line, quick rewrite</div></div>
+        <div class="frow"><div class="feat">Multi-turn conversation</div><div class="when">The first answer is a starting point, not the end</div><div class="eg">Refine an outreach email over 3 versions, push back, adjust tone</div></div>
+        <div class="frow"><div class="feat">Projects + custom instructions</div><div class="when">Same kind of task, same background, done repeatedly</div><div class="eg">"My Sales Desk": store the line card, your voice, your ICP — stop re-pasting</div></div>
+        <div class="frow"><div class="feat">File / PDF upload</div><div class="when">The answer lives inside a document</div><div class="eg">A customer RFQ, spec sheet, price list, a lead-list Excel, a meeting transcript</div></div>
+        <div class="frow"><div class="feat">Artifacts (deliverables)</div><div class="when">Output you'll edit repeatedly and actually reuse</div><div class="eg">A model comparison table, an outreach email, a one-pager</div></div>
+        <div class="frow"><div class="feat">Reach your tools (Cowork)</div><div class="when">The task needs Claude to act inside your own browser / computer / apps — read a site you're logged into, work on files on your machine — not paste things into the chat</div><div class="eg">Pull specs from a supplier/customer portal you're logged into; work through the stack of product PDFs on your machine</div></div>
+        <div class="frow"><div class="feat">Agent</div><div class="when">A clear, rules-based multi-step task you can hand off whole — you delegate → it runs → you check (you can step away)</div><div class="eg">Research 10 target companies → consolidate into a table → draft an email for each</div></div>
+      </div>
+
+      <p class="subhead" style="margin-top:40px;">Three demos — each reaches a little further</p>
+      <p class="subnote">One Sales storyline (look things up, compare specs, organise customers); the reach climbs from <b>chat window → browser → your computer</b>. Marketing / Ops can swap the material.</p>
+      <p class="subnote" style="margin-top:10px;"><b>On cowork — Projects work inside chat too, so that's not the real difference.</b> Cowork's real difference is <b>Claude acting inside your own environment</b>: <b>Round 2</b> reaches into your browser (everyone installs it and follows along); <b>Round 3</b> reaches into your computer and saves the result as a file (bigger permissions, more advanced — show it as the ceiling, you run it).</p>
+
+      <div class="plan">
+        <!-- Round 1 -->
+        <div class="ses">
+          <div class="when"><div class="mo">Round 1</div><div class="ph">Onboarding</div></div>
+          <div>
+            <div class="alt">Rung 1 main act · The outreach email you write several times a week</div>
+            <span class="featin">Features introduced: plain chat → multi-turn → Projects</span>
+            <h3>Hand the email you write every week to AI</h3>
+            <p class="goal"><b>Goal:</b> get a true-beginner rep to a usable email on the spot — and willing to come back.</p>
+
+            <span class="subtag">On screen</span>
+            <ol class="runsteps">
+              <li>"Ask casually": paste "write me an outreach email" — get a vague, canned-sounding version.</li>
+              <li>Switch to the formula — role (Neteon IPC sales) + context (prospect is a factory-automation integrator, product Nuvo-XXXX) + task (first outreach email) + format (English, short, one clear CTA). Same task, instantly usable. Show them side by side.</li>
+              <li>Refine over multiple turns: "shorter, add a line naming their pain, make the tone more human."</li>
+              <li>Open a Project, "My Sales Desk": upload the line card + two or three of your best past emails (your voice) + ICP notes, with custom instructions "you're my sales assistant at Neteon, write in my voice, US B2B tone." Then just type "draft a first email to ___."</li>
+            </ol>
+
+            <span class="subtag">Key line</span>
+            <p class="sayline">"Plain chat is throwaway. A Project is it remembering your products and your voice — no re-pasting every time."</p>
+
+            <span class="subtag">Bonus rung (for those who already know this)</span>
+            <p class="mini">30 seconds: chain a second file (the price list) into the Project — framed as "your next step."</p>
+
+            <span class="subtag">Leave with</span>
+            <p class="mini">Every rep builds their own "My Sales Desk" Project that day and takes the prompt formula with them.</p>
+
+            <span class="src">Maps to Sales' top uses "look-ups / writing copy" + Q5 "customer outreach," "fine-tune the prompt"</span>
+          </div>
+        </div>
+
+        <!-- Round 2 -->
+        <div class="ses">
+          <div class="when"><div class="mo">Round 2</div><div class="ph">Browser · Cowork</div></div>
+          <div>
+            <div class="alt">Rung 2 main act · Let Claude find / read data inside your own browser</div>
+            <span class="featin">Feature introduced: Claude in Chrome (reach: your browser)</span>
+            <h3>Compare specs, research customers: from copy-paste to it reading the page</h3>
+            <p class="goal"><b>Goal:</b> this is cowork — Claude acting inside the page you've opened. This is the session everyone <b>installs and follows along</b>.</p>
+
+            <span class="subtag">Live ① teach the install (3–5 min)</span>
+            <ol class="runsteps">
+              <li>Use <b>Chrome or Edge</b> (Brave / Arc not supported).</li>
+              <li>Search the Chrome Web Store for "Claude in Chrome" → <b>Add to Chrome</b> (or via claude.com/claude-for-chrome).</li>
+              <li><b>Sign in</b> with your Claude account (features need a paid plan; check who in the room can follow along).</li>
+              <li>Click the puzzle-piece icon → <b>pin</b> Claude; one click opens the side panel.</li>
+              <li>First run asks for <b>permissions</b> (read pages, control the browser) → choose "Ask before acting."</li>
+            </ol>
+            <p class="mini"><b>One safety line:</b> it can click, type and screenshot — so demo on <b>public pages only</b>, never on tabs logged into internal systems or holding customer data.</p>
+
+            <span class="subtag">Live ② task: read a competitor page, compare to Neteon (8–10 min)</span>
+            <ol class="runsteps">
+              <li>Open a <b>public</b> competitor / supplier industrial-PC product page; open the side panel.</li>
+              <li>Have it <b>read the page on your screen</b> and pull the specs into a table — you copy-pasted nothing.</li>
+              <li>Open Neteon's matching model page; build a side-by-side comparison flagging where Neteon wins.</li>
+            </ol>
+
+            <span class="subtag">Verbatim prompts (paste as-is)</span>
+            <p class="cmd">On the competitor page: Read this page's product specs into a table — columns: model, CPU, memory, storage, operating temperature, power input, I/O, expansion, certifications; mark anything not listed as "not listed," don't guess.</p>
+            <p class="cmd">On Neteon's [Nuvo-XXXX] page: This page is Neteon [Nuvo-XXXX]. Using the same columns, build a side-by-side comparison with the previous unit; add a final row naming Neteon's edge in one line.</p>
+            <p class="cmd">To finish: Give me a plain-text version of the comparison I can paste into an email, plus two sales talking points for a US manufacturing customer — professional, no hype.</p>
+
+            <span class="subtag">Key line</span>
+            <p class="sayline">"Notice — I'm not just typing in the side panel; I'm <b>letting it read the page I've opened</b>. Pasting into chat is just chat; it reading and acting on the page you've opened is what makes it cowork."</p>
+
+            <span class="subtag">Leave with / if it stalls</span>
+            <p class="mini"><b>Leave with:</b> install Claude in Chrome, pick a public page, ask it to "read this page → summarise in three points." <b>If it stalls:</b> fall back to the chat version (screenshot / save as PDF and upload), and explain the difference.</p>
+
+            <span class="src">Cowork centrepiece · paid plan · Chrome / Edge only · may be disabled by admins on Team/Enterprise — check first</span>
+          </div>
+        </div>
+
+        <!-- Round 3 -->
+        <div class="ses">
+          <div class="when"><div class="mo">Round 3</div><div class="ph">Your computer · ceiling</div></div>
+          <div>
+            <div class="alt">Rung 3 main act · Let Claude reach into your computer — grab data + save it as a file</div>
+            <span class="featin">Feature introduced: Claude desktop + filesystem connector (reach: your computer)</span>
+            <h3>It doesn't just tell you — it saves the result onto your computer</h3>
+            <p class="goal"><b>Goal:</b> the ceiling — reach goes one step past the browser, into your computer: it gathers the data and saves it as a file for you. <b>You (or a recording) demo it; don't ask everyone to install it.</b></p>
+
+            <span class="subtag">Before (only you set this up)</span>
+            <p class="mini">Connect the <b>Claude desktop app</b> to a <b>filesystem connector (MCP)</b>, granting access to <b>one specific folder</b> (not your whole computer). This is more advanced than the Chrome extension and carries bigger permissions (it writes your files).</p>
+
+            <span class="subtag">On screen</span>
+            <ol class="runsteps">
+              <li>Carry on from Round 2: have Claude consolidate a few competitors / prospects into one comparison table / list.</li>
+              <li>Tell it to <b>save the result as a file</b> (e.g. .csv or .md) into the folder you granted.</li>
+              <li>Open that folder — the file is really on your computer, not just in the chat.</li>
+            </ol>
+
+            <span class="subtag">Verbatim prompt (paste as-is)</span>
+            <p class="cmd">Save this comparison as a CSV named neteon-vs-competitor.csv into the folder I granted you access to; tell me the full path once it's saved.</p>
+
+            <span class="subtag">Key line</span>
+            <p class="sayline">"In Round 2 it went out and <b>read</b> the data for me; in Round 3 it <b>brings it back and writes a file on my computer</b>. The reach goes chat window → browser → my computer."</p>
+
+            <span class="subtag">How to play it</span>
+            <p class="mini">This is the ceiling — show "look how far it goes," <b>don't ask anyone to keep up live.</b> Big permissions — grant a single folder and use non-sensitive sample data only.</p>
+
+            <span class="src">Claude desktop + filesystem MCP · larger permissions, grant one folder only</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="twocol">
+        <div class="box use">
+          <h3>Demo topics to use</h3>
+          <ul>
+            <li>Prospecting: research a list, write the first email (Sales)</li>
+            <li>Customer RFQ / quoting: match specs, build a comparison table (Sales)</li>
+            <li>Meeting-note tidy-up &amp; follow-up emails (Sales / everyone)</li>
+            <li>Product data &amp; catalog copy (Marketing)</li>
+            <li>Daily schedule / fulfilment planning (Operations)</li>
+          </ul>
+        </div>
+        <div class="box skip">
+          <h3>Topics to skip</h3>
+          <ul>
+            <li>Anything coding-heavy — nobody asked for it</li>
+            <li>It would reinforce the "this is for techies" fear</li>
+            <li>Abstract feature tours with no real task attached</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>In one line:</strong> the agent <strong>creates aspiration</strong> and keeps the advanced engaged;
+        a fast, relevant, do-it-tomorrow win is what actually <strong>pulls beginners in</strong>. Every session
+        needs both.
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p class="mark">Prompt → Partner</p>
+      <p>Pre-event survey results &amp; demo notes · 9 responses · 18 Jun 2026 · internal use</p>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var btns = document.querySelectorAll('.langtoggle button');
+    function set(l) {
+      root.setAttribute('data-lang', l);
+      root.setAttribute('lang', l === 'zh' ? 'zh-Hant' : 'en');
+      try { localStorage.setItem('fp2p-lang', l); } catch (e) {}
+      btns.forEach(function (b) {
+        var active = b.dataset.set === l;
+        b.classList.toggle('on', active);
+        b.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+    }
+    btns.forEach(function (b) { b.addEventListener('click', function () { set(b.dataset.set); }); });
+    set(root.getAttribute('data-lang') || 'zh');
+  })();
+</script>
+
+</body>
+</html>
