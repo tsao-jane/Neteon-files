@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI 工作坊系列 — 從 Prompt 到 Partner · 企劃</title>
+<meta name="description" content="把內部 AI 活動從比賽改成 3 場實作工作坊:現場示範一招、當場帶你做一次;集滿三場小作業就拿禮品卡。沒有評比、沒有淘汰。" />
+<meta name="theme-color" content="#0e7d8c" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f4f9fa; --bg-card: #ffffff; --bg-sub: #eaf4f6;
+    --ink: #11201f; --ink-mid: #324245; --ink-soft: #56656a;
+    --rule: #e0ecee; --rule-strong: #cce0e3;
+    --teal: #0e7d8c; --teal-hi: #14a3b6; --teal-bg: #e0f4f7; --teal-line: #bfe6ec;
+    --coral: #c2552f; --coral-bg: #fcefe8; --slate: #8aa3a6;
+    --shadow-sm: 0 1px 2px rgba(13,40,44,.05);
+    --shadow: 0 1px 2px rgba(13,40,44,.04), 0 14px 34px -14px rgba(13,40,44,.16);
+    --shadow-lg: 0 2px 6px rgba(13,40,44,.05), 0 30px 60px -22px rgba(13,40,44,.20);
+    --radius: 16px; --radius-sm: 11px;
+    --ease: cubic-bezier(.22,.61,.36,1);
+    --sans: "Hanken Grotesk", "Noto Sans TC", -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+    --display: "Fraunces", "Noto Serif TC", Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 20px; -webkit-text-size-adjust: 100%; }
+  html, body { margin: 0; padding: 0; }
+  ::selection { background: var(--teal-bg); }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.75; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 30px; }
+
+  .kicker { font-size: 13px; font-weight: 600; letter-spacing: .1em; color: var(--teal); display: inline-block; }
+  .kicker.coral { color: var(--coral); }
+  .kicker.slate { color: var(--slate); }
+
+  /* hero */
+  .hero { position: relative; padding: 92px 0 64px; overflow: hidden; }
+  .hero::before { content: ""; position: absolute; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 55% 50% at 88% -8%, var(--teal-bg), transparent 62%), radial-gradient(ellipse 45% 40% at -5% 0%, var(--coral-bg), transparent 60%); opacity: .7; }
+  .hero .wrap { position: relative; z-index: 1; }
+  .eyebrow { font-family: var(--display); font-style: italic; font-size: 18px; color: var(--ink-mid); margin: 0 0 14px; }
+  h1 { font-family: var(--display); font-weight: 600; font-optical-sizing: auto; font-size: clamp(38px, 6vw, 60px); line-height: 1.1; letter-spacing: -0.01em; margin: 0 0 18px; max-width: 18ch; }
+  h1 em { font-style: normal; color: var(--teal); }
+  .lede { font-size: 19px; line-height: 1.7; color: var(--ink-mid); max-width: 50ch; margin: 0; }
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  .meta { margin-top: 34px; display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .meta .m { flex: 1 1 0; min-width: 140px; padding: 16px 22px 16px 0; border-right: 1px solid var(--rule); }
+  .meta .m:last-child { border-right: 0; }
+  .meta .k { font-size: 12px; font-weight: 600; letter-spacing: .04em; color: var(--ink-soft); }
+  .meta .v { font-family: var(--display); font-size: 19px; color: var(--ink); margin-top: 3px; line-height: 1.25; }
+  @media (max-width: 680px) { .meta { flex-direction: column; } .meta .m { border-right: 0; border-bottom: 1px solid var(--rule); } .meta .m:last-child { border-bottom: 0; } }
+
+  /* sections */
+  .section { padding: 64px 0; border-top: 1px solid var(--rule); }
+  .section.wash { background: var(--bg-sub); }
+  h2 { font-family: var(--display); font-weight: 600; font-size: clamp(26px, 4.2vw, 38px); line-height: 1.22; margin: 12px 0 16px; max-width: 24ch; }
+  h2 em { font-style: normal; color: var(--teal); }
+  h3 { font-family: var(--display); font-weight: 600; font-size: 20px; line-height: 1.3; margin: 0 0 6px; color: var(--ink); }
+  .lead { font-size: 17.5px; line-height: 1.75; color: var(--ink-mid); max-width: 48ch; }
+  .lead strong { color: var(--ink); font-weight: 600; }
+  p { color: var(--ink-mid); }
+  ul { color: var(--ink-mid); padding-left: 0; list-style: none; }
+  ul li { margin: 9px 0; padding-left: 24px; position: relative; line-height: 1.6; }
+  ul li::before { content: ""; position: absolute; left: 4px; top: .62em; width: 7px; height: 7px; border-radius: 999px; background: var(--teal); opacity: .8; }
+  strong { color: var(--ink); }
+
+  /* passport / stamp card (signature) */
+  .passport { margin-top: 28px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; background: var(--bg-card); border: 1px solid var(--rule); border-radius: var(--radius); padding: 28px 30px; box-shadow: var(--shadow-sm); }
+  .stamp { display: grid; place-items: center; width: 96px; height: 96px; border-radius: 50%; border: 2px dashed var(--rule-strong); background: var(--bg-card); text-align: center; flex: none; }
+  .stamp .n { font-family: var(--display); font-size: 15px; font-weight: 600; color: var(--teal); }
+  .stamp .t { font-size: 11px; color: var(--ink-soft); margin-top: 2px; padding: 0 6px; line-height: 1.3; }
+  .pass-arrow { color: var(--teal); font-size: 22px; flex: none; }
+  .reward { display: grid; place-items: center; min-width: 120px; padding: 18px 22px; border-radius: var(--radius-sm); background: linear-gradient(135deg, var(--teal), var(--teal-hi)); color: #fff; text-align: center; flex: none; box-shadow: var(--shadow-sm); }
+  .reward .ico { font-size: 26px; }
+  .reward .lbl { font-family: var(--display); font-size: 14px; font-weight: 600; margin-top: 4px; }
+  @media (max-width: 680px) { .passport { justify-content: center; } }
+
+  /* cards / steps */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 26px; }
+  .card { background: var(--bg-card); border: 1px solid var(--rule); border-radius: var(--radius); padding: 24px 26px; box-shadow: var(--shadow-sm); transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease); }
+  .card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--teal-line); }
+  .card p { font-size: 14.5px; line-height: 1.7; margin: 6px 0 0; }
+  @media (max-width: 680px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* session blocks */
+  .ses { background: var(--bg-card); border: 1px solid var(--rule); border-radius: var(--radius); padding: 26px 30px; box-shadow: var(--shadow-sm); display: grid; grid-template-columns: 130px 1fr; gap: 26px; margin-top: 18px; }
+  .ses .when .mo { font-family: var(--display); font-size: 21px; font-weight: 600; color: var(--teal); line-height: 1.1; }
+  .ses .when .dt { font-size: 13px; color: var(--ink-soft); margin-top: 3px; }
+  .ses .reach { font-size: 12.5px; font-weight: 600; letter-spacing: .04em; color: var(--ink-soft); text-transform: uppercase; margin-top: 8px; }
+  .ses .feat { display: inline-block; margin: 0 0 8px; font-size: 12.5px; font-weight: 600; color: var(--teal); background: var(--teal-bg); border: 1px solid var(--teal-line); border-radius: 999px; padding: 3px 12px; }
+  .ses p { font-size: 15px; line-height: 1.7; margin: 6px 0 0; }
+  .subtag { display: block; font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 16px 0 5px; }
+  .assign { margin: 4px 0 0; padding: 12px 16px; background: var(--coral-bg); border-left: 3px solid var(--coral); border-radius: 4px var(--radius-sm) var(--radius-sm) 4px; font-size: 14.5px; color: var(--ink); }
+  .assign b { color: var(--coral); }
+  @media (max-width: 680px) { .ses { grid-template-columns: 1fr; gap: 12px; padding: 24px 22px; } }
+
+  /* feature table */
+  .ftable { margin-top: 18px; border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; background: var(--bg-card); box-shadow: var(--shadow-sm); }
+  .frow { display: grid; grid-template-columns: 200px 1fr 1.1fr; border-top: 1px solid var(--rule); }
+  .frow:first-child { border-top: 0; }
+  .frow > div { padding: 14px 18px; font-size: 14px; line-height: 1.6; }
+  .frow .feat { font-family: var(--display); font-weight: 600; color: var(--teal); border-right: 1px solid var(--rule); }
+  .frow .when { color: var(--ink); border-right: 1px solid var(--rule); }
+  .frow .eg { color: var(--ink-soft); }
+  .frow.head > div { background: var(--bg-sub); font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+  .frow.head .feat { color: var(--ink-soft); }
+  @media (max-width: 680px) { .frow { grid-template-columns: 1fr; padding: 6px 0; } .frow > div { border-right: 0; padding: 4px 18px; } .frow.head { display: none; } .frow .feat { padding-top: 12px; } .frow .eg { padding-bottom: 12px; } }
+
+  .note { margin-top: 24px; background: var(--bg-sub); border: 1px solid var(--rule); border-radius: var(--radius-sm); padding: 18px 24px; font-size: 15px; line-height: 1.8; color: var(--ink-mid); }
+  .note strong { color: var(--ink); }
+  .callout { margin-top: 26px; background: linear-gradient(180deg, #fff, var(--teal-bg)); border: 1px solid var(--teal-line); border-left: 4px solid var(--teal); border-radius: 4px var(--radius) var(--radius) 4px; padding: 24px 28px; box-shadow: var(--shadow-sm); }
+  .callout p { margin: 0; font-size: 15.5px; line-height: 1.75; color: var(--ink-mid); }
+  .callout b { color: var(--teal); }
+
+  /* feedback form spec */
+  .formq { margin-top: 20px; display: grid; gap: 12px; }
+  .formq .q { background: var(--bg-card); border: 1px solid var(--rule); border-radius: var(--radius-sm); padding: 16px 20px; box-shadow: var(--shadow-sm); }
+  .formq .q .head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .formq .q .num { font-family: var(--display); font-size: 16px; font-weight: 600; color: var(--teal); }
+  .formq .q .ttl { font-weight: 600; color: var(--ink); flex: 1 1 auto; }
+  .formq .q .type { font-size: 11.5px; font-weight: 600; letter-spacing: .04em; color: var(--ink-soft); background: var(--bg-sub); border: 1px solid var(--rule); border-radius: 999px; padding: 2px 10px; }
+  .formq .q .opts { margin: 8px 0 0; font-size: 14px; color: var(--ink-mid); line-height: 1.8; }
+  .formq .q .hint { margin: 6px 0 0; font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+
+  details { border: 1px solid var(--rule); border-radius: var(--radius-sm); padding: 16px 22px; margin: 12px 0; background: var(--bg-card); box-shadow: var(--shadow-sm); }
+  details[open] { border-color: var(--teal-line); box-shadow: var(--shadow); }
+  summary { cursor: pointer; font-weight: 600; color: var(--ink); list-style: none; position: relative; padding-right: 30px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; display: grid; place-items: center; border-radius: 999px; background: var(--teal-bg); color: var(--teal); font-size: 15px; }
+  details[open] summary::after { content: "\2212"; }
+  details > p, details > ul { margin-top: 12px; color: var(--ink-mid); font-size: 14.5px; line-height: 1.7; }
+
+  footer { padding: 56px 0 84px; text-align: center; border-top: 1px solid var(--rule); }
+  footer .mark { font-family: var(--display); font-style: italic; font-size: 24px; color: var(--teal); }
+  footer p { color: var(--ink-soft); font-size: 13.5px; margin: 10px 0 0; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto; } .card:hover { transform: none; } }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">內部 AI 工作坊 · 企劃</p>
+    <h1>從 Prompt 到 <em>Partner</em> · AI 工作坊系列</h1>
+    <p class="lede">
+      我們把原本的比賽,改成 <strong>3 場輕鬆的線上實作工作坊</strong>。每場直播示範一招、帶你當場做一次;
+      <strong>出席 + 填一份回饋(寫一句「我試了 ___」)就算一份,填滿三份換禮品卡</strong>(看重播也能補)。<strong>沒有評比、沒有淘汰 —— 來,就有收穫。</strong>
+    </p>
+    <div class="meta">
+      <div class="m"><div class="k">形式</div><div class="v">3 場線上實作工作坊</div></div>
+      <div class="m"><div class="k">日期</div><div class="v">7/9 · 7/30 · 8/13(四)</div></div>
+      <div class="m"><div class="k">對象</div><div class="v">全體 · 任何程度</div></div>
+      <div class="m"><div class="k">獎勵</div><div class="v">填 1·2·3 份回饋 → 禮品卡遞增</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- 01 為什麼改成工作坊 -->
+<section class="section" id="why">
+  <div class="wrap">
+    <span class="kicker">為什麼改成工作坊</span>
+    <h2>把門檻拉到最低,<em>讓更多人真的動手</em></h2>
+    <p class="lead">
+      大多數同事用 AI 還停在「打開對話框、問一個問題」。比賽容易嚇退我們最想帶動的人(新手、行政、業務),
+      所以我們改成<strong>邊看邊做的工作坊</strong> —— 每場學一招、當場用在自己的工作上。重點不是誰最厲害,
+      是<strong>每個人都往前走一小步</strong>。
+    </p>
+    <div class="note">
+      <strong>用問卷設計的:</strong>多數同事已經每天在用 AI(查資料、寫信),最多人想學的是
+      「能幫我跑多步驟任務的 AI」,卡關的地方則是「整併不同來源的資料、客戶開發、產品資料維護」。
+      三場工作坊就是照這個順序,一步步把大家帶到那裡。
+    </div>
+  </div>
+</section>
+
+<!-- 02 怎麼運作 -->
+<section class="section wash" id="how">
+  <div class="wrap">
+    <span class="kicker">怎麼運作</span>
+    <h2>三場、每場一招、<em>當場帶走</em></h2>
+    <p class="lead">
+      每場約 <strong>60–75 分鐘</strong>、<strong>線上直播</strong>、算正式工時。結構固定:直播示範 → 你開著畫面跟著做一次 →
+      帶走一個能用的小成果,並填一份這場的回饋表單。
+    </p>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>每場都一樣的節奏</h3>
+        <p>① 用全公司基準線數字開場 → ② 直播示範一招(開著自己畫面跟著做)→ ③ 線上分組(breakout)聊「我的工作哪裡能用」→ ④ 帶走一個小成果。</p>
+      </div>
+      <div class="card">
+        <h3>回饋集點卡 → 禮品卡</h3>
+        <p><strong>出席 + 填一份回饋(一句「我試了 ___」)就算一份</strong>。<strong>來越多場、禮品卡越大</strong> —— 填 1 / 2 / 3 份都有實質禮品卡,填滿三份最多。不排名、不比輸贏。</p>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>關鍵設計:</strong>算工時、主管帶頭參加、用一個共用回饋表單收成果與補填;沒辦法每場準時也沒關係 ——
+      每場都會錄成短片 + 附一個可直接複製的範本,看重播照樣能填、照樣算。
+    </div>
+  </div>
+</section>
+
+<!-- 03 獎勵機制 -->
+<section class="section" id="reward">
+  <div class="wrap">
+    <span class="kicker coral">獎勵機制</span>
+    <h2>填滿三份回饋,<em>人人有獎</em></h2>
+    <p class="lead">
+      不評分、不排名。<strong>出席(或看重播)+ 填一份回饋(寫一句「我試了 ___」)就算一份</strong>,而且
+      <strong>每一份都有實質禮品卡 —— 來越多拿越多</strong>。回饋集點只是溫和地把大家帶回來;中途加入、看重播也都算。
+    </p>
+
+    <div class="passport" aria-label="回饋集點卡">
+      <div class="stamp"><div><div class="n">①</div><div class="t">7/9<br>聊天框</div></div></div>
+      <span class="pass-arrow">→</span>
+      <div class="stamp"><div><div class="n">②</div><div class="t">7/30<br>瀏覽器</div></div></div>
+      <span class="pass-arrow">→</span>
+      <div class="stamp"><div><div class="n">③</div><div class="t">8/13<br>你的電腦</div></div></div>
+      <span class="pass-arrow">→</span>
+      <div class="reward"><div class="ico">🎁</div><div class="lbl">禮品卡</div></div>
+    </div>
+
+    <h3 style="margin-top:30px;">怎樣才算「一份回饋」</h3>
+    <ul>
+      <li><strong>出席那場直播,或事後看重播</strong> —— 兩者都算。</li>
+      <li>到那場的<strong>共用回饋表單</strong>寫一句「我試了 ___」(可附截圖)。出席 + 這份回饋,就算一份。</li>
+      <li><strong>不查品質、信任大家</strong> —— 主辦不當場逐一檢查,只在最後清點「誰填滿三份」。</li>
+      <li>缺哪一場、或只來了兩次?截止前看重播、補填那份回饋,就補得回第三份。</li>
+    </ul>
+    <div class="note">
+      <strong>禮品卡按回饋份數遞增(線上、重播都算):</strong>
+      1 份 → <strong>USD $20</strong> + 完成證書 · 2 份 → <strong>USD $40</strong> · 3 份 → <strong>USD $75</strong>
+      (再加最後一場「分享得意之作」的自願小抽獎)。預算充足($5,000),<strong>只來一次也拿得到實質獎勵</strong>。
+    </div>
+
+    <div class="callout">
+      <p>
+        <b>預算:</b>總額 <b>USD $5,000</b>,很夠 —— 用 $20 / $40 / $75 的遞增階梯,就算 30–40 人多數完成,
+        大約落在 $1,500–$3,000,仍有餘裕(金額可再往上調)。內部點名表揚幾乎不花錢、長期效果最好,建議一起做;
+        最後一場直播時加一個 <b>自願、不評分的「分享你的得意之作」</b>,有慶祝感、零壓力。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 三場示範 -->
+<section class="section wash" id="sessions">
+  <div class="wrap">
+    <span class="kicker">三場示範</span>
+    <h2>碰得到的範圍,<em>一場比一場深</em></h2>
+    <p class="lead">
+      跟著一條業務主線(查資料、比規格、整理客戶),讓 Claude 能碰到的範圍一路從
+      <strong>聊天框 → 你的瀏覽器 → 你的電腦</strong>。每場帶到一兩個功能,當場可跟著做。
+    </p>
+    <div class="note">
+      <strong>中途才加入、怕跟不上?不會。</strong>三個工具是各自獨立的招(第 2 場不需要先會第 1 場),每場都自成一個能用的成果;
+      每場開場用 60 秒回顧上一場重點。缺哪一場,看 3 分鐘短片補上即可 —— 回饋能後補,不卡你拿禮品卡。
+    </div>
+
+    <!-- Session 1 -->
+    <div class="ses">
+      <div class="when"><div class="mo">第 1 場</div><div class="dt">7/9(四)</div><div class="reach">聊天框</div></div>
+      <div>
+        <span class="feat">帶到:一般對話 → 多輪 → Projects</span>
+        <h3>把每週要寫的開發信,第一次交給 AI</h3>
+        <p>先示範「隨便問 vs 套公式問」的差距(角色＋背景＋任務＋格式),再開一個 Project「我的業務桌」,上傳產品線卡與你的語氣,之後一句話就生出對的稿。</p>
+        <span class="subtag">當場帶走</span>
+        <p>每人建好自己的「我的業務桌」Project,並抄走那條提示詞公式。</p>
+        <div class="assign"><b>本場回饋(填表單):</b>用你的 Project 真的寫一封信 / 一段文案,分享成果一句話。</div>
+      </div>
+    </div>
+
+    <!-- Session 2 -->
+    <div class="ses">
+      <div class="when"><div class="mo">第 2 場</div><div class="dt">7/30(四)</div><div class="reach">你的瀏覽器 · Cowork</div></div>
+      <div>
+        <span class="feat">帶到:Claude in Chrome(進你的瀏覽器)</span>
+        <h3>讓 Claude 直接讀網頁,幫你比規格</h3>
+        <p>先花 3–5 分鐘教裝 Claude in Chrome(Chrome / Edge → 商店加到 Chrome → 付費帳號登入 → 釘選 → 權限選「動作前先問」),再讓它直接讀一個<strong>公開</strong>競品頁、跟 Neteon 型號做並排比較 —— 你完全不用複製貼上。</p>
+        <span class="subtag">當場帶走</span>
+        <p>裝好 Claude in Chrome,挑一個公開頁讓它「讀這頁 → 摘成三點」。</p>
+        <div class="assign"><b>本場回饋(填表單):</b>用 Claude in Chrome 對你工作相關的一個公開頁面做一件事,分享截圖或一句話。</div>
+      </div>
+    </div>
+
+    <!-- Session 3 -->
+    <div class="ses">
+      <div class="when"><div class="mo">第 3 場</div><div class="dt">8/13(四)</div><div class="reach">你的電腦 · 天花板</div></div>
+      <div>
+        <span class="feat">帶到:Claude 桌面版 + 檔案系統(進你的電腦)</span>
+        <h3>讓 Claude 連進電腦,抓資料 + 存成檔案</h3>
+        <p>用 Claude 桌面版接上檔案系統連接器(MCP),只授權一個指定資料夾。它把研究 / 比較結果直接存成你電腦裡的檔案。這階是<strong>天花板,由主辦示範、不要求全場安裝</strong>。最後接<strong>自願的「分享你的得意之作」</strong>收尾。</p>
+        <span class="subtag">當場帶走</span>
+        <p>一個方向感:從「自己一步步做」到「讓 AI 幫我跑完、把成品交回來」。</p>
+        <div class="assign"><b>本場回饋(填表單):</b>分享你這三場裡最有感的一個 AI 成果(任何形式),即完成。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 功能使用時機 -->
+<section class="section" id="features">
+  <div class="wrap">
+    <span class="kicker">工具速查</span>
+    <h2>哪個 Claude 功能、<em>什麼時候用</em></h2>
+    <p class="lead">示範時邊做邊講「這一步該用哪個、為什麼」,比單獨介紹功能更有感。</p>
+    <div class="ftable">
+      <div class="frow head"><div class="feat">功能</div><div class="when">什麼時候用</div><div class="eg">業務情境例子</div></div>
+      <div class="frow"><div class="feat">一般對話</div><div class="when">快速、用完即丟、不需要它記得</div><div class="eg">查一個規格、翻一句話、快速改一句</div></div>
+      <div class="frow"><div class="feat">多輪對話</div><div class="when">第一個答案只是起點,要來回修</div><div class="eg">把開發信改三版、調語氣</div></div>
+      <div class="frow"><div class="feat">Projects + 自訂指令</div><div class="when">同一類任務、同一套背景,一直重複做</div><div class="eg">「我的業務桌」:存產品線卡、你的語氣、ICP</div></div>
+      <div class="frow"><div class="feat">上傳檔案 / PDF</div><div class="when">答案就在某份文件裡</div><div class="eg">客戶 RFQ、規格表、報價單、名單</div></div>
+      <div class="frow"><div class="feat">Claude in Chrome(瀏覽器)</div><div class="when">要它讀 / 動你打開的網頁,不是貼進聊天框</div><div class="eg">讀公開競品頁抓規格、查潛在客戶</div></div>
+      <div class="frow"><div class="feat">桌面版 + 檔案系統(電腦)</div><div class="when">要它把成品存成你電腦裡的檔案</div><div class="eg">把比較表存成 CSV 到指定資料夾</div></div>
+    </div>
+    <div class="note">
+      <strong>關於 cowork:</strong>chat 裡也能用 Project,差別不在那。cowork 真正的差別是
+      <strong>Claude 進到你自己的環境</strong> —— 第 2 場進你的瀏覽器、第 3 場進你的電腦。需要付費方案 + Chrome/Edge,務必只用公開頁面 / 指定資料夾。
+    </div>
+  </div>
+</section>
+
+<!-- 06 我們想移動的指標 -->
+<section class="section wash" id="kpi">
+  <div class="wrap">
+    <span class="kicker">真正的成績單</span>
+    <h2>我們在意的,<em>是基準線往前移</em></h2>
+    <p class="lead">活動結束要跟經營層報告的不是「誰得獎」,而是<strong>全公司的 AI 使用基準線移動了多少</strong>。用前後問卷量這四個數字:</p>
+    <div class="grid-2">
+      <div class="card"><h3>使用頻率</h3><p>每週用 AI 幾次 —— 前後平均的變化。</p></div>
+      <div class="card"><h3>功能涵蓋率</h3><p>多輪 / 檔案 / Projects / 瀏覽器 / 電腦 —— 用過幾種的人變多多少。</p></div>
+      <div class="card"><h3>信心分數</h3><p>「用 AI 解決工作問題」1–5 分的自評平均。</p></div>
+      <div class="card"><h3>省下工時</h3><p>每月估計省下的總時數 —— 三場後的變化。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06.5 回饋表單 -->
+<section class="section" id="form">
+  <div class="wrap">
+    <span class="kicker coral">回饋表單</span>
+    <h2>三場共用的<em>回饋表單</em></h2>
+    <p class="lead">
+      一張表單用到底、每場填一次 —— 它<strong>既是「填了 = 一份回饋」的領獎憑證</strong>,也每場把資料餵回上面四個指標。
+      表單開頭寫一句:「填完就算完成本場、累積你的禮品卡 🎁 —— 30 秒、不評分、沒有對錯。」
+    </p>
+    <div class="formq">
+      <div class="q">
+        <div class="head"><span class="num">1</span><span class="ttl">你的名字(或 Email)</span><span class="type">簡答</span></div>
+        <p class="hint">用來累積你的回饋份數(填滿 3 份拿滿額)。也可改用 Google Forms 的「自動收集 Email」。</p>
+      </div>
+      <div class="q">
+        <div class="head"><span class="num">2</span><span class="ttl">這是哪一場?</span><span class="type">單選</span></div>
+        <p class="opts">○ 第 1 場 · 7/9 · 聊天框(Projects)　　○ 第 2 場 · 7/30 · 瀏覽器(Claude in Chrome)　　○ 第 3 場 · 8/13 · 你的電腦(連到檔案)</p>
+      </div>
+      <div class="q">
+        <div class="head"><span class="num">3</span><span class="ttl">今天你用學到的招,試了什麼?(一句話就好)</span><span class="type">簡答</span></div>
+        <p class="hint">✦ 這題就是你的「回饋憑證」。例:「我用 Project 寫了一封開發信」「讓 Claude 讀競品頁抓規格」。可順手附截圖。</p>
+      </div>
+      <div class="q">
+        <div class="head"><span class="num">4</span><span class="ttl">你覺得這能幫你省多少時間?</span><span class="type">單選</span></div>
+        <p class="opts">○ 還好 / 幾乎沒有　　○ 幾分鐘　　○ 大約 1 小時　　○ 好幾個小時　　○ 以後每週都會用到</p>
+        <p class="hint">→ 對到指標「省下工時」。</p>
+      </div>
+      <div class="q">
+        <div class="head"><span class="num">5</span><span class="ttl">現在你對「用 AI 處理這類工作」有多少信心?</span><span class="type">線性刻度 1–5</span></div>
+        <p class="opts">1 = 完全不會　……　5 = 很有信心、每天都用</p>
+        <p class="hint">→ 對到指標「信心分數」。每場都問同一題,就能看到信心一場一場往上爬。</p>
+      </div>
+      <div class="q">
+        <div class="head"><span class="num">6</span><span class="ttl">有卡住的地方,或想看的下一步嗎?</span><span class="type">選填 · 簡答</span></div>
+        <p class="hint">質性回饋,直接拿來調整下一場的示範題材。</p>
+      </div>
+    </div>
+    <div class="note">
+      <strong>建立 &amp; 清點:</strong>「限制回覆 1 次」要<strong>關掉</strong>(大家需要三場各交一次,用第 2 題 + 時間戳區分);
+      發獎時在回覆試算表用「第 1 題(人)× 第 2 題(場次)」去重 —— <strong>每人填了幾個不同場次 = 幾份回饋 = $20 / $40 / $75</strong>。
+      使用頻率、功能涵蓋率留在前後問卷,這份每場的就保持輕薄。
+    </div>
+  </div>
+</section>
+
+<!-- 07 主辦提醒 -->
+<section class="section wash" id="notes">
+  <div class="wrap">
+    <span class="kicker">主辦提醒</span>
+    <h2>讓更多人願意來、願意做</h2>
+    <div class="grid-2">
+      <div class="card">
+        <h3>該做的事</h3>
+        <ul>
+          <li>每場算工時、主管帶頭參加(線上直播)</li>
+          <li>第一場 hook 用最日常的雜事開場,不是炫技</li>
+          <li>每場錄短片 + 附可複製範本,放共用頻道,方便看重播補填回饋</li>
+          <li>用一個共用表單 / 頻道收作業,最後清點,不當場逐一檢查</li>
+          <li>第 2 場全員動手裝 Claude in Chrome,事前先確認誰有付費帳號</li>
+          <li>第 3 場(天花板)由主辦或預錄示範,只授權單一資料夾、用非機密範例</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>避開的事</h3>
+        <ul>
+          <li>不要評分、排名、淘汰 —— 這是工作坊,不是比賽</li>
+          <li>不要要求長報告;小作業就是「用一次 + 分享一句話」</li>
+          <li>不要把示範做得太技術,會嚇退新手</li>
+          <li>別在登入內部系統或有客戶個資的分頁上示範 cowork</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 FAQ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <span class="kicker">常見問題</span>
+    <h2>FAQ</h2>
+
+    <details>
+      <summary>我完全沒用過 AI,可以來嗎?</summary>
+      <p>當然 —— 這就是為你辦的。每場都從最簡單的版本開始、當場帶你做一次;沒有評比、沒有淘汰,來了就有收穫。</p>
+    </details>
+    <details>
+      <summary>只來一兩次,或只能看重播,拿得到獎嗎?</summary>
+      <p>拿得到<strong>實質禮品卡</strong>。每一份回饋都有,來越多越大 —— 填 1 份 $20、2 份 $40、3 份 $75(出席或看重播 + 填一份回饋就算一份)。想拿滿額,缺的那場截止前看重播、補填回饋就行。</p>
+    </details>
+    <details>
+      <summary>線上要怎麼交回饋 / 算數?</summary>
+      <p>到那場的共用回饋表單寫一句「我試了 ___」加(可選)截圖即可。主辦不當場逐一檢查,只在系列結束時清點「誰填滿三份」→ 發獎。</p>
+    </details>
+    <details>
+      <summary>「小作業」會很花時間嗎?</summary>
+      <p>不會。就是把當場教的招,用在一件你本來就要做的工作上,然後分享一句話或一張截圖。重點是動手試一次,不是交報告。</p>
+    </details>
+    <details>
+      <summary>我的工作很機密,能參加嗎?</summary>
+      <p>可以。示範與練習一律用<strong>公開或去識別化</strong>的內容;cowork(瀏覽器 / 電腦)也只在公開頁面、指定資料夾上操作。你也可以只把流程套在不敏感的任務上。</p>
+    </details>
+    <details>
+      <summary>第 2、3 場需要先準備什麼?</summary>
+      <p>第 2 場會現場教裝 Claude in Chrome(需付費方案、限 Chrome / Edge);第 3 場是天花板展示,由主辦操作,你看著理解方向即可,不需要自己先裝。</p>
+    </details>
+    <details>
+      <summary>禮品卡是多少?</summary>
+      <p>依預算與完成人數而定(建議每人固定一個金額,例如 USD $20)。重點是「完成就有」、人人平等,不靠名次。</p>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="mark">Prompt → Partner</p>
+    <p>AI 工作坊系列 · 企劃 · 2026/07–08 · 內部使用</p>
+  </div>
+</footer>
+
+</body>
+</html>
