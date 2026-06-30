@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>東岸場 · 主持稿 — From Prompt to Partner 工作坊</title>
+<meta name="description" content="東岸三場線上工作坊的主持人 run-of-show:流程時間、現場示範步驟、可直接複製的英文逐字指令、關鍵台詞、現場練習與 check-in。" />
+<meta name="theme-color" content="#0e7d8c" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f4f9fa; --bg-card: #ffffff; --bg-sub: #eaf4f6;
+    --ink: #11201f; --ink-mid: #324245; --ink-soft: #56656a;
+    --rule: #e0ecee; --rule-strong: #cce0e3;
+    --teal: #0e7d8c; --teal-hi: #14a3b6; --teal-bg: #e0f4f7; --teal-line: #bfe6ec;
+    --coral: #c2552f; --coral-bg: #fcefe8; --slate: #8aa3a6;
+    --shadow-sm: 0 1px 2px rgba(13,40,44,.05);
+    --shadow: 0 1px 2px rgba(13,40,44,.04), 0 14px 34px -14px rgba(13,40,44,.16);
+    --radius: 16px; --radius-sm: 11px;
+    --ease: cubic-bezier(.22,.61,.36,1);
+    --sans: "Hanken Grotesk", "Noto Sans TC", -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+    --display: "Fraunces", "Noto Serif TC", Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 20px; -webkit-text-size-adjust: 100%; }
+  html, body { margin: 0; padding: 0; }
+  ::selection { background: var(--teal-bg); }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.72; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 30px; }
+
+  .kicker { font-size: 13px; font-weight: 600; letter-spacing: .1em; color: var(--teal); display: inline-block; }
+  .kicker.coral { color: var(--coral); }
+
+  .hero { position: relative; padding: 84px 0 56px; overflow: hidden; }
+  .hero::before { content: ""; position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 55% 50% at 88% -8%, var(--teal-bg), transparent 62%), radial-gradient(ellipse 45% 40% at -5% 0%, var(--coral-bg), transparent 60%); opacity: .7; }
+  .hero .wrap { position: relative; z-index: 1; }
+  .eyebrow { font-family: var(--display); font-style: italic; font-size: 18px; color: var(--ink-mid); margin: 0 0 14px; }
+  h1 { font-family: var(--display); font-weight: 600; font-size: clamp(36px, 5.6vw, 54px); line-height: 1.12; margin: 0 0 18px; max-width: 20ch; }
+  h1 em { font-style: normal; color: var(--teal); }
+  .lede { font-size: 18px; line-height: 1.7; color: var(--ink-mid); max-width: 52ch; margin: 0; }
+  .lede strong { color: var(--ink); font-weight: 600; }
+  .meta { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .meta .m { flex: 1 1 0; min-width: 140px; padding: 15px 20px 15px 0; border-right: 1px solid var(--rule); }
+  .meta .m:last-child { border-right: 0; }
+  .meta .k { font-size: 12px; font-weight: 600; letter-spacing: .04em; color: var(--ink-soft); }
+  .meta .v { font-family: var(--display); font-size: 18px; color: var(--ink); margin-top: 3px; }
+  @media (max-width: 680px) { .meta { flex-direction: column; } .meta .m { border-right: 0; border-bottom: 1px solid var(--rule); } .meta .m:last-child { border-bottom: 0; } }
+
+  .section { padding: 60px 0; border-top: 1px solid var(--rule); }
+  .section.wash { background: var(--bg-sub); }
+  h2 { font-family: var(--display); font-weight: 600; font-size: clamp(26px, 4.2vw, 36px); line-height: 1.22; margin: 12px 0 16px; max-width: 24ch; }
+  h2 em { font-style: normal; color: var(--teal); }
+  .lead { font-size: 17px; line-height: 1.72; color: var(--ink-mid); max-width: 52ch; }
+  .lead strong { color: var(--ink); font-weight: 600; }
+  p { color: var(--ink-mid); }
+
+  /* session block */
+  .ses { background: var(--bg-card); border: 1px solid var(--rule); border-radius: var(--radius); padding: 28px 32px; box-shadow: var(--shadow-sm); margin-top: 22px; }
+  .ses .top { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; border-bottom: 1px solid var(--rule); padding-bottom: 16px; margin-bottom: 4px; }
+  .ses .mo { font-family: var(--display); font-size: 23px; font-weight: 600; color: var(--teal); }
+  .ses .dt { font-size: 14px; color: var(--ink-soft); }
+  .ses .feat { font-size: 12.5px; font-weight: 600; color: var(--teal); background: var(--teal-bg); border: 1px solid var(--teal-line); border-radius: 999px; padding: 3px 12px; margin-left: auto; }
+  .ses h3 { font-family: var(--display); font-size: 21px; font-weight: 600; margin: 16px 0 4px; color: var(--ink); }
+  .ses .goal { font-size: 15px; color: var(--ink-mid); margin: 0; }
+  .ses .goal b { color: var(--ink); }
+  .subtag { display: block; font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 20px 0 7px; }
+
+  .ros { display: grid; gap: 0; border: 1px solid var(--rule); border-radius: var(--radius-sm); overflow: hidden; }
+  .ros .r { display: grid; grid-template-columns: 92px 1fr; border-top: 1px solid var(--rule); }
+  .ros .r:first-child { border-top: 0; }
+  .ros .r > div { padding: 10px 14px; font-size: 14px; line-height: 1.5; }
+  .ros .t { background: var(--bg-sub); color: var(--teal); font-weight: 600; border-right: 1px solid var(--rule); }
+  .ros .w { color: var(--ink-mid); }
+
+  .runsteps { margin: 0; padding-left: 22px; counter-reset: s; list-style: none; }
+  .runsteps li { font-size: 14.5px; line-height: 1.65; margin: 8px 0; color: var(--ink-mid); position: relative; }
+  .runsteps li::before { counter-increment: s; content: counter(s); position: absolute; left: -22px; top: 0; font-family: var(--display); font-size: 13px; font-weight: 600; color: var(--teal); }
+
+  .cmd { margin: 7px 0; padding: 12px 15px; background: #0e2a2e; border-radius: var(--radius-sm); font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: 13px; line-height: 1.6; color: #d7eef0; }
+  .cmd::before { content: "EN ▸ "; color: var(--teal-hi); font-weight: 700; }
+
+  .sayline { margin: 7px 0 0; padding: 11px 15px; background: var(--teal-bg); border-left: 3px solid var(--teal); border-radius: 4px var(--radius-sm) var(--radius-sm) 4px; font-size: 14.5px; color: var(--ink); font-weight: 500; line-height: 1.55; }
+  .mini { font-size: 14px; line-height: 1.65; color: var(--ink-mid); margin: 5px 0 0; }
+  .mini b { color: var(--ink); }
+  .assign { margin: 6px 0 0; padding: 12px 15px; background: var(--coral-bg); border-left: 3px solid var(--coral); border-radius: 4px var(--radius-sm) var(--radius-sm) 4px; font-size: 14.5px; color: var(--ink); }
+  .assign b { color: var(--coral); }
+  .xfer { margin: 6px 0 0; font-size: 13.5px; color: var(--ink-soft); }
+  .xfer b { color: var(--teal); }
+
+  .callout { margin-top: 26px; background: linear-gradient(180deg, #fff, var(--coral-bg)); border: 1px solid #eccdbf; border-left: 4px solid var(--coral); border-radius: 4px var(--radius) var(--radius) 4px; padding: 24px 28px; box-shadow: var(--shadow-sm); }
+  .callout h3 { font-family: var(--display); font-size: 19px; font-weight: 600; margin: 0 0 8px; color: var(--coral); }
+  .callout p { margin: 0; font-size: 15.5px; line-height: 1.75; color: var(--ink-mid); }
+  .callout p strong { color: var(--ink); }
+  .note { margin-top: 24px; background: var(--bg-sub); border: 1px solid var(--rule); border-radius: var(--radius-sm); padding: 18px 24px; font-size: 15px; line-height: 1.8; color: var(--ink-mid); }
+  .note strong { color: var(--ink); }
+
+  footer { padding: 54px 0 84px; text-align: center; border-top: 1px solid var(--rule); }
+  footer .mark { font-family: var(--display); font-style: italic; font-size: 22px; color: var(--teal); }
+  footer p { color: var(--ink-soft); font-size: 13.5px; margin: 10px 0 0; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">East Coast 場 · 主持人 run-of-show</p>
+    <h1>東岸三場,<em>照著走就行</em></h1>
+    <p class="lede">
+      東岸主打<strong>人人用得到、幾乎免設定</strong>的兩招(Projects + Claude in Chrome),第三場當啟發性天花板。
+      用業務例子示範(最有感),但學的是<strong>可轉移的功能</strong> —— 每場都附「換成你的工作」讓混合部門也接得住。
+      MCP / NetSuite / 排程那塊留給西岸進階場。
+    </p>
+    <div class="meta">
+      <div class="m"><div class="k">場數</div><div class="v">3 場 · 線上</div></div>
+      <div class="m"><div class="k">日期</div><div class="v">7/9 · 7/30 · 8/13</div></div>
+      <div class="m"><div class="k">每場</div><div class="v">約 60–75 分鐘</div></div>
+      <div class="m"><div class="k">逐字指令</div><div class="v">英文 · 可複製</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- 怎麼用這份稿 -->
+<section class="section">
+  <div class="wrap">
+    <span class="kicker">怎麼用這份稿</span>
+    <h2>每場固定節奏,<em>主秀只佔 15 分鐘</em></h2>
+    <p class="lead">
+      每場都同一個流程:開場 → 示範(主秀)→ 換你做 → 分組 → 收尾蓋章。深色框是<strong>英文逐字指令,直接複製貼到 Claude</strong>;
+      teal 框是<strong>你可以照唸的關鍵台詞</strong>。
+    </p>
+    <div class="ros" style="margin-top:18px;">
+      <div class="r"><div class="t">0–5 分</div><div class="w">開場 + 上週 baseline / 60 秒回顧上一場</div></div>
+      <div class="r"><div class="t">5–20 分</div><div class="w"><b>主秀示範</b>(本場那一招,當場可跟著做)</div></div>
+      <div class="r"><div class="t">20–35 分</div><div class="w">換你做 —— 大家開著自己畫面,套在自己的一個任務上</div></div>
+      <div class="r"><div class="t">35–55 分</div><div class="w">線上分組(breakout,依部門)聊「我的工作哪裡能用」</div></div>
+      <div class="r"><div class="t">55–65 分</div><div class="w">收尾 + 填 check-in 表單 + 預告下一場</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SESSION 1 -->
+<section class="section wash">
+  <div class="wrap">
+    <span class="kicker">主秀 1 / 3</span>
+    <div class="ses">
+      <div class="top"><span class="mo">第 1 場</span><span class="dt">7/9 · 聊天框</span><span class="feat">Projects</span></div>
+      <h3>一個記得你工作的助手</h3>
+      <p class="goal"><b>目標:</b>每個人當場做出自己的 Project,並學會「列問題 → 逐題答 → 標來源」這招(更完整、更可信)。</p>
+
+      <span class="subtag">現場示範步驟(用業務例子:回客戶詢問)</span>
+      <ol class="runsteps">
+        <li>先「隨便問」:貼一封客戶來信,叫它回信 → 給出空泛、罐頭味重的版本。</li>
+        <li>換成公式 + 完整性招式(見下方指令)→ 同一封信,立刻變得能用,當場對比。</li>
+        <li>開一個 Project「My Desk」:設自訂指令(你的語氣、US B2B),上傳產品規格 / datasheet PDF / 幾封你寫過最好的信。</li>
+        <li>之後只打「draft a reply to this inquiry」→ 它直接抓對語氣與規格,不用再貼背景。</li>
+      </ol>
+
+      <span class="subtag">逐字指令(複製貼上)</span>
+      <p class="cmd">Write a reply to this customer email.  ← 先用這句示範「不夠好」</p>
+      <p class="cmd">You're a sales rep at Neteon (industrial PCs). The customer is a factory-automation integrator. Reply to their email — but FIRST list every question they asked, THEN answer each one, and note which spec or document each answer comes from. Flag anything you're unsure of as "needs checking." Keep it short, professional, US B2B tone.</p>
+      <p class="cmd">[Project custom instructions] You are my sales assistant at Neteon. Write in my voice — short, professional, US B2B. Use the product specs and past emails I've uploaded; if something isn't in them, say so instead of guessing.</p>
+
+      <span class="subtag">關鍵台詞</span>
+      <p class="sayline">"A prompt is re-explaining yourself every time — a Project is it remembering you: your products, your voice."</p>
+      <p class="sayline">"Notice it listed every question first — that's how you stop it answering only half."</p>
+
+      <span class="subtag">換你做 + 分組</span>
+      <p class="mini">每個人開一個自己的 Project,丟一個自己常重複寫的東西進去試一次。分組:各部門聊「我的 Project 該記住什麼背景」。</p>
+
+      <span class="subtag">本場 check-in(蓋章)</span>
+      <div class="assign"><b>填回饋:</b>我建了一個 Project 來做 ___,而且用它做了一次 ___。</div>
+
+      <span class="subtag">換成你的工作</span>
+      <p class="xfer"><b>行銷</b> → 產品文案助手 · <b>營運</b> → 回供應商 / 出貨說明 · <b>客服/行政</b> → 常見問題、政策回覆。同一招,換你的檔案與語氣。</p>
+    </div>
+  </div>
+</section>
+
+<!-- SESSION 2 -->
+<section class="section">
+  <div class="wrap">
+    <span class="kicker">主秀 2 / 3</span>
+    <div class="ses">
+      <div class="top"><span class="mo">第 2 場</span><span class="dt">7/30 · 你的瀏覽器</span><span class="feat">Claude in Chrome</span></div>
+      <h3>讓 AI 進到你打開的工具裡幫你做事</h3>
+      <p class="goal"><b>目標:</b>大家裝好 Claude in Chrome,並用它在<strong>一個你打開的 Google Sheet / 網頁</strong>上做一件事 —— 重點不是「會比較」(那 chat 就能做),而是<strong>它碰得到 chat 碰不到的東西</strong>。</p>
+
+      <span class="subtag">先教安裝(3–5 分)</span>
+      <ol class="runsteps">
+        <li>用 Chrome 或 Edge → Chrome 線上應用程式商店搜「Claude in Chrome」→ Add to Chrome。</li>
+        <li>用 Claude 帳號登入(需付費方案)→ 點拼圖圖示釘選 → 第一次給權限時選「Ask before acting」。</li>
+        <li>安全提醒:它能點、打字、截圖 —— <strong>只在公開頁面示範,別碰登入的內部系統或客戶個資</strong>。</li>
+      </ol>
+
+      <span class="subtag">關鍵觀念:Claude in Chrome 厲害在哪</span>
+      <p class="mini">不是「會比較」(那普通 chat 就能做)。重點是它能<strong>直接看、操作你瀏覽器裡的東西</strong> —— 你打開的 <strong>Google Sheet</strong>、你登入的 CRM / 入口網站、一個不好複製的網頁。<strong>這些都是 chat 碰不到的</strong>(你得整段複製貼上)。所以 demo 要演「它進到你的工具裡做事」,而不是又一個 chat 也能做的比較。</p>
+
+      <span class="subtag">現場示範步驟(用業務例子:在 Google Sheet 上選型)</span>
+      <ol class="runsteps">
+        <li>事先開好一張 <strong>Google Sheet</strong>:A 欄列候選機型(POC-700、POC-766AWP、Nuvo-11000、RUC-1000D —— 來自 category page 的 In-Vehicle 那格),最上面一列寫<strong>客戶需求</strong>。</li>
+        <li>就在那張 sheet 上,開 Claude in Chrome 側欄。</li>
+        <li>叫它讀 sheet 裡的機型 + 客戶需求,把<strong>比較欄位 + 優劣 + 推薦</strong>整理出來(用「動作前先問」逐步填回 sheet,或讓它產出你貼回)。</li>
+        <li>強調:你<strong>沒有把任何東西貼進聊天框</strong> —— 它直接在你開的 sheet 裡工作。</li>
+      </ol>
+
+      <span class="subtag">逐字指令(複製貼上)</span>
+      <p class="cmd">Read the candidate models and the customer's requirements in this Google Sheet. For each model, fill in columns comparing the specs that matter for this customer, add a short pros/cons note and a fit rating, and recommend one — explain why in two sentences. Ask me before changing any cells.</p>
+      <p class="cmd">For any spec that's missing, open that model's product page to find it and tell me which page you got it from. Flag anything you can't confirm instead of guessing.</p>
+
+      <span class="subtag">關鍵台詞</span>
+      <p class="sayline">"I didn't paste any specs into a chat — it's working inside the Google Sheet I've got open. That's the bit plain chat can't reach."</p>
+
+      <span class="subtag">換你做 + 分組</span>
+      <p class="mini">每個人挑<strong>一個你平常在用的 Google Sheet,或一個你登入的網頁工具</strong>,讓 Claude in Chrome 在上面幫你做一件事。分組聊「我哪個表單 / 後台最值得讓它進去幫忙」。</p>
+      <p class="mini" style="margin-top:8px;"><b>穩定度備案:</b>在 Google Sheet 上「直接填回去」是用瀏覽器操作,偶爾會卡 —— 備案是讓它<strong>讀 sheet → 產出填好的比較,你再貼回</strong>;或全程用「動作前先問」一步步確認。</p>
+
+      <span class="subtag">本場 check-in(蓋章)</span>
+      <div class="assign"><b>填回饋:</b>我讓 Claude in Chrome 在我的 ___(Google Sheet / 網頁)上幫我 ___(附截圖更好)。</div>
+
+      <span class="subtag">換成你的工作</span>
+      <p class="xfer"><b>行銷</b> → 在內容行事曆 sheet 上整理 · <b>營運</b> → 在訂單 / 庫存 sheet 上抓重點 · <b>任何人</b> → 讓它讀你登入的某個後台、幫你摘要或填表。</p>
+    </div>
+  </div>
+</section>
+
+<!-- SESSION 3 -->
+<section class="section wash">
+  <div class="wrap">
+    <span class="kicker">主秀 3 / 3</span>
+    <div class="ses">
+      <div class="top"><span class="mo">第 3 場</span><span class="dt">8/13 · 你的電腦</span><span class="feat">由你示範,不要求動手</span></div>
+      <h3>把第 2 場的比較,變成存進電腦的成品檔</h3>
+      <p class="goal"><b>目標:</b>延續第 2 場 —— 你在 Google Sheet 上做好的選型比較,讓 Claude 整理成一份乾淨的檔案、<strong>存進你的電腦</strong>。reach 從瀏覽器 / Sheet(S2)再下到你的電腦(S3)。由你示範、不要求動手。</p>
+
+      <span class="subtag">事前(只有你要設定)</span>
+      <p class="mini">用 Claude 桌面版 + 檔案系統連接器,授權一個資料夾;把第 2 場那張 Google Sheet <strong>下載成 CSV</strong>(File → Download → CSV)丟進去當素材(非機密)。</p>
+
+      <span class="subtag">現場示範步驟(由你操作)</span>
+      <ol class="runsteps">
+        <li>承接第 2 場:把那張選型比較(從 Google Sheet 下載的 CSV)放進授權資料夾。</li>
+        <li>叫 Claude 讀它 → 整理成一份<strong>客戶可看的成品</strong>(乾淨的比較 + 兩句推薦),存成 <strong>recommendation.md 與 comparison.csv</strong> 放回資料夾。</li>
+        <li>打開資料夾 —— <strong>成品檔在你電腦裡了</strong>,可以直接寄客戶 / 歸檔,不是只停在瀏覽器。</li>
+        <li>點一句:「再往上,它還能接 NetSuite、設成每週自動跑 —— 那是西岸進階場;今天先看可能性。」</li>
+      </ol>
+
+      <span class="subtag">逐字指令(複製貼上)</span>
+      <p class="cmd">Read the comparison CSV in this folder. Turn it into a clean, customer-ready model recommendation — a tidy comparison plus a two-line recommendation — and save it as recommendation.md and a cleaned comparison.csv in this folder. Tell me the file paths, and flag anything you're unsure of instead of guessing.</p>
+
+      <span class="subtag">關鍵台詞</span>
+      <p class="sayline">"In Session 2 it worked inside my Google Sheet; now it's dropped the finished file on my computer — ready to attach to an email or file in our drive. That's the partner part."</p>
+
+      <span class="subtag">收尾</span>
+      <p class="mini">開放<strong>自願</strong>分享:這三場裡你最得意的一個 AI 成果(不評分、不排名)。然後填最後一份 check-in。</p>
+
+      <span class="subtag">本場 check-in(蓋章)</span>
+      <div class="assign"><b>填回饋:</b>這三場裡我最有感 / 之後最想用的一招是 ___。</div>
+
+      <span class="subtag">換成你的工作</span>
+      <p class="xfer"><b>任何人</b> → 整理一疊報價 / 會議記錄 / datasheet → 產出一份檔案 · <b>需要連系統 / 自動化的人</b>(出貨提醒、報表、排程)→ 報名西岸 MCP 進階場。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 貫穿原則 -->
+<section class="section">
+  <div class="wrap">
+    <span class="kicker coral">每場都要做的一件事</span>
+    <h2>教大家「<em>信任但查證</em>」</h2>
+    <div class="callout">
+      <h3>驗證,每場順帶示範一次</h3>
+      <p>
+        三場都帶同一個習慣:叫 AI <strong>「標出每個答案的來源 / 哪條規格」</strong>、<strong>「沒把握就說不確定」</strong>,
+        然後<strong>人工抽查</strong>。尤其客戶要看的東西,<strong>絕不未經檢查就直接送出</strong>。這比任何單一功能都重要 ——
+        也是新手最該帶走的安心感。
+      </p>
+    </div>
+    <div class="note">
+      <strong>東岸要準備的:</strong>① 一封真實(去識別化)客戶來信當 S1 教材;② 一個客戶情境 + 對應 category page 子分類的<strong>候選機型產品頁</strong>(例:In-Vehicle 那組 POC-700 / POC-766AWP / Nuvo-11000 / RUC-1000D)當 S2 教材;
+      ③ 把第 2 場的 Google Sheet <strong>下載成 CSV</strong>、放進一個授權資料夾,並先設好 Claude 桌面版/檔案系統連接器,當 S3 教材。三場都先<strong>自己跑過一次</strong>、錄影、把範本與 check-in 表單放共用頻道(看重播也能蓋章)。
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="mark">Prompt → Partner</p>
+    <p>East Coast 主持稿 · 2026/07–08 · 內部使用</p>
+  </div>
+</footer>
+
+</body>
+</html>
