@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Neteon AI Workshop Session 1 HTML slide deck.">
+<meta name="theme-color" content="#0e7d8c">
+<title>From Prompt to Partner · Session 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#0e7d8c; --teal-hi:#14a3b6; --teal-deep:#0e2a2e;
+    --coral:#c2552f; --amber:#d7a73f; --mist:#e9f5f6; --bg:#f5f8f6; --card:#ffffff;
+    --ink:#0e2a2e; --ink-mid:#3d5359; --ink-soft:#5f747a;
+    --line:#d3e3e5; --line-soft:#e6eff0;
+    --display:"Fraunces",Georgia,serif;
+    --sans:"Hanken Grotesk",system-ui,-apple-system,sans-serif;
+    --radius:10px; --radius-sm:8px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden}
+  body{
+    font-family:var(--sans); color:var(--ink); background:var(--teal-deep);
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    -webkit-text-size-adjust:100%;text-size-adjust:100%;
+  }
+  button{font:inherit}
+
+  /* ---- deck shell ---- */
+  .deck{position:fixed;inset:0;background:
+    linear-gradient(135deg, rgba(14,125,140,.10), transparent 34%),
+    linear-gradient(315deg, rgba(194,85,47,.08), transparent 38%),
+    linear-gradient(rgba(14,42,46,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14,42,46,.03) 1px, transparent 1px),
+    var(--bg);background-size:auto,auto,36px 36px,36px 36px,auto;isolation:isolate;counter-reset:slide}
+  .slide{
+    position:absolute;inset:0;width:100vw;min-height:100svh;
+    display:grid;align-content:center;justify-items:start;
+    gap:clamp(14px,2.2vh,26px);
+    padding:clamp(38px,6vw,104px);
+    padding-bottom:calc(clamp(74px,10vh,120px) + env(safe-area-inset-bottom));
+    opacity:0;visibility:hidden;pointer-events:none;
+    transition:opacity .45s ease;
+    overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable;
+    counter-increment:slide;
+  }
+  .slide::before{
+    content:"";position:fixed;left:clamp(18px,3vw,42px);top:clamp(28px,5vh,54px);
+    bottom:clamp(86px,11vh,130px);width:3px;border-radius:999px;
+    background:linear-gradient(var(--teal),var(--coral));opacity:.22;pointer-events:none;
+  }
+  .slide::after{
+    content:counter(slide, decimal-leading-zero);position:fixed;right:clamp(22px,4vw,54px);
+    top:clamp(22px,4vh,44px);font-family:var(--display);font-weight:600;
+    color:rgba(14,42,46,.16);font-size:clamp(28px,5vw,74px);line-height:1;pointer-events:none;
+  }
+  .slide.active{opacity:1;visibility:visible;pointer-events:auto}
+  .slide:focus{outline:none}
+  .slide.active .rise{animation:rise .55s cubic-bezier(.2,.7,.2,1) both}
+  .slide.active .rise:nth-child(2){animation-delay:.05s}
+  .slide.active .rise:nth-child(3){animation-delay:.10s}
+  .slide.active .rise:nth-child(4){animation-delay:.15s}
+  .slide.active .rise:nth-child(5){animation-delay:.20s}
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+  .eyebrow{
+    font-size:clamp(12px,1.5vw,15px);font-weight:700;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--teal);display:inline-flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:24px;height:2px;background:var(--coral);border-radius:999px}
+  h1{font-family:var(--display);font-weight:600;line-height:1.02;
+     font-size:clamp(48px,8.8vw,118px);letter-spacing:0;color:var(--ink)}
+  h2{font-family:var(--display);font-weight:600;line-height:1.05;
+     font-size:clamp(34px,5.5vw,68px);letter-spacing:0;color:var(--ink)}
+  .lead{font-size:clamp(18px,2.4vw,29px);line-height:1.4;color:var(--ink-mid);max-width:34ch}
+  .sub{font-size:clamp(16px,1.9vw,22px);line-height:1.5;color:var(--ink-mid);max-width:56ch}
+  .big-quote{font-family:var(--display);font-weight:500;line-height:1.08;
+     font-size:clamp(34px,6.2vw,76px);letter-spacing:-.015em;color:var(--ink);max-width:24ch}
+  em{color:var(--teal);font-style:italic}
+  strong{font-weight:700;color:var(--ink)}
+  .accent{color:var(--coral)}
+
+  /* chips */
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{font-weight:600;font-size:clamp(13px,1.5vw,17px);
+    background:rgba(255,255,255,.78);border:1px solid var(--line);border-radius:999px;
+    padding:9px 17px;color:var(--ink);box-shadow:0 10px 22px -20px rgba(14,42,46,.55)}
+  .chip b{color:var(--teal)}
+
+  /* framework rows */
+  .frame{display:grid;gap:clamp(10px,1.6vh,16px);width:min(100%,900px)}
+  .frow{display:grid;grid-template-columns:auto 1fr;gap:clamp(14px,2vw,22px);align-items:center}
+  .badge{width:clamp(42px,5vw,60px);height:clamp(42px,5vw,60px);border-radius:12px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;
+    font-size:clamp(20px,2.6vw,30px);color:#fff;background:var(--teal);flex:none}
+  .frow:nth-child(2) .badge{background:var(--teal-hi)}
+  .frow:nth-child(3) .badge{background:#3f8f7d}
+  .frow:nth-child(4) .badge{background:var(--coral)}
+  .fname{font-weight:800;font-size:clamp(16px,2vw,23px)}
+  .fdesc{color:var(--ink-mid);font-size:clamp(14px,1.7vw,19px);line-height:1.35}
+  .fname .k{color:var(--ink-soft);font-weight:600}
+
+  /* cards / mail / form */
+  .card{background:rgba(255,255,255,.86);backdrop-filter:blur(12px);border:1px solid rgba(211,227,229,.9);border-radius:var(--radius);
+    padding:clamp(20px,2.8vw,34px);width:min(100%,860px);box-shadow:0 22px 48px -34px rgba(14,42,46,.55);position:relative}
+  .card::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;border-radius:var(--radius) var(--radius) 0 0;background:linear-gradient(90deg,var(--teal),var(--coral));opacity:.9}
+  .mail-h{font-size:clamp(13px,1.5vw,16px);color:var(--ink-soft);font-weight:600;
+    border-bottom:1px solid var(--line-soft);padding-bottom:12px;margin-bottom:16px}
+  .mail-h b{color:var(--ink)}
+  .mail-b{font-size:clamp(15px,1.85vw,21px);line-height:1.6;color:var(--ink-mid);white-space:pre-wrap}
+  .mail-b .hl{color:var(--teal);font-weight:700}
+  .sig{margin-top:14px;font-size:clamp(13px,1.5vw,17px);color:var(--ink-soft)}
+  .kv{display:grid;grid-template-columns:auto 1fr;gap:6px 22px;font-size:clamp(14px,1.7vw,19px);line-height:1.5}
+  .kv .k{color:var(--ink-soft);font-weight:600;white-space:nowrap}
+  .kv .v{color:var(--ink)}
+  .kv .v.msg{white-space:pre-wrap;color:var(--ink-mid)}
+  .kv .v .hl{color:var(--teal);font-weight:700}
+  .formtag{display:inline-block;font-size:clamp(11px,1.3vw,13px);font-weight:700;letter-spacing:.06em;
+    text-transform:uppercase;color:#fff;background:var(--coral);border-radius:6px;padding:4px 10px;margin-bottom:14px}
+
+  /* prompt box */
+  .prompt{background:linear-gradient(135deg,#0b2226,#11383d);color:#e6f3f4;border-radius:var(--radius);
+    padding:clamp(48px,4vw,64px) clamp(22px,2.6vw,34px) clamp(22px,2.6vw,34px);width:min(100%,980px);
+    font-family:ui-monospace,"SFMono-Regular",Menlo,monospace;
+    font-size:clamp(13px,1.55vw,18px);line-height:1.62;white-space:pre-wrap;position:relative;box-shadow:0 26px 56px -34px rgba(14,42,46,.7)}
+  .prompt::before{content:"Reusable Prompt";position:absolute;top:16px;left:18px;color:#9fdce4;font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+  .prompt .num{color:var(--teal-hi);font-weight:700}
+  .cmd-line{display:inline-block;background:var(--teal-deep);color:#dbeef0;border-radius:12px;
+    font-family:ui-monospace,Menlo,monospace;font-weight:600;
+    font-size:clamp(22px,3.4vw,42px);padding:16px 26px;letter-spacing:.01em}
+  .copy{position:absolute;top:14px;right:14px;background:var(--teal-hi);color:#fff;border:none;
+    border-radius:8px;padding:8px 14px;font-weight:700;font-size:13px;cursor:pointer;font-family:var(--sans)}
+  .copy:hover{background:#1bb6cb}
+
+  /* callout / steps */
+  .callout{font-size:clamp(15px,1.9vw,22px);line-height:1.5;color:var(--ink-mid);max-width:50ch}
+  .callout .big{font-family:var(--display);font-weight:600;color:var(--ink);
+    font-size:clamp(20px,2.6vw,32px);display:block;margin-top:6px}
+  .steps{display:grid;gap:clamp(11px,1.7vh,18px);width:min(100%,860px)}
+  .step{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:baseline}
+  .step .no{font-family:var(--display);font-weight:700;color:var(--teal);
+    font-size:clamp(18px,2.2vw,26px);flex:none}
+  .step p{font-size:clamp(15px,1.85vw,21px);line-height:1.4;color:var(--ink-mid)}
+  .three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;width:min(100%,900px)}
+  @media(max-width:720px){.three{grid-template-columns:1fr}}
+  .mini{background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:var(--radius-sm);padding:16px 18px;box-shadow:0 16px 32px -28px rgba(14,42,46,.55)}
+  .mini h4{font-size:clamp(14px,1.7vw,19px);margin-bottom:5px}
+  .mini h4 .e{color:var(--teal)}
+  .mini p{font-size:clamp(12px,1.45vw,15px);color:var(--ink-soft);line-height:1.4}
+
+  /* bar charts */
+  .charts2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(22px,3.4vw,50px);width:min(100%,1000px)}
+  @media(max-width:760px){.charts2{grid-template-columns:1fr}}
+  .chart{display:grid;gap:clamp(8px,1.35vh,13px);align-content:start;
+    background:rgba(255,255,255,.78);border:1px solid var(--line-soft);border-radius:var(--radius-sm);
+    padding:clamp(16px,1.9vw,24px);box-shadow:0 18px 40px -34px rgba(14,42,46,.5)}
+  .chart-t{font-family:var(--display);font-weight:600;font-size:clamp(15px,1.8vw,21px);color:var(--ink);margin-bottom:2px}
+  .chart-t .n{color:var(--teal)}
+  .bar{display:grid;grid-template-columns:clamp(76px,11vw,152px) 1fr clamp(20px,2vw,30px);gap:12px;align-items:center}
+  .bar .bl{font-size:clamp(12px,1.35vw,16px);color:var(--ink-mid);line-height:1.15}
+  .bar .track{height:clamp(11px,1.5vh,16px);background:#e3edee;border-radius:999px;overflow:hidden}
+  .bar .fill{display:block;height:100%;border-radius:999px;
+    background:linear-gradient(90deg,var(--teal-hi),var(--teal));
+    transform-origin:left;animation:grow .8s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  .bar .bn{font-weight:700;color:var(--teal);font-variant-numeric:tabular-nums;font-size:clamp(13px,1.5vw,18px);text-align:right}
+  .bar.alt .fill{background:#b8c7ca}
+  .bar.alt .bn{color:var(--ink-soft)}
+  .gapnote{font-size:clamp(13px,1.55vw,18px);color:var(--ink-mid);margin-top:8px;line-height:1.4}
+  .gapnote b{color:var(--coral)}
+
+  /* icon steps + reward tiers */
+  .istep{display:grid;grid-template-columns:auto 1fr;gap:clamp(14px,1.8vw,20px);align-items:center}
+  .ibadge{width:clamp(46px,5vw,60px);height:clamp(46px,5vw,60px);border-radius:12px;background:#e6f4f5;
+    border:1px solid var(--line);display:grid;place-items:center;font-size:clamp(23px,2.7vw,31px);flex:none}
+  .tiers{display:grid;grid-template-columns:1fr;gap:clamp(12px,1.7vw,18px);width:min(100%,1060px)}
+  .tier{background:rgba(255,255,255,.86);border:1px solid var(--line);border-radius:var(--radius);
+    padding:clamp(16px,2vw,26px) clamp(22px,2.8vw,36px);box-shadow:0 16px 36px -30px rgba(14,42,46,.5);
+    display:grid;grid-template-columns:auto minmax(120px,auto) 1fr;gap:clamp(16px,2.6vw,32px);align-items:center}
+  .tier .ic{font-size:clamp(30px,3.7vw,46px);line-height:1}
+  .tier h4{font-family:var(--display);font-weight:600;font-size:clamp(19px,2.3vw,28px);margin:0;color:var(--ink)}
+  .tier .amt{font-size:clamp(16px,1.9vw,23px);color:var(--ink-mid);line-height:1.4;text-align:right}
+  .tier .amt b{color:var(--teal)}
+  .tier.top{border-color:var(--teal);box-shadow:0 20px 44px -26px rgba(14,125,140,.55)}
+  .tier .pta{color:var(--coral);font-weight:700;white-space:nowrap}
+
+  /* login cards */
+  .logins{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,24px);width:min(100%,900px)}
+  @media(max-width:720px){.logins{grid-template-columns:1fr}}
+  .login{background:rgba(255,255,255,.86);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(20px,2.6vw,30px);box-shadow:0 18px 36px -30px rgba(14,42,46,.5)}
+  .login .tool{font-family:var(--display);font-weight:600;font-size:clamp(22px,2.8vw,32px)}
+  .login .url{color:var(--teal);font-weight:600;font-size:clamp(14px,1.6vw,18px);margin-top:2px}
+  .email-pill{margin-top:16px;display:inline-flex;align-items:center;gap:8px;background:var(--bg);
+    border:1px dashed var(--teal);border-radius:10px;padding:10px 15px;font-weight:700;
+    font-size:clamp(14px,1.7vw,19px);color:var(--ink)}
+  .tip{font-size:clamp(14px,1.7vw,19px);color:var(--ink-soft);max-width:56ch}
+  .tip b{color:var(--teal)}
+
+  a.link{color:var(--teal);font-weight:600;text-decoration:none;border-bottom:2px solid var(--line);
+    font-size:clamp(14px,1.7vw,19px)}
+  a.link:hover{border-color:var(--teal)}
+
+  /* QR slide */
+  .qr-wrap{display:grid;grid-template-columns:auto 1fr;gap:clamp(28px,4vw,56px);align-items:center;width:min(100%,940px)}
+  @media(max-width:720px){.qr-wrap{grid-template-columns:1fr;justify-items:center;text-align:center}}
+  .qr{width:clamp(200px,30vw,320px);height:auto;background:#fff;padding:16px;border-radius:var(--radius);
+    border:1px solid var(--line);box-shadow:0 20px 44px -28px rgba(14,42,46,.55)}
+  .qr svg{width:100%;height:auto;display:block;shape-rendering:crispEdges}
+  .qr-url{font-family:ui-monospace,Menlo,monospace;font-size:clamp(13px,1.6vw,18px);color:var(--ink-soft);margin-top:14px}
+
+  /* ---- nav chrome ---- */
+  .progress{position:fixed;top:0;left:0;height:4px;background:var(--teal);width:0;z-index:40;transition:width .45s ease}
+  .nav{position:fixed;bottom:0;left:0;right:0;height:clamp(52px,8vh,68px);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 clamp(20px,4vw,44px);padding-bottom:env(safe-area-inset-bottom);
+    z-index:40;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(244,249,250,.88))}
+  .nav>*{pointer-events:auto}
+  .brand{font-family:var(--display);font-weight:600;font-size:clamp(14px,1.7vw,19px);color:var(--ink)}
+  .brand .dot{color:var(--coral)}
+  .navctl{display:flex;align-items:center;gap:14px}
+  .count{font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink-soft);font-size:clamp(13px,1.5vw,16px)}
+  .count b{color:var(--ink)}
+  .arrow{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--card);
+    display:grid;place-items:center;cursor:pointer;color:var(--ink);font-size:17px;transition:.15s}
+  .arrow:hover{border-color:var(--teal);color:var(--teal)}
+  .arrow:disabled{opacity:.35;cursor:default}
+  .fs{background:none;border:none;cursor:pointer;color:var(--ink-soft);font-size:13px;font-weight:600;font-family:var(--sans)}
+  .fs:hover{color:var(--teal)}
+  .copy:focus-visible,.arrow:focus-visible,.fs:focus-visible,.edge:focus-visible,a.link:focus-visible{
+    outline:3px solid rgba(20,163,182,.45);outline-offset:3px;
+  }
+  .edge{position:fixed;top:0;bottom:clamp(52px,8vh,68px);width:9%;z-index:30;cursor:pointer}
+  .edge.l{left:0}.edge.r{right:0}
+  .hint{position:fixed;bottom:clamp(60px,9vh,80px);left:50%;transform:translateX(-50%);
+    font-size:13px;color:var(--ink-soft);z-index:35;opacity:.9}
+  @media(min-width:721px){.edge{width:7%}}
+
+  /* --- readability + size pass --- */
+  h1,h2,.big-quote,.callout .big,.chart-t{text-wrap:balance}
+  p,li,.lead,.sub,.callout,.fdesc,.tip,.amt,.gapnote,.mail-b{text-wrap:pretty}
+  .lead{font-size:clamp(20px,2.7vw,32px)}
+  .sub{font-size:clamp(17px,2.1vw,25px)}
+  .callout{font-size:clamp(16px,2.1vw,25px);max-width:none}
+  .lead,.sub,.tip{max-width:none}
+  .steps{width:min(100%,1240px)}
+  .frame{width:min(100%,1180px)}
+  .callout .big{font-size:clamp(22px,2.9vw,36px)}
+  .step p{font-size:clamp(16px,2vw,23px)}
+  .istep p{font-size:clamp(18px,2.35vw,28px);line-height:1.38;color:var(--ink-mid)}
+  .istep{gap:clamp(16px,2.1vw,26px)}
+  .ibadge{width:clamp(52px,5.8vw,68px);height:clamp(52px,5.8vw,68px);font-size:clamp(26px,3.1vw,36px)}
+  .fdesc{font-size:clamp(15px,1.9vw,22px)}
+  .fname{font-size:clamp(17px,2.1vw,25px)}
+  .bar .bl{font-size:clamp(13px,1.55vw,17px)}
+  .tier .amt{font-size:clamp(16px,1.95vw,23px)}
+  .tier h4{font-size:clamp(19px,2.3vw,28px)}
+  .pta{white-space:nowrap}
+
+  /* --- level-up composition pass --- */
+  .slide.cover{justify-items:center;text-align:center;align-content:center}
+  .slide.cover::before{left:50%;top:auto;bottom:clamp(92px,12vh,132px);width:min(52vw,680px);height:3px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,var(--teal),var(--coral),transparent);opacity:.5}
+  .slide.cover::after{content:"Session 01";right:auto;left:50%;top:clamp(28px,5vh,54px);transform:translateX(-50%);font-size:clamp(18px,2vw,28px);color:rgba(14,42,46,.28)}
+  .slide.cover h1{font-size:clamp(58px,10vw,136px)}
+  .slide.cover .lead{font-size:clamp(22px,3vw,36px)}
+  .slide.principle{background:linear-gradient(135deg,rgba(14,42,46,.06),transparent 48%)}
+  .slide.principle .big-quote{max-width:14ch;font-size:clamp(48px,8vw,96px)}
+  .slide.data .charts2,.slide.reward .tiers,.slide.project .three{width:min(100%,1120px)}
+  .slide.formula .frame{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(14px,2vw,24px);width:min(100%,1100px)}
+  .slide.formula .frow{background:rgba(255,255,255,.75);border:1px solid var(--line-soft);border-radius:var(--radius);padding:clamp(12px,1.7vw,20px);box-shadow:0 16px 34px -30px rgba(14,42,46,.5)}
+  .slide.formula.simple .frame{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .slide.prompt-slide{align-content:start}
+  .slide.prompt-slide .prompt{width:min(100%,1120px)}
+  .slide.outro .chips .chip{background:var(--teal-deep);color:#eaf5f6;border-color:transparent}
+  .slide.outro .chips .chip::after{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--coral);margin-left:10px;vertical-align:middle}
+
+  @media(max-width:720px){
+    .slide{align-content:start;padding:28px 20px 92px;gap:16px}
+    .slide::before,.slide::after{display:none}
+    h1{font-size:clamp(48px,15vw,76px)}
+    h2{font-size:clamp(34px,10vw,48px)}
+    .brand{display:none}
+    .nav{justify-content:center}
+    .navctl{gap:10px}
+    .fs{display:none}
+    .tier{grid-template-columns:auto 1fr;gap:12px 16px}
+    .tier .amt{grid-column:1 / -1;text-align:left}
+    .kv{grid-template-columns:1fr;gap:2px 0}
+    .kv .k{margin-top:8px}
+    .prompt{padding:54px 18px 20px;font-size:13px;line-height:1.55}
+    .copy{top:10px;right:10px}
+    .hint{display:none}
+    .slide.cover{justify-items:start;text-align:left}
+    .slide.formula .frame,.slide.formula.simple .frame{grid-template-columns:1fr}
+    .slide.principle .big-quote{font-size:clamp(42px,13vw,70px)}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+  }
+
+  @media print{
+    html,body{height:auto;overflow:visible;background:#fff}
+    .deck{position:static;background:#fff}
+    .slide{position:relative;visibility:visible;opacity:1;pointer-events:auto;overflow:hidden;
+      min-height:0;height:100vh;page-break-after:always;padding:54px;break-after:page}
+    .progress,.nav,.edge,.hint,.copy{display:none!important}
+    .card,.chart,.tier,.login,.mini,.prompt,.qr{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<main class="deck" id="deck" role="region" aria-label="From Prompt to Partner Session 1 slide deck">
+
+  <!-- 1 · COVER -->
+  <section class="slide cover" aria-label="Slide 1">
+    <div class="eyebrow rise">Neteon · AI Workshop</div>
+    <h1 class="rise">From Prompt<br>to Partner</h1>
+    <div class="lead rise">Session 1 — make AI remember you.</div>
+    <div class="chips rise"><span class="chip">3-part live series</span><span class="chip">Session 1</span><span class="chip">No wrong answers</span></div>
+  </section>
+
+  <!-- 2 · WHY THIS SERIES -->
+  <section class="slide narrative" aria-label="Slide 2">
+    <div class="eyebrow rise">Why we're here</div>
+    <h2 class="rise">From asking questions → working <em>with</em> AI</h2>
+    <div class="sub rise">Most of us already use AI to look things up — that's great.<br>This series is about the next step: making it a <strong>partner</strong> that remembers you and helps you finish the work, not just a Q&amp;A box.</div>
+    <div class="chips rise"><span class="chip">Prompt</span><span class="chip">→</span><span class="chip"><b>Partner</b></span></div>
+  </section>
+
+  <!-- 3 · SURVEY / USAGE -->
+  <section class="slide data" aria-label="Slide 3">
+    <div class="eyebrow rise">What the team told us · 9 replies</div>
+    <h2 class="rise">Built around how you actually work</h2>
+    <div class="charts2 rise">
+      <div class="chart">
+        <div class="chart-t"><span class="n">①</span> &nbsp;What you already use AI for</div>
+        <div class="bar"><span class="bl">Look things up</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="bn">7</span></div>
+        <div class="bar"><span class="bl">Emails &amp; copy</span><span class="track"><span class="fill" style="width:86%"></span></span><span class="bn">6</span></div>
+        <div class="bar"><span class="bl">Meeting notes</span><span class="track"><span class="fill" style="width:57%"></span></span><span class="bn">4</span></div>
+        <div class="bar"><span class="bl">Translate</span><span class="track"><span class="fill" style="width:29%"></span></span><span class="bn">2</span></div>
+        <div class="bar"><span class="bl">Spreadsheets</span><span class="track"><span class="fill" style="width:29%"></span></span><span class="bn">2</span></div>
+      </div>
+      <div class="chart">
+        <div class="chart-t"><span class="n">②</span> &nbsp;Hours saved / month — already</div>
+        <div class="bar"><span class="bl">20+ hrs</span><span class="track"><span class="fill" style="width:50%"></span></span><span class="bn">2</span></div>
+        <div class="bar"><span class="bl">4–10 hrs</span><span class="track"><span class="fill" style="width:50%"></span></span><span class="bn">2</span></div>
+        <div class="bar"><span class="bl">1–3 hrs</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="bn">4</span></div>
+        <div class="bar alt"><span class="bl">None yet</span><span class="track"><span class="fill" style="width:25%"></span></span><span class="bn">1</span></div>
+      </div>
+    </div>
+    <div class="callout rise">And that's <strong>before any training</strong> — two of you already save 20+ hrs a month. Imagine after.</div>
+  </section>
+
+  <!-- 4 · PAIN POINTS -->
+  <section class="slide data pain" aria-label="Slide 4">
+    <div class="eyebrow rise">Where you get stuck — in your own words</div>
+    <h2 class="rise">The everyday friction</h2>
+    <div class="steps rise" style="width:min(100%,1150px)">
+      <div class="step"><div class="no">•</div><p><strong>"AI only answers half"</strong> — you want replies faster &amp; sharper.</p></div>
+      <div class="step"><div class="no">•</div><p><strong>Pick the right product model</strong> — match the customer need to the exact SKU, then explain why it fits.</p></div>
+      <div class="step"><div class="no">•</div><p>The repetitive stuff — follow-ups, shipment reminders, reports.</p></div>
+      <div class="step"><div class="no">•</div><p>And two everyone feels: <strong>"re-writing the prompt every time"</strong> &amp; <strong>"can I trust it?"</strong></p></div>
+    </div>
+    <div class="chart rise" style="width:min(100%,820px);margin-top:4px">
+      <div class="chart-t"><span class="n">③</span> &nbsp;Want to learn vs. actually used</div>
+      <div class="bar"><span class="bl">Want AI agents</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="bn">4</span></div>
+      <div class="bar alt"><span class="bl">Actually used</span><span class="track"><span class="fill" style="width:25%"></span></span><span class="bn">1</span></div>
+      <div class="gapnote"><b>That gap</b> is exactly what these three sessions close.</div>
+    </div>
+  </section>
+
+  <!-- 5 · HOW IT WORKS -->
+  <section class="slide agenda" aria-label="Slide 5">
+    <div class="eyebrow rise">How the series runs</div>
+    <h2 class="rise">Three live sessions</h2>
+    <div class="steps rise">
+      <div class="istep"><div class="ibadge">📅</div><p><strong>7/9 · 7/30 · 8/13 (Thu)</strong> — under an hour each, and it counts as work time.</p></div>
+      <div class="istep"><div class="ibadge">🖥️</div><p>I demo everything live — nothing to prepare, just come along.</p></div>
+      <div class="istep"><div class="ibadge">🎥</div><p>Every session is <strong>recorded</strong> — miss one, catch the video.</p></div>
+      <div class="istep"><div class="ibadge">✅</div><p>A quick check-in after each (one line) → collect all three for your reward.</p></div>
+    </div>
+  </section>
+
+  <!-- 6 · REWARD -->
+  <section class="slide reward" aria-label="Slide 6">
+    <div class="eyebrow rise">Your reward · check in, collect, done</div>
+    <h2 class="rise">The more you join, the bigger it gets</h2>
+    <div class="tiers rise">
+      <div class="tier"><div class="ic">🎟️</div><h4>1 check-in</h4><div class="amt">US <b>$30</b> gift card&nbsp; ·&nbsp; TW <b>NT$1,000</b></div></div>
+      <div class="tier"><div class="ic">🎁</div><h4>2 check-ins</h4><div class="amt">US <b>$60</b> gift card&nbsp; ·&nbsp; TW <b>NT$2,000</b></div></div>
+      <div class="tier top"><div class="ic">🏅</div><h4>All 3</h4><div class="amt">US <b>$100</b> gift card&nbsp; ·&nbsp; TW <b>NT$3,000</b> <span class="pta">+ 2 days PTO</span></div></div>
+    </div>
+    <div class="callout rise">Attendance (or the replay) + one line on the form = one check-in. No grading.</div>
+  </section>
+
+  <!-- 7 · TODAY IN ONE LINE -->
+  <section class="slide principle" aria-label="Slide 7">
+    <div class="eyebrow rise">Today, in one line</div>
+    <div class="big-quote rise">AI that <em>sounds</em> sure isn't the same as AI that's <em>right</em>.</div>
+    <div class="sub rise">So today we do two things: give it our <strong>real product info</strong>, and <strong>make it remember us</strong> — until one line handles a real customer inquiry.</div>
+    <div class="chips rise"><span class="chip"><b>1</b> &nbsp;A good prompt</span><span class="chip"><b>2</b> &nbsp;Ground it in our catalog</span><span class="chip"><b>3</b> &nbsp;Save it as a Project</span></div>
+  </section>
+
+  <!-- 3 · LOG IN -->
+  <section class="slide login-slide" aria-label="Slide 8">
+    <div class="eyebrow rise">First things first</div>
+    <h2 class="rise">Log in — open both tabs now</h2>
+    <div class="logins rise">
+      <div class="login">
+        <div class="tool">Claude</div>
+        <div class="url">claude.ai</div>
+        <div class="email-pill">📧 marketing@neteon.net</div>
+      </div>
+      <div class="login">
+        <div class="tool">ChatGPT</div>
+        <div class="url">chatgpt.com</div>
+        <div class="email-pill">📧 marketing@neteon.net</div>
+      </div>
+    </div>
+    <div class="tip rise">Both use our <b>company email</b> — <strong>marketing@neteon.net</strong>. Sign in, keep both tabs open, and follow along live.</div>
+  </section>
+
+  <!-- 4 · RACE -->
+  <section class="slide formula" aria-label="Slide 9">
+    <div class="eyebrow rise">Prompt formula ①</div>
+    <h2 class="rise">RACE — for a solid, complete ask</h2>
+    <div class="frame rise">
+      <div class="frow"><div class="badge">R</div><div><div class="fname">Role <span class="k">角色</span></div><div class="fdesc">Who Claude should be — e.g. "a senior IPC sales engineer."</div></div></div>
+      <div class="frow"><div class="badge">A</div><div><div class="fname">Action <span class="k">行動</span></div><div class="fdesc">The exact task — e.g. "draft a reply to this inquiry."</div></div></div>
+      <div class="frow"><div class="badge">C</div><div><div class="fname">Context <span class="k">背景</span></div><div class="fdesc">Background & why — who we are, which vendors, what the customer sent.</div></div></div>
+      <div class="frow"><div class="badge">E</div><div><div class="fname">Expectation <span class="k">期望</span></div><div class="fdesc">What good looks like — confirm the SKU, flag anything unsure, ask what's missing.</div></div></div>
+    </div>
+  </section>
+
+  <!-- 5 · RTF -->
+  <section class="slide formula simple" aria-label="Slide 10">
+    <div class="eyebrow rise">Prompt formula ②</div>
+    <h2 class="rise">RTF — the simplest all-purpose one</h2>
+    <div class="frame rise">
+      <div class="frow"><div class="badge">R</div><div><div class="fname">Role <span class="k">角色</span></div><div class="fdesc">Set who the AI is.</div></div></div>
+      <div class="frow"><div class="badge">T</div><div><div class="fname">Task <span class="k">任務</span></div><div class="fdesc">One clear instruction.</div></div></div>
+      <div class="frow"><div class="badge">F</div><div><div class="fname">Format <span class="k">格式</span></div><div class="fdesc">How to lay it out — email, table, bullet list, Markdown.</div></div></div>
+    </div>
+    <a class="link rise" href="https://s4.tenten.co/tenten-ai-prompt-cheat-sheet.html#framework" target="_blank" rel="noopener">More frameworks — full cheat sheet →</a>
+  </section>
+
+  <!-- 6 · REAL INQUIRY (EMAIL) -->
+  <section class="slide inquiry" aria-label="Slide 11">
+    <div class="eyebrow rise">What lands in your inbox</div>
+    <h2 class="rise">A real inquiry — by email</h2>
+    <div class="card rise">
+      <div class="mail-h"><b>Subject:</b> P&amp;A request — PLANET IPOE-470-12V (×12)</div>
+      <div class="mail-b">Hi,
+
+Could you please advise on <span class="hl">12 units</span> of the <span class="hl">PLANET IPOE-470-12V</span>? We'd need them delivered to Kalgoorlie, WA 6430.
+
+Thanks,</div>
+      <div class="sig">Nathan Pryor · Goldfields Signal Co · nathan.pryor@goldfieldssignal.example</div>
+    </div>
+    <div class="callout rise">Notice: they name a <strong>specific part</strong> and want price &amp; availability. That's the real pattern.</div>
+  </section>
+
+  <!-- 7 · JUST ASK (TRAP) -->
+  <section class="slide trap" aria-label="Slide 12">
+    <div class="eyebrow rise">① Just ask</div>
+    <div class="cmd-line rise">Write a reply.</div>
+    <div class="callout rise">You get a fast, confident reply. But we carry <strong>200+ models across 4 vendors</strong><br>— it may pin the <strong class="accent">wrong vendor</strong> or guess a spec, and sound <em>just as sure</em> either way.
+      <span class="big">Clear ≠ correct.</span></div>
+  </section>
+
+  <!-- 8 · THE PROMPT -->
+  <section class="slide prompt-slide" aria-label="Slide 13">
+    <div class="eyebrow rise">② The prompt that works — email <em>or</em> form</div>
+    <div class="prompt rise">
+      <button class="copy" type="button" onclick="copyPrompt(this)" aria-label="Copy the prompt text">Copy prompt</button><span id="promptText">We're the Neteon IPC team — a distributor of industrial and edge-AI computers and industrial networking, carrying 200+ models across multiple vendors (Neousys, ASUS IoT, Premio, PLANET, and more).
+
+Here's an inbound sales inquiry — it may be an email or a website form submission. Read it and:
+<span class="num">1.</span> Identify the exact part number(s) / series they're asking about, and which vendor each is from. If they haven't named a specific product, suggest a sensible starting option from our catalog instead.
+<span class="num">2.</span> Confirm each product against our catalog — if you're not sure we carry that exact SKU, or you're unsure of any detail, say so instead of guessing.
+<span class="num">3.</span> Draft a friendly, professional reply in my voice that confirms the product, answers what we can, and asks only for anything we genuinely still need (e.g. the application, or quantity if it's unclear).</span></div>
+    <div class="callout rise">Now it pins the <strong>exact SKU + vendor</strong>, <strong>flags</strong> what it isn't sure of, and drafts the reply.</div>
+  </section>
+
+  <!-- 9 · PROJECT -->
+  <section class="slide project" aria-label="Slide 14">
+    <div class="eyebrow rise">③ Save it once — a Project</div>
+    <h2 class="rise">Stop re-explaining yourself</h2>
+    <div class="steps rise">
+      <div class="step"><div class="no">1</div><p>Open a <strong>Project</strong> → paste the prompt above as its <strong>custom instructions</strong>.</p></div>
+      <div class="step"><div class="no">2</div><p>Give it our real info — <strong>no need to build a spreadsheet</strong>, just use what you already have:</p></div>
+    </div>
+    <div class="three rise">
+      <div class="mini"><h4><span class="e">①</span> Paste a link</h4><p>Drop our product-page URL into the prompt. Lowest effort.</p></div>
+      <div class="mini"><h4><span class="e">②</span> Paste the text</h4><p>Copy the product page and paste it in. Always readable.</p></div>
+      <div class="mini"><h4><span class="e">③</span> Upload a file</h4><p>Attach an existing catalog / price-list PDF. Most reliable.</p></div>
+    </div>
+    <div class="callout rise">Then you just type: <strong>"Draft a reply to this inquiry."</strong>
+      <span class="big">A chat re-explains every time. A Project remembers you.</span></div>
+  </section>
+
+  <!-- 10 · SAME PROMPT, SECOND CHANNEL -->
+  <section class="slide inquiry form-slide" aria-label="Slide 15">
+    <div class="eyebrow rise">Same prompt — now a web form</div>
+    <h2 class="rise">One setup, any channel</h2>
+    <div class="card rise">
+      <span class="formtag">HubSpot · new submission</span>
+      <div class="kv">
+        <span class="k">Company</span><span class="v">Gulf Line Trading &amp; Contracting</span>
+        <span class="k">Looking for</span><span class="v">Buy a Product, Service, Solution</span>
+        <span class="k">Message</span><span class="v msg">Please give us a quote for
+<span class="hl">IGS-6325-8UP2S2X</span> — 45 Nos.
+<span class="hl">IGS-5225-8P4S</span> — 45 Nos.
+Power Supply Unit — 45</span>
+      </div>
+    </div>
+    <div class="callout rise">Didn't change a thing in the prompt — <strong>it reads the form just the same</strong>. Email today, form tomorrow: same Project.</div>
+  </section>
+
+  <!-- 11 · CHECK-IN QR -->
+  <section class="slide qr-slide" aria-label="Slide 16">
+    <div class="eyebrow rise">That's your check-in</div>
+    <div class="qr-wrap rise">
+      <div class="qr"><svg viewBox="0 0 33 33"><path fill="#fff" d="M0 0h33v33h-33z"/><path stroke="#0e2a2e" d="M2 2.5h7m4 0h3m1 0h1m4 0h1m1 0h7m-29 1h1m5 0h1m2 0h1m1 0h1m1 0h3m1 0h1m2 0h1m1 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m1 0h6m1 0h1m4 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h2m1 0h2m1 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h4m3 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m1 0h2m3 0h1m2 0h1m3 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h1m2 0h1m2 0h2m4 0h1m-21 1h1m1 0h5m3 0h1m5 0h2m1 0h1m2 0h5m-25 1h1m1 0h1m4 0h2m2 0h2m2 0h1m2 0h1m1 0h3m3 0h1m-28 1h3m2 0h4m3 0h4m1 0h1m2 0h1m1 0h2m-25 1h2m1 0h3m1 0h1m1 0h1m1 0h3m4 0h1m1 0h1m1 0h2m1 0h1m1 0h1m-28 1h1m1 0h1m1 0h1m1 0h3m1 0h2m2 0h2m1 0h2m2 0h1m3 0h2m-27 1h1m1 0h2m1 0h1m1 0h1m1 0h1m1 0h1m3 0h2m2 0h6m3 0h1m-26 1h4m4 0h1m3 0h3m2 0h1m1 0h1m2 0h2m-24 1h1m4 0h1m2 0h1m2 0h2m2 0h5m1 0h1m2 0h1m-28 1h2m1 0h1m1 0h3m1 0h1m2 0h1m3 0h1m6 0h1m1 0h2m-27 1h3m4 0h2m4 0h2m1 0h1m1 0h1m1 0h5m1 0h1m1 0h1m-29 1h1m2 0h1m1 0h2m4 0h5m2 0h1m1 0h1m2 0h1m2 0h1m-27 1h1m6 0h1m1 0h3m1 0h1m2 0h1m2 0h2m1 0h2m3 0h1m-28 1h1m1 0h1m2 0h4m1 0h1m3 0h2m1 0h1m1 0h6m1 0h3m-21 1h3m5 0h1m3 0h1m3 0h5m-29 1h7m2 0h1m2 0h1m2 0h1m1 0h4m1 0h1m1 0h3m-27 1h1m5 0h1m1 0h1m3 0h1m1 0h2m2 0h1m1 0h1m3 0h1m3 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m6 0h2m3 0h5m1 0h2m-28 1h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h4m2 0h1m5 0h4m-29 1h1m1 0h3m1 0h1m1 0h5m2 0h2m2 0h1m1 0h7m-28 1h1m5 0h1m3 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m2 0h1m1 0h1m-28 1h7m1 0h5m1 0h4m1 0h1m1 0h1m1 0h2m1 0h1"/></svg></div>
+      <div>
+        <h2>Scan to check in</h2>
+        <div class="sub" style="margin-top:14px">30 seconds. One line on what you tried today = your <strong>stamp</strong> toward your reward. No grading, no wrong answers.</div>
+        <div class="qr-url">forms.gle/GdLUW9x6ArTqPfyC8</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 · NEXT -->
+  <section class="slide outro" aria-label="Slide 17">
+    <div class="eyebrow rise">See you next time</div>
+    <h2 class="rise">Session 2 — into your browser</h2>
+    <div class="sub rise">Next we let Claude work <strong>right on our website</strong> (Claude in Chrome) — so it reads the live product pages itself, no files needed.</div>
+    <div class="tip rise">Check your <b>calendar invite</b> for your session time. Questions any time in the <strong>Slack channel</strong>.</div>
+    <div class="chips rise"><span class="chip">Thanks for building your first Project 🎉</span></div>
+  </section>
+
+</main>
+
+<!-- chrome -->
+<div class="edge l" id="edgeL" role="button" tabindex="0" aria-label="Previous slide"></div>
+<div class="edge r" id="edgeR" role="button" tabindex="0" aria-label="Next slide"></div>
+<div class="hint" id="hint">← → to move · F for fullscreen</div>
+<nav class="nav" aria-label="Slide navigation">
+  <div class="brand">From Prompt to Partner <span class="dot">·</span></div>
+  <div class="navctl">
+    <button class="fs" id="fsBtn" type="button" aria-label="Toggle fullscreen">⛶ Fullscreen</button>
+    <span class="count"><b id="cur">1</b> / <span id="tot">12</span></span>
+    <button class="arrow" id="prev" type="button" aria-label="Previous slide">‹</button>
+    <button class="arrow" id="next" type="button" aria-label="Next slide">›</button>
+  </div>
+</nav>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const total = slides.length;
+  let i = 0;
+  let x0 = null;
+
+  const curEl = document.getElementById('cur');
+  const totalEl = document.getElementById('tot');
+  const progress = document.getElementById('progress');
+  const prevB = document.getElementById('prev');
+  const nextB = document.getElementById('next');
+  const hint = document.getElementById('hint');
+  const fsBtn = document.getElementById('fsBtn');
+  const edgeL = document.getElementById('edgeL');
+  const edgeR = document.getElementById('edgeR');
+
+  totalEl.textContent = total;
+
+  function clampSlide(n){
+    return Math.max(0, Math.min(total - 1, n));
+  }
+
+  function isTypingTarget(target){
+    return target.closest('button,a,input,textarea,select,[contenteditable="true"]');
+  }
+
+  function setFullscreenLabel(){
+    fsBtn.textContent = document.fullscreenElement ? 'Exit fullscreen' : '⛶ Fullscreen';
+    fsBtn.setAttribute('aria-label', document.fullscreenElement ? 'Exit fullscreen' : 'Enter fullscreen');
+  }
+
+  function show(n, push = true){
+    i = clampSlide(n);
+
+    slides.forEach((slide, index) => {
+      const isActive = index === i;
+      slide.classList.toggle('active', isActive);
+      slide.setAttribute('aria-hidden', String(!isActive));
+      slide.toggleAttribute('inert', !isActive);
+      slide.tabIndex = isActive ? 0 : -1;
+    });
+
+    curEl.textContent = i + 1;
+    progress.style.width = total > 1 ? `${(i / (total - 1)) * 100}%` : '100%';
+    prevB.disabled = i === 0;
+    nextB.disabled = i === total - 1;
+    edgeL.setAttribute('aria-disabled', String(i === 0));
+    edgeR.setAttribute('aria-disabled', String(i === total - 1));
+
+    if(push) history.replaceState(null, '', `#${i + 1}`);
+    if(i > 0 && hint) hint.hidden = true;
+  }
+
+  function next(){
+    if(i < total - 1) show(i + 1);
+  }
+
+  function prev(){
+    if(i > 0) show(i - 1);
+  }
+
+  function toggleFs(){
+    if(!document.fullscreenElement && document.documentElement.requestFullscreen){
+      document.documentElement.requestFullscreen();
+      return;
+    }
+    if(document.exitFullscreen) document.exitFullscreen();
+  }
+
+  function handleEdgeKey(event, direction){
+    if(event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    direction === 'next' ? next() : prev();
+  }
+
+  document.addEventListener('keydown', event => {
+    if(isTypingTarget(event.target)) return;
+    if(['ArrowRight','ArrowDown','PageDown',' '].includes(event.key)){
+      event.preventDefault();
+      next();
+      return;
+    }
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(event.key)){
+      event.preventDefault();
+      prev();
+      return;
+    }
+    if(event.key === 'Home'){
+      event.preventDefault();
+      show(0);
+      return;
+    }
+    if(event.key === 'End'){
+      event.preventDefault();
+      show(total - 1);
+      return;
+    }
+    if(event.key === 'f' || event.key === 'F') toggleFs();
+  });
+
+  nextB.addEventListener('click', next);
+  prevB.addEventListener('click', prev);
+  edgeR.addEventListener('click', next);
+  edgeL.addEventListener('click', prev);
+  edgeR.addEventListener('keydown', event => handleEdgeKey(event, 'next'));
+  edgeL.addEventListener('keydown', event => handleEdgeKey(event, 'prev'));
+  fsBtn.addEventListener('click', toggleFs);
+  document.addEventListener('fullscreenchange', setFullscreenLabel);
+
+  document.addEventListener('touchstart', event => {
+    x0 = event.touches[0].clientX;
+  }, { passive:true });
+
+  document.addEventListener('touchend', event => {
+    if(x0 === null) return;
+    const dx = event.changedTouches[0].clientX - x0;
+    if(Math.abs(dx) > 45) dx < 0 ? next() : prev();
+    x0 = null;
+  });
+
+  async function copyPrompt(btn){
+    const promptText = document.getElementById('promptText').innerText;
+    const originalText = btn.textContent;
+
+    try{
+      await navigator.clipboard.writeText(promptText);
+      btn.textContent = 'Copied ✓';
+    }catch(error){
+      const textArea = document.createElement('textarea');
+      textArea.value = promptText;
+      textArea.setAttribute('readonly', '');
+      textArea.style.position = 'fixed';
+      textArea.style.opacity = '0';
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      textArea.remove();
+      btn.textContent = 'Copied ✓';
+    }
+
+    setTimeout(() => {
+      btn.textContent = originalText;
+    }, 1600);
+  }
+  window.copyPrompt = copyPrompt;
+
+  window.addEventListener('hashchange', () => {
+    const hashSlide = parseInt(location.hash.replace('#', ''), 10);
+    if(Number.isFinite(hashSlide)) show(hashSlide - 1, false);
+  });
+
+  const start = parseInt(location.hash.replace('#', ''), 10) || 1;
+  setFullscreenLabel();
+  show(start - 1, false);
+</script>
+</body>
+</html>
