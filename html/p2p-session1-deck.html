@@ -432,7 +432,7 @@
       <div class="frow"><div class="badge">R</div><div><div class="fname">Role <span class="k">角色</span></div><div class="fdesc">Who Claude should be — e.g. "a senior IPC sales engineer."</div></div></div>
       <div class="frow"><div class="badge">A</div><div><div class="fname">Action <span class="k">行動</span></div><div class="fdesc">The exact task — e.g. "draft a reply to this inquiry."</div></div></div>
       <div class="frow"><div class="badge">C</div><div><div class="fname">Context <span class="k">背景</span></div><div class="fdesc">Background & why — who we are, which vendors, what the customer sent.</div></div></div>
-      <div class="frow"><div class="badge">E</div><div><div class="fname">Expectation <span class="k">期望</span></div><div class="fdesc">What good looks like — confirm the SKU, flag anything unsure, ask what's missing.</div></div></div>
+      <div class="frow"><div class="badge">E</div><div><div class="fname">Expectation <span class="k">期望</span></div><div class="fdesc">Show the desired output: Asked / Missing / Reply. Verify specs, flag unknowns, and ask only quote-blocking questions.</div></div></div>
     </div>
   </section>
 
@@ -468,7 +468,7 @@ Thanks,</div>
   <section class="slide trap" aria-label="Slide 12">
     <div class="eyebrow rise">① Just ask</div>
     <div class="cmd-line rise">Write a reply.</div>
-    <div class="callout rise">You get a fast, confident reply. But we carry <strong>200+ models across 4 vendors</strong><br>— it may pin the <strong class="accent">wrong vendor</strong> or guess a spec, and sound <em>just as sure</em> either way.
+    <div class="callout rise">You get a fast, confident reply. But we carry <strong>200+ models across multiple vendors</strong><br>— it may pin the <strong class="accent">wrong vendor</strong> or guess a spec, and sound <em>just as sure</em> either way.
       <span class="big">Clear ≠ correct.</span></div>
   </section>
 
@@ -476,12 +476,14 @@ Thanks,</div>
   <section class="slide prompt-slide" aria-label="Slide 13">
     <div class="eyebrow rise">② The prompt that works — email <em>or</em> form</div>
     <div class="prompt rise">
-      <button class="copy" type="button" onclick="copyPrompt(this)" aria-label="Copy the prompt text">Copy prompt</button><span id="promptText">We're the Neteon IPC team — a distributor of industrial and edge-AI computers and industrial networking, carrying 200+ models across multiple vendors (Neousys, ASUS IoT, Premio, PLANET, and more).
+      <button class="copy" type="button" onclick="copyPrompt(this)" aria-label="Copy the prompt text">Copy prompt</button><span id="promptText">You are a sales support assistant for Neteon, a US-based industrial computing and Edge AI distributor (ipc.neteon.net). We carry products from Moxa, Neousys, ASUS IoT, Advantech, Cincoze, Innodisk, Teltonika, PLANET, Sena, ATOP, Vertiv, and Dinspace.
 
-Here's an inbound sales inquiry — it may be an email or a website form submission. Read it and:
-<span class="num">1.</span> Identify the exact part number(s) / series they're asking about, and which vendor each is from. If they haven't named a specific product, suggest a sensible starting option from our catalog instead.
-<span class="num">2.</span> Confirm each product against our catalog — if you're not sure we carry that exact SKU, or you're unsure of any detail, say so instead of guessing.
-<span class="num">3.</span> Draft a friendly, professional reply in my voice that confirms the product, answers what we can, and asks only for anything we genuinely still need (e.g. the application, or quantity if it's unclear).</span></div>
+Here's an inbound customer inquiry. Follow this sequence:
+<span class="num">1.</span> List what they explicitly asked for. Do not infer needs they did not state.
+<span class="num">2.</span> List what's missing before we can recommend a specific model or quote: environment, camera/sensor type and count, AI workload, quantity, budget, and timeline.
+<span class="num">3.</span> Draft a friendly, concrete reply. Recommend one sensible starting model from our vendor range, suggest a step-up model if the workload may be heavier, and close with 3-4 questions needed to finalize model and quote.
+
+Rules: Verify every product/spec claim against a vendor datasheet or Neteon product page. If you cannot verify it, say "I want to confirm..." instead of guessing. Do not invent certifications, TOPS, temperature ranges, IP ratings, voltages, or prices. Never present competitor products as options. Sign off with: [Your Name] / Neteon / ipc.neteon.net · 1-888-908-3330 · sales@neteon.net</span></div>
     <div class="callout rise">Now it pins the <strong>exact SKU + vendor</strong>, <strong>flags</strong> what it isn't sure of, and drafts the reply.</div>
   </section>
 
