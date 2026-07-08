@@ -125,7 +125,7 @@
     padding:clamp(48px,4vw,64px) clamp(22px,2.6vw,34px) clamp(22px,2.6vw,34px);width:min(100%,980px);
     font-family:ui-monospace,"SFMono-Regular",Menlo,monospace;
     font-size:clamp(13px,1.55vw,18px);line-height:1.62;white-space:pre-wrap;position:relative;box-shadow:0 26px 56px -34px rgba(14,42,46,.7)}
-  .prompt::before{content:"Reusable Prompt";position:absolute;top:16px;left:18px;color:#9fdce4;font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+  .prompt::before{content:"Reusable User Prompt";position:absolute;top:16px;left:18px;color:#9fdce4;font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
   .prompt .num{color:var(--teal-hi);font-weight:700}
   .cmd-line{display:inline-block;background:var(--teal-deep);color:#dbeef0;border-radius:12px;
     font-family:ui-monospace,Menlo,monospace;font-weight:600;
@@ -191,7 +191,8 @@
   @media(max-width:720px){.logins{grid-template-columns:1fr}}
   .login{background:rgba(255,255,255,.86);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(20px,2.6vw,30px);box-shadow:0 18px 36px -30px rgba(14,42,46,.5)}
   .login .tool{font-family:var(--display);font-weight:600;font-size:clamp(22px,2.8vw,32px)}
-  .login .url{color:var(--teal);font-weight:600;font-size:clamp(14px,1.6vw,18px);margin-top:2px}
+  .login .url{display:inline-block;color:var(--teal);font-weight:600;font-size:clamp(14px,1.6vw,18px);margin-top:2px;text-decoration:none}
+  .login .url:hover{text-decoration:underline;text-underline-offset:3px}
   .email-pill{margin-top:16px;display:inline-flex;align-items:center;gap:8px;background:var(--bg);
     border:1px dashed var(--teal);border-radius:10px;padding:10px 15px;font-weight:700;
     font-size:clamp(14px,1.7vw,19px);color:var(--ink)}
@@ -412,12 +413,12 @@
     <div class="logins rise">
       <div class="login">
         <div class="tool">Claude</div>
-        <div class="url">claude.ai</div>
+        <a class="url" href="https://claude.ai/login" target="_blank" rel="noopener">claude.ai/login</a>
         <div class="email-pill">📧 marketing@neteon.net</div>
       </div>
       <div class="login">
         <div class="tool">ChatGPT</div>
-        <div class="url">chatgpt.com</div>
+        <a class="url" href="https://chatgpt.com/auth/login" target="_blank" rel="noopener">chatgpt.com/auth/login</a>
         <div class="email-pill">📧 marketing@neteon.net</div>
       </div>
     </div>
@@ -475,16 +476,20 @@ Thanks,</div>
   <!-- 8 · THE PROMPT -->
   <section class="slide prompt-slide" aria-label="Slide 13">
     <div class="eyebrow rise">② The prompt that works — email <em>or</em> form</div>
-    <div class="prompt rise">
-      <button class="copy" type="button" onclick="copyPrompt(this)" aria-label="Copy the prompt text">Copy prompt</button><span id="promptText">You are a sales support assistant for Neteon, a US-based industrial computing and Edge AI distributor (ipc.neteon.net). We carry products from Moxa, Neousys, ASUS IoT, Advantech, Cincoze, Innodisk, Teltonika, PLANET, Sena, ATOP, Vertiv, and Dinspace.
+    <div class="prompt rise"><button class="copy" type="button" onclick="copyPrompt(this)" aria-label="Copy the prompt text">Copy prompt</button><span id="promptText">You are my sales support assistant.
 
-Here's an inbound customer inquiry. Follow this sequence:
-<span class="num">1.</span> List what they explicitly asked for. Do not infer needs they did not state.
-<span class="num">2.</span> List what's missing before we can recommend a specific model or quote: environment, camera/sensor type and count, AI workload, quantity, budget, and timeline.
-<span class="num">3.</span> Draft a friendly, concrete reply. Recommend one sensible starting model from our vendor range, suggest a step-up model if the workload may be heavier, and close with 3-4 questions needed to finalize model and quote.
+We are Neteon, a US-based industrial computing and Edge AI distributor (ipc.neteon.net).
 
-Rules: Verify every product/spec claim against a vendor datasheet or Neteon product page. If you cannot verify it, say "I want to confirm..." instead of guessing. Do not invent certifications, TOPS, temperature ranges, IP ratings, voltages, or prices. Never present competitor products as options. Sign off with: [Your Name] / Neteon / ipc.neteon.net · 1-888-908-3330 · sales@neteon.net</span></div>
-    <div class="callout rise">Now it pins the <strong>exact SKU + vendor</strong>, <strong>flags</strong> what it isn't sure of, and drafts the reply.</div>
+Here is a customer inquiry. Please:
+<span class="num">1.</span> List what the customer asked.
+<span class="num">2.</span> List what information is still missing.
+<span class="num">3.</span> Draft a short, professional reply.
+
+Do not invent product specs, availability, pricing, or other facts. If something is not clear, say we need to confirm it.
+
+Sign off with:
+[Your Name] / Neteon / ipc.neteon.net · 1-888-908-3330 · sales@neteon.net</span></div>
+    <div class="callout rise">Now the prompt has <strong>role</strong>, <strong>context</strong>, <strong>task</strong>, and one clear guardrail: <strong>don't make things up</strong>.</div>
   </section>
 
   <!-- 9 · PROJECT -->
