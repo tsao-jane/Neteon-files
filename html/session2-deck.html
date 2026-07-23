@@ -1,0 +1,1800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="From Prompt to Partner Session 2 HTML slide deck.">
+<meta name="theme-color" content="#0e7d8c">
+<title>From Prompt to Partner - Session 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#0e7d8c;
+    --teal-hi:#14a3b6;
+    --teal-deep:#0e2a2e;
+    --coral:#c2552f;
+    --amber:#d7a73f;
+    --mint:#e9f5f6;
+    --bg:#f5f8f6;
+    --card:#ffffff;
+    --ink:#0e2a2e;
+    --ink-mid:#3d5359;
+    --ink-soft:#61777d;
+    --line:#d5e4e6;
+    --line-soft:#e8f0f1;
+    --danger:#b8452d;
+    --ok:#287d62;
+    --display:"Fraunces", Georgia, serif;
+    --sans:"Hanken Grotesk", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono:"SFMono-Regular", Menlo, Consolas, monospace;
+    --radius:10px;
+    --radius-sm:8px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden}
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--teal-deep);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+  }
+  button{font:inherit}
+  .deck{
+    position:fixed;
+    inset:0;
+    background:
+      linear-gradient(135deg, rgba(14,125,140,.11), transparent 32%),
+      linear-gradient(315deg, rgba(194,85,47,.08), transparent 36%),
+      linear-gradient(rgba(14,42,46,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(14,42,46,.03) 1px, transparent 1px),
+      var(--bg);
+    background-size:auto, auto, 36px 36px, 36px 36px, auto;
+    counter-reset:slide;
+  }
+  .slide{
+    position:absolute;
+    inset:0;
+    min-height:100svh;
+    width:100vw;
+    display:grid;
+    align-content:center;
+    justify-items:start;
+    gap:clamp(14px,2.2vh,26px);
+    padding:clamp(38px,6vw,104px);
+    padding-bottom:calc(clamp(78px,11vh,126px) + env(safe-area-inset-bottom));
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    overflow:auto;
+    overscroll-behavior:contain;
+    transition:opacity .45s ease;
+    counter-increment:slide;
+  }
+  .slide::before{
+    content:"";
+    position:fixed;
+    left:clamp(18px,3vw,42px);
+    top:clamp(30px,5vh,56px);
+    bottom:clamp(88px,12vh,132px);
+    width:3px;
+    border-radius:999px;
+    background:linear-gradient(var(--teal), var(--coral));
+    opacity:.22;
+    pointer-events:none;
+  }
+  .slide::after{
+    content:counter(slide, decimal-leading-zero);
+    position:fixed;
+    right:clamp(22px,4vw,54px);
+    top:clamp(22px,4vh,44px);
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(30px,5.6vw,78px);
+    line-height:1;
+    color:rgba(14,42,46,.15);
+    pointer-events:none;
+  }
+  .slide.active{opacity:1;visibility:visible;pointer-events:auto}
+  .slide:focus{outline:none}
+  .slide.active .rise{animation:rise .55s cubic-bezier(.2,.7,.2,1) both}
+  .slide.active .rise:nth-child(2){animation-delay:.05s}
+  .slide.active .rise:nth-child(3){animation-delay:.10s}
+  .slide.active .rise:nth-child(4){animation-delay:.15s}
+  .slide.active .rise:nth-child(5){animation-delay:.2s}
+  @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    color:var(--teal);
+    font-size:clamp(12px,1.5vw,15px);
+    font-weight:800;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+  }
+  .eyebrow::before{
+    content:"";
+    width:24px;
+    height:2px;
+    border-radius:999px;
+    background:var(--coral);
+  }
+  h1{
+    max-width:18ch;
+    font-family:var(--display);
+    font-size:clamp(58px,9vw,120px);
+    line-height:1;
+    font-weight:600;
+    letter-spacing:0;
+  }
+  h2{
+    max-width:24ch;
+    font-family:var(--display);
+    font-size:clamp(40px,5.8vw,72px);
+    line-height:1.04;
+    font-weight:600;
+    letter-spacing:0;
+  }
+  h3{
+    font-size:clamp(19px,2.3vw,28px);
+    line-height:1.16;
+    font-weight:800;
+  }
+  .lead{
+    max-width:68ch;
+    color:var(--ink-mid);
+    font-size:clamp(20px,2.45vw,31px);
+    line-height:1.36;
+  }
+  .sub{
+    max-width:78ch;
+    color:var(--ink-mid);
+    font-size:clamp(16px,1.85vw,22px);
+    line-height:1.48;
+  }
+  .quote{
+    max-width:34ch;
+    font-family:var(--display);
+    font-size:clamp(38px,6.2vw,78px);
+    line-height:1.08;
+    font-weight:600;
+  }
+  .accent{color:var(--coral)}
+  strong{font-weight:800;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:rgba(255,255,255,.78);
+    color:var(--ink);
+    box-shadow:0 10px 22px -20px rgba(14,42,46,.55);
+    padding:9px 16px;
+    font-size:clamp(13px,1.5vw,17px);
+    font-weight:700;
+  }
+  .chip b{color:var(--teal)}
+
+  .grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:clamp(18px,2.8vw,34px);
+    width:min(100%,1180px);
+    align-items:stretch;
+  }
+  .grid-3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:clamp(14px,2vw,24px);
+    width:min(100%,1200px);
+  }
+  .card{
+    position:relative;
+    width:100%;
+    border:1px solid rgba(213,228,230,.95);
+    border-radius:var(--radius);
+    background:rgba(255,255,255,.86);
+    backdrop-filter:blur(12px);
+    box-shadow:0 22px 48px -34px rgba(14,42,46,.55);
+    padding:clamp(20px,2.7vw,34px);
+  }
+  .card::before{
+    content:"";
+    position:absolute;
+    inset:0 0 auto 0;
+    height:4px;
+    border-radius:var(--radius) var(--radius) 0 0;
+    background:linear-gradient(90deg,var(--teal),var(--coral));
+    opacity:.9;
+  }
+  .card p,.card li{
+    color:var(--ink-mid);
+    font-size:clamp(15px,1.75vw,20px);
+    line-height:1.45;
+  }
+  .card ul{display:grid;gap:10px;list-style:none}
+  .card li::before{
+    content:"";
+    display:inline-block;
+    width:8px;
+    height:8px;
+    margin-right:10px;
+    border-radius:50%;
+    background:var(--teal);
+    transform:translateY(-1px);
+  }
+  .small{font-size:clamp(13px,1.45vw,16px);color:var(--ink-soft);line-height:1.45}
+  .kicker{
+    color:var(--ink-soft);
+    font-size:clamp(13px,1.45vw,16px);
+    font-weight:800;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+  }
+
+  .browser{
+    width:min(100%,1160px);
+    overflow:hidden;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:#fff;
+    box-shadow:0 24px 50px -34px rgba(14,42,46,.7);
+  }
+  .browser-top{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    gap:12px;
+    align-items:center;
+    border-bottom:1px solid var(--line-soft);
+    background:#f0f6f7;
+    padding:12px 14px;
+  }
+  .dots{display:flex;gap:6px}
+  .dot{width:10px;height:10px;border-radius:50%;background:#b8c6c9}
+  .dot:nth-child(1){background:#d86b4a}
+  .dot:nth-child(2){background:#d6aa47}
+  .dot:nth-child(3){background:#4f9a7e}
+  .url{
+    min-width:0;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:#fff;
+    color:var(--ink-soft);
+    padding:8px 14px;
+    font-family:var(--mono);
+    font-size:clamp(11px,1.2vw,14px);
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+  }
+  .tab-label{
+    color:var(--teal);
+    font-weight:800;
+    font-size:clamp(12px,1.3vw,14px);
+  }
+  .browser-body{
+    display:grid;
+    grid-template-columns:1fr minmax(250px,34%);
+    min-height:clamp(300px,45vh,470px);
+  }
+  .webpage{
+    display:grid;
+    align-content:start;
+    gap:18px;
+    border-right:1px solid var(--line-soft);
+    padding:clamp(22px,2.8vw,34px);
+  }
+  .web-hero{
+    height:clamp(78px,13vh,132px);
+    border-radius:var(--radius);
+    background:
+      linear-gradient(135deg, rgba(14,125,140,.92), rgba(14,42,46,.86)),
+      linear-gradient(90deg, transparent, rgba(255,255,255,.2));
+  }
+  .lines{display:grid;gap:10px}
+  .line{height:12px;border-radius:999px;background:#dce9eb}
+  .line.short{width:56%}
+  .line.mid{width:74%}
+  .line.dark{background:#b8c9cc;width:42%}
+  .sidebar{
+    display:grid;
+    align-content:start;
+    gap:14px;
+    background:#fbfdfd;
+    padding:clamp(18px,2.2vw,28px);
+  }
+  .ai-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    font-weight:800;
+    color:var(--teal-deep);
+  }
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    min-height:30px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:var(--mint);
+    color:var(--teal-deep);
+    padding:5px 11px;
+    font-size:12px;
+    font-weight:800;
+    white-space:nowrap;
+  }
+  .answer{
+    display:grid;
+    gap:10px;
+    border:1px solid var(--line-soft);
+    border-radius:var(--radius);
+    background:#fff;
+    padding:16px;
+  }
+  .answer b{color:var(--teal)}
+  .answer p{font-size:clamp(13px,1.45vw,16px);line-height:1.4;color:var(--ink-mid)}
+
+  .compare-table,.sheet-table,.gap-table{
+    width:min(100%,1200px);
+    border-collapse:separate;
+    border-spacing:0;
+    overflow:hidden;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:#fff;
+    box-shadow:0 20px 44px -34px rgba(14,42,46,.56);
+  }
+  .compare-table th,.compare-table td,
+  .sheet-table th,.sheet-table td,
+  .gap-table th,.gap-table td{
+    border-bottom:1px solid var(--line-soft);
+    padding:clamp(12px,1.8vw,20px);
+    text-align:left;
+    vertical-align:top;
+    color:var(--ink-mid);
+    font-size:clamp(14px,1.65vw,19px);
+    line-height:1.35;
+  }
+  .compare-table th,.sheet-table th,.gap-table th{
+    background:#eef7f8;
+    color:var(--ink);
+    font-weight:800;
+  }
+  .compare-table tr:last-child td,
+  .sheet-table tr:last-child td,
+  .gap-table tr:last-child td{border-bottom:0}
+  .sheet-table .found{color:var(--teal-deep);font-weight:700;background:#f8fcfc}
+  .inbound-table{
+    width:100%;
+  }
+  .inbound-table th:first-child,
+  .slide:nth-child(8) .sheet-table th:first-child{
+    white-space:nowrap;
+  }
+  .inbound-table th,
+  .inbound-table td{
+    padding:clamp(10px,1.45vw,16px);
+    font-size:clamp(13px,1.45vw,18px);
+  }
+  .inbound-table td:first-child{
+    width:34%;
+  }
+  .gap-table .public b{color:var(--ok)}
+  .gap-table .internal b{color:var(--danger)}
+
+  .flow{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    width:min(100%,1160px);
+  }
+  .flow-card{
+    position:relative;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:#fff;
+    padding:22px;
+    box-shadow:0 18px 38px -32px rgba(14,42,46,.55);
+  }
+  .flow-card::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    right:-14px;
+    width:26px;
+    height:2px;
+    background:var(--coral);
+  }
+  .flow-card:last-child::after{display:none}
+  .flow-card h3{font-size:clamp(18px,2vw,24px);margin-bottom:8px}
+  .flow-card p{color:var(--ink-mid);font-size:clamp(14px,1.6vw,18px);line-height:1.4}
+  .mode{margin-top:14px;color:var(--teal);font-weight:800;font-size:clamp(12px,1.4vw,15px)}
+
+  .steps{
+    display:grid;
+    gap:clamp(12px,1.8vh,18px);
+    width:min(100%,1080px);
+  }
+  .step{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:16px;
+    align-items:start;
+  }
+  .no{
+    display:grid;
+    place-items:center;
+    width:42px;
+    height:42px;
+    border-radius:10px;
+    background:var(--teal);
+    color:#fff;
+    font-family:var(--display);
+    font-weight:700;
+    font-size:22px;
+  }
+  .step p{
+    padding-top:6px;
+    color:var(--ink-mid);
+    font-size:clamp(16px,1.9vw,22px);
+    line-height:1.38;
+  }
+
+  .prompt{
+    position:relative;
+    width:min(100%,1160px);
+    border-radius:var(--radius);
+    background:linear-gradient(135deg,#0b2226,#123b40);
+    box-shadow:0 26px 56px -34px rgba(14,42,46,.72);
+    color:#e7f4f5;
+    padding:clamp(54px,4vw,64px) clamp(22px,2.8vw,34px) clamp(22px,2.8vw,34px);
+    font-family:var(--mono);
+    font-size:clamp(13px,1.5vw,17px);
+    line-height:1.6;
+    white-space:pre-wrap;
+  }
+  .copy-prompt{
+    position:absolute;
+    top:13px;
+    right:14px;
+    border:1px solid rgba(159,220,228,.34);
+    border-radius:8px;
+    background:rgba(255,255,255,.08);
+    color:#d8eef1;
+    padding:7px 11px;
+    font-family:var(--sans);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    cursor:pointer;
+  }
+  .copy-prompt:hover{
+    background:rgba(255,255,255,.14);
+    border-color:rgba(159,220,228,.7);
+  }
+  .copy-prompt:focus-visible{
+    outline:3px solid rgba(20,163,182,.45);
+    outline-offset:3px;
+  }
+  .demo-flow-card{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:rgba(255,255,255,.88);
+    box-shadow:0 22px 46px -34px rgba(14,42,46,.58);
+    padding:clamp(24px,3vw,38px);
+  }
+  .demo-flow-card .kicker{
+    display:block;
+    margin-bottom:18px;
+  }
+  .demo-flow-list{
+    display:grid;
+    gap:14px;
+  }
+  .demo-flow-item{
+    display:grid;
+    grid-template-columns:42px 1fr;
+    gap:14px;
+    align-items:start;
+  }
+  .demo-flow-item p{
+    padding-top:5px;
+    color:var(--ink-mid);
+    font-size:clamp(16px,1.8vw,22px);
+    line-height:1.35;
+  }
+
+  .extension-link{
+    display:inline-flex;
+    align-items:center;
+    width:min(100%,980px);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:rgba(255,255,255,.88);
+    color:var(--teal-deep);
+    box-shadow:0 18px 38px -32px rgba(14,42,46,.55);
+    padding:clamp(16px,2vw,22px) clamp(18px,2.4vw,28px);
+    font-family:var(--mono);
+    font-size:clamp(13px,1.55vw,18px);
+    font-weight:700;
+    line-height:1.35;
+    text-decoration:none;
+    overflow-wrap:anywhere;
+  }
+  .extension-link:hover{
+    border-color:var(--teal);
+    color:var(--teal);
+  }
+  .checkin-link{
+    display:inline-flex;
+    align-items:center;
+    width:min(100%,980px);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:rgba(255,255,255,.88);
+    color:var(--teal-deep);
+    box-shadow:0 18px 38px -32px rgba(14,42,46,.55);
+    padding:clamp(16px,2vw,22px) clamp(18px,2.4vw,28px);
+    font-family:var(--mono);
+    font-size:clamp(18px,2.15vw,28px);
+    font-weight:800;
+    line-height:1.35;
+    text-decoration:none;
+    overflow-wrap:anywhere;
+  }
+  .checkin-link:hover{
+    border-color:var(--teal);
+    color:var(--teal);
+    text-decoration:underline;
+    text-underline-offset:5px;
+  }
+  .wide-close{
+    width:min(100%,1240px);
+    grid-template-columns:minmax(560px,1.12fr) minmax(420px,.88fr);
+    align-items:stretch;
+  }
+  .wide-close .card{
+    width:100%;
+    display:grid;
+    align-content:start;
+    gap:clamp(14px,2vh,22px);
+    min-height:clamp(260px,34vh,340px);
+  }
+  .wide-close h3{
+    font-size:clamp(28px,3.2vw,42px);
+  }
+  .wide-close .checkin-link{
+    width:100%;
+    font-size:clamp(19px,2.3vw,31px);
+    letter-spacing:.01em;
+  }
+  .session-pill{
+    display:inline-flex;
+    width:max-content;
+    border:1px solid rgba(14,125,140,.24);
+    border-radius:999px;
+    background:#eef8f9;
+    color:var(--teal-deep);
+    padding:8px 13px;
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  .close-question{
+    margin-top:2px;
+    border-left:4px solid var(--coral);
+    padding-left:18px;
+    color:var(--ink-mid);
+    font-size:clamp(20px,2.35vw,31px);
+    line-height:1.28;
+  }
+  .date-pill{
+    display:inline-flex;
+    width:max-content;
+    border:1px solid rgba(194,85,47,.28);
+    border-radius:999px;
+    background:rgba(194,85,47,.09);
+    color:var(--coral);
+    padding:9px 14px;
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+  }
+  .install-layout{
+    display:grid;
+    grid-template-columns:minmax(360px,.9fr) minmax(460px,1.1fr);
+    gap:clamp(20px,3vw,42px);
+    width:min(100%,1200px);
+    align-items:start;
+  }
+  .media-card{
+    position:relative;
+    display:grid;
+    gap:12px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:rgba(255,255,255,.84);
+    box-shadow:0 22px 46px -34px rgba(14,42,46,.58);
+    padding:14px;
+  }
+  .shot-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  .webstore-shot{
+    display:block;
+    width:100%;
+    aspect-ratio:16/10;
+    object-fit:cover;
+    border:1px solid var(--line-soft);
+    border-radius:var(--radius);
+    background:#eee;
+  }
+  .shot-caption{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    color:var(--ink-soft);
+    line-height:1.32;
+    font-size:clamp(12px,1.25vw,14px);
+  }
+  .shot-caption b{color:var(--teal-deep)}
+  .media-link{
+    position:absolute;
+    inset:0;
+    z-index:2;
+    border-radius:var(--radius);
+    color:transparent;
+    text-decoration:none;
+  }
+  .media-card:hover{
+    border-color:var(--teal);
+  }
+  .media-link:focus-visible{
+    outline:3px solid rgba(20,163,182,.45);
+    outline-offset:4px;
+  }
+
+  .wide-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:clamp(18px,3vw,42px);
+    width:min(100%,1180px);
+    align-items:start;
+  }
+  .scenario-layout{
+    display:grid;
+    grid-template-columns:minmax(560px,1fr) minmax(310px,390px);
+    gap:clamp(24px,3.2vw,46px);
+    width:min(100%,1240px);
+    align-items:center;
+  }
+  .inquiry-card{
+    display:grid;
+    gap:18px;
+    padding:clamp(28px,3.4vw,46px);
+  }
+  .inquiry-summary{
+    display:grid;
+    gap:clamp(16px,2.1vh,24px);
+    width:100%;
+    padding:clamp(4px,1vw,12px) 0;
+  }
+  .summary-tag{
+    color:var(--ink-soft);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+  }
+  .summary-name{
+    font-family:var(--display);
+    font-size:clamp(44px,6vw,78px);
+    font-weight:600;
+    line-height:1;
+    color:var(--ink);
+  }
+  .summary-rows{
+    display:grid;
+    width:min(100%,720px);
+    border-top:1px solid var(--line);
+  }
+  .summary-row{
+    display:grid;
+    grid-template-columns:minmax(110px,160px) 1fr;
+    gap:clamp(18px,2.6vw,34px);
+    align-items:baseline;
+    border-bottom:1px solid var(--line);
+    padding:clamp(10px,1.45vh,15px) 0;
+  }
+  .summary-row b{
+    color:var(--ink-soft);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+  }
+  .summary-row span{
+    color:var(--ink);
+    font-size:clamp(18px,2.15vw,28px);
+    line-height:1.25;
+  }
+  .question-line{
+    position:relative;
+    width:min(100%,760px);
+    margin-top:4px;
+    padding-left:20px;
+    color:var(--teal-deep);
+    font-family:var(--display);
+    font-size:clamp(30px,3.8vw,52px);
+    font-weight:600;
+    line-height:1.08;
+  }
+  .question-line::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:.08em;
+    bottom:.08em;
+    width:4px;
+    border-radius:999px;
+    background:linear-gradient(var(--teal),var(--coral));
+  }
+  .inquiry-head{
+    display:grid;
+    gap:10px;
+    border-bottom:1px solid var(--line-soft);
+    padding-bottom:18px;
+  }
+  .inquiry-title{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:12px 20px;
+  }
+  .inquiry-title strong{
+    font-family:var(--display);
+    font-size:clamp(34px,4.6vw,58px);
+    font-weight:600;
+    line-height:1;
+  }
+  .hubspot-pill{
+    border:1px solid rgba(14,125,140,.28);
+    border-radius:999px;
+    background:#eef8f9;
+    color:var(--teal-deep);
+    padding:8px 13px;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    white-space:nowrap;
+  }
+  .inquiry-sub{
+    color:var(--ink-mid);
+    font-size:clamp(17px,2vw,24px);
+    line-height:1.35;
+  }
+  .signal-list{
+    display:grid;
+    gap:10px;
+  }
+  .signal-row{
+    display:grid;
+    grid-template-columns:minmax(104px,150px) 1fr;
+    gap:18px;
+    align-items:baseline;
+    border-bottom:1px solid var(--line-soft);
+    padding:11px 0;
+  }
+  .signal-row:last-child{border-bottom:0}
+  .signal-row b{
+    color:var(--ink-soft);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  .signal-row span{
+    color:var(--ink);
+    font-size:clamp(18px,2.2vw,28px);
+    line-height:1.24;
+  }
+  .form-source{
+    display:grid;
+    gap:10px;
+    justify-self:center;
+    width:min(100%,390px);
+  }
+  .source-label{
+    color:var(--ink-soft);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .form-frame{
+    overflow:hidden;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:#fff;
+    box-shadow:0 24px 50px -34px rgba(14,42,46,.65);
+    padding:0;
+  }
+  .form-shot{
+    display:block;
+    width:100%;
+    height:clamp(440px,66vh,610px);
+    object-fit:cover;
+    object-position:top center;
+  }
+  .field-list{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:18px;
+  }
+  .field{
+    display:grid;
+    gap:6px;
+    border:1px solid var(--line-soft);
+    border-radius:var(--radius);
+    background:#f8fcfc;
+    padding:14px 16px;
+    color:var(--ink);
+    font-size:clamp(15px,1.7vw,20px);
+    line-height:1.35;
+  }
+  .field b{
+    color:var(--ink-soft);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  .field.highlight{
+    border-color:rgba(14,125,140,.32);
+    background:#eef8f9;
+  }
+  .field.wide{grid-column:1/-1}
+  .ask-strip{
+    margin-top:18px;
+    border-radius:var(--radius);
+    background:linear-gradient(135deg,var(--teal-deep),#123b40);
+    color:#e7f4f5;
+    padding:18px 20px;
+    font-family:var(--display);
+    font-size:clamp(24px,3vw,40px);
+    line-height:1.12;
+    font-weight:600;
+  }
+  .demo-layout{
+    display:grid;
+    grid-template-columns:minmax(560px,1.2fr) minmax(360px,.8fr);
+    gap:clamp(22px,3vw,42px);
+    width:min(100%,1240px);
+    align-items:start;
+  }
+  .demo-layout .flow{
+    grid-template-columns:1fr;
+    width:100%;
+  }
+  .demo-layout .flow-card::after{
+    display:none;
+  }
+  .team-mark{
+    display:block;
+    margin-bottom:clamp(14px,2vh,22px);
+    font-size:clamp(42px,5vw,70px);
+    line-height:1;
+  }
+  .team-slide .card{
+    display:grid;
+    justify-items:center;
+    align-content:center;
+    min-height:clamp(190px,28vh,270px);
+    text-align:center;
+  }
+  .team-slide .card h3{
+    font-size:clamp(26px,3.2vw,42px);
+  }
+  .prompt.compact{
+    font-size:clamp(12px,1.25vw,15px);
+    line-height:1.45;
+    width:min(100%,1180px);
+    padding-top:48px;
+  }
+  .prompt::before{
+    content:"Prompt direction";
+    position:absolute;
+    top:17px;
+    left:20px;
+    color:#9fdce4;
+    font-family:var(--sans);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+
+  .nav{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:30;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:clamp(52px,8vh,68px);
+    padding:0 clamp(20px,4vw,44px);
+    padding-bottom:env(safe-area-inset-bottom);
+    background:linear-gradient(180deg,transparent,rgba(245,248,246,.9));
+    pointer-events:none;
+  }
+  .nav>*{pointer-events:auto}
+  .brand{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(14px,1.7vw,19px);
+    color:var(--ink);
+  }
+  .brand .brand-dot{color:var(--coral)}
+  .navctl{display:flex;align-items:center;gap:14px}
+  .arrow{
+    border:1px solid var(--line);
+    border-radius:50%;
+    background:var(--card);
+    color:var(--ink);
+    width:38px;
+    height:38px;
+    display:grid;
+    place-items:center;
+    font-size:17px;
+    line-height:1;
+    cursor:pointer;
+    transition:.15s;
+  }
+  .arrow:hover{border-color:var(--teal);color:var(--teal)}
+  .arrow:disabled{opacity:.35;cursor:default}
+  .fs{
+    border:0;
+    background:none;
+    color:var(--ink-soft);
+    cursor:pointer;
+    font-family:var(--sans);
+    font-size:13px;
+    font-weight:700;
+  }
+  .fs:hover{color:var(--teal)}
+  .count{
+    color:var(--ink-soft);
+    font-size:clamp(13px,1.5vw,16px);
+    font-variant-numeric:tabular-nums;
+    font-weight:700;
+  }
+  .count b{color:var(--ink)}
+  .arrow:focus-visible,.fs:focus-visible,.edge:focus-visible{
+    outline:3px solid rgba(20,163,182,.45);
+    outline-offset:3px;
+  }
+  .progress{
+    position:fixed;
+    left:0;
+    top:0;
+    z-index:40;
+    height:4px;
+    width:0;
+    background:linear-gradient(90deg,var(--teal),var(--coral));
+    transition:width .35s ease;
+  }
+  .edge{
+    position:fixed;
+    top:0;
+    bottom:0;
+    z-index:20;
+    width:18vw;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+  }
+  .edge.prev{left:0}
+  .edge.next{right:0}
+  .edge:focus-visible{outline:3px solid rgba(20,163,182,.35);outline-offset:-6px}
+  .hint{
+    position:fixed;
+    left:50%;
+    bottom:calc(clamp(60px,9vh,78px) + env(safe-area-inset-bottom));
+    transform:translateX(-50%);
+    z-index:40;
+    color:var(--ink-soft);
+    font-size:13px;
+    font-weight:700;
+    background:rgba(255,255,255,.82);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:7px 12px;
+  }
+
+  /* --- premium composition pass, matched to Session 1 --- */
+  h1,h2,.quote,.ask-strip,.chart-t{text-wrap:balance}
+  p,li,.lead,.sub,.card p,.card li,.step p{text-wrap:pretty}
+  .lead{font-size:clamp(20px,2.7vw,32px);max-width:none}
+  .sub{font-size:clamp(17px,2.1vw,25px);max-width:none}
+  .steps{width:min(100%,1240px)}
+  .step p{font-size:clamp(16px,2vw,23px)}
+  .card p,.card li{font-size:clamp(16px,1.95vw,22px)}
+  .grid-2,.grid-3,.flow,.compare-table,.sheet-table,.gap-table{width:min(100%,1220px)}
+
+  .slide.cover{
+    justify-items:center;
+    text-align:center;
+    align-content:center;
+  }
+  .slide.cover::before{
+    left:50%;
+    top:auto;
+    bottom:clamp(92px,12vh,132px);
+    width:min(52vw,680px);
+    height:3px;
+    transform:translateX(-50%);
+    background:linear-gradient(90deg,transparent,var(--teal),var(--coral),transparent);
+    opacity:.5;
+  }
+  .slide.cover::after{
+    content:"Session 02";
+    right:auto;
+    left:50%;
+    top:clamp(28px,5vh,54px);
+    transform:translateX(-50%);
+    color:rgba(14,42,46,.28);
+    font-size:clamp(18px,2vw,28px);
+  }
+  .slide.cover h1{
+    max-width:none;
+    font-size:clamp(58px,10vw,136px);
+  }
+  .slide.cover .lead{
+    font-size:clamp(22px,3vw,36px);
+  }
+  .slide:nth-child(3) .quote{
+    font-size:clamp(44px,6.6vw,86px);
+  }
+  .slide:nth-child(4) .compare-table,
+  .slide:nth-child(8) .sheet-table,
+  .slide:nth-child(15) .gap-table{
+    box-shadow:0 24px 52px -36px rgba(14,42,46,.62);
+  }
+  .slide:nth-child(7) .card{
+    padding:clamp(24px,3vw,40px);
+  }
+  .slide:nth-child(7) .inquiry-card{
+    padding:clamp(28px,3.4vw,46px);
+  }
+  .scenario-layout{
+    grid-template-columns:minmax(560px,1fr) minmax(310px,400px);
+    width:min(100%,1240px);
+  }
+  .field{
+    box-shadow:0 12px 28px -26px rgba(14,42,46,.5);
+  }
+  .field.highlight{
+    border-color:rgba(14,125,140,.38);
+    background:linear-gradient(135deg,#eef8f9,#f8fcfc);
+  }
+  .ask-strip{
+    box-shadow:0 18px 42px -34px rgba(14,42,46,.75);
+  }
+  .form-frame{
+    box-shadow:0 24px 56px -32px rgba(14,42,46,.62);
+  }
+  .demo-layout .prompt{
+    width:100%;
+    min-height:100%;
+    font-size:clamp(12px,1.08vw,15px);
+    line-height:1.48;
+  }
+  .prompt{
+    box-shadow:0 26px 56px -34px rgba(14,42,46,.7);
+  }
+  .prompt.compact{
+    width:min(100%,1220px);
+  }
+  .browser{
+    box-shadow:0 28px 60px -36px rgba(14,42,46,.72);
+  }
+
+  @media(max-width:820px){
+    .grid-2,.grid-3,.flow,.browser-body,.wide-row,.install-layout,.scenario-layout,.demo-layout,.wide-close{grid-template-columns:1fr}
+    .signal-row{grid-template-columns:1fr;gap:4px}
+    .summary-row{grid-template-columns:1fr;gap:4px}
+    .flow-card::after{display:none}
+    .browser-body{min-height:auto}
+    .webpage{border-right:0;border-bottom:1px solid var(--line-soft)}
+  }
+  @media(max-width:620px){
+    .slide{padding:30px 22px 96px}
+    .slide::before,.slide::after{display:none}
+    h1{font-size:46px}
+    h2{font-size:36px}
+    .slide.cover{justify-items:start;text-align:left}
+    .nav{justify-content:flex-end}
+    .brand{display:none}
+    .fs{display:none}
+  }
+  @media print{
+    html,body{height:auto;overflow:visible;background:#fff}
+    .deck{position:static;background:#fff}
+    .slide{
+      position:relative;
+      opacity:1!important;
+      visibility:visible!important;
+      pointer-events:auto;
+      min-height:100vh;
+      break-after:page;
+    }
+    .slide::before,.slide::after,.nav,.edge,.hint,.progress{display:none!important}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<button class="edge prev" id="edgePrev" aria-label="Previous slide"></button>
+<button class="edge next" id="edgeNext" aria-label="Next slide"></button>
+<main class="deck" id="deck" role="region" aria-label="From Prompt to Partner Session 2 slide deck">
+  <section class="slide cover" aria-label="Slide 1">
+    <div class="eyebrow rise">Neteon · AI Workshop</div>
+    <h1 class="rise">Into your browser</h1>
+    <p class="lead rise">Claude leaves the chat box and reads the webpage you already have open.</p>
+    <div class="chips rise">
+      <span class="chip">3-part live series</span>
+      <span class="chip"><b>Session 2</b></span>
+      <span class="chip">Watch today, try later</span>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Slide 2">
+    <div class="eyebrow rise">Quick recap</div>
+    <h2 class="rise">Last time, we made AI remember the job.</h2>
+    <div class="grid-2 rise">
+      <div class="card">
+        <h3>What we built</h3>
+        <ul>
+          <li>Prompt structure: RACE / RTF</li>
+          <li>Project = Instructions + Knowledge + Workflow</li>
+          <li>Uploaded datasheet to product comparison to sales output</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Core warning</h3>
+        <p class="quote" style="font-size:clamp(28px,4.1vw,54px);">AI that sounds sure is not the same as AI that is right.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Slide 3">
+    <div class="eyebrow rise">Today's frame</div>
+    <div class="wide-row rise">
+      <p class="quote">In the chat box, you bring the information to it.</p>
+      <p class="quote"><span class="accent">In the browser, it goes and gets it.</span></p>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Slide 4">
+    <div class="eyebrow rise">Why browser access matters</div>
+    <h2 class="rise">"Can't chat already read a URL?"</h2>
+    <p class="lead rise">Sometimes. But you do not always know when it cannot.</p>
+    <table class="compare-table rise">
+      <thead>
+        <tr>
+          <th>If you paste a URL into chat</th>
+          <th>If Claude is in your browser</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Bot-blocked pages may fail</td>
+          <td>You are already viewing the page</td>
+        </tr>
+        <tr>
+          <td>Login-required pages may fail</td>
+          <td>You are already logged in</td>
+        </tr>
+        <tr>
+          <td>JS-rendered content may fail</td>
+          <td>The content is already on screen</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="sub rise"><strong>Risk:</strong> it may still answer with old or incomplete information.</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 5">
+    <div class="eyebrow rise">Install once, try later</div>
+    <h2 class="rise">The install is not the lesson.</h2>
+    <div class="install-layout rise">
+      <div class="steps">
+        <a class="extension-link" href="https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn" target="_blank" rel="noopener">Chrome Web Store: Claude extension</a>
+        <div class="step"><div class="no">1</div><p>Chrome / Edge to extension store to Add to Chrome.</p></div>
+        <div class="step"><div class="no">2</div><p>Sign in with paid account.</p></div>
+        <div class="step"><div class="no">3</div><p>Pin Claude to the toolbar.</p></div>
+        <div class="step"><div class="no">4</div><p>Set permissions to <strong>Ask before acting</strong>.</p></div>
+      </div>
+      <div class="media-card">
+        <a class="media-link" href="https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn" target="_blank" rel="noopener" aria-label="Open the Claude Chrome Web Store listing"></a>
+        <div class="shot-grid">
+          <img class="webstore-shot" src="session2-assets/claude-chrome-3.png" alt="Chrome Web Store screenshot showing Claude can use your browser.">
+          <img class="webstore-shot" src="session2-assets/claude-chrome-1.png" alt="Chrome Web Store screenshot showing approving Claude's plan before it acts.">
+        </div>
+        <div class="shot-caption">
+          <span><b>Official listing media</b></span>
+          <span>Click image area to open</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Slide 6">
+    <div class="eyebrow rise">Permissions and boundaries</div>
+    <h2 class="rise">The tab is the steering wheel.</h2>
+    <div class="grid-2 rise">
+      <div class="card">
+        <h3>How to steer</h3>
+        <ul>
+          <li>Claude sees the tab you have open.</li>
+          <li>You steer by switching tabs.</li>
+          <li>It asks before clicking, saving, submitting, or editing.</li>
+          <li>Today uses public pages and a test Sheet only.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Permission rule</h3>
+        <ul>
+          <li>Start with <strong>view / read-only</strong>.</li>
+          <li>Use <strong>edit</strong> only when actually needed.</li>
+          <li>Edit is acceptable for test Sheets, public data, and low-risk fields.</li>
+          <li>Do not give edit access to sensitive systems during practice.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead rise">View first. Edit only when needed. Ask before acting. Human review before submit.</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 7">
+    <div class="eyebrow rise">Scenario</div>
+    <h2 class="rise">One inbound inquiry lands in HubSpot.</h2>
+    <div class="scenario-layout rise">
+      <div class="inquiry-summary">
+        <table class="sheet-table inbound-table" aria-label="Inbound form summary">
+          <thead>
+            <tr>
+              <th>What the customer gave us</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Contact</td><td class="found">Braden McShane</td></tr>
+            <tr><td>Email</td><td class="found">bmcshane@archer.com</td></tr>
+            <tr><td>Company</td><td class="found">Archer Aviation</td></tr>
+            <tr><td>Product</td><td class="found">PE1000U-U7BB</td></tr>
+            <tr><td>Quantity</td><td class="found">1</td></tr>
+            <tr><td>Request</td><td class="found">Buy a Product, Service, Solution</td></tr>
+          </tbody>
+        </table>
+        <div class="question-line">What do you usually do for the next 20 minutes?</div>
+      </div>
+      <div class="form-source">
+        <div class="source-label">Actual HubSpot submission</div>
+        <div class="form-frame">
+          <img class="form-shot" src="form 3.png" alt="HubSpot form submission from Archer Aviation requesting PE1000U-U7BB.">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Slide 8">
+    <div class="eyebrow rise">Working table</div>
+    <h2 class="rise">One row equals one inquiry.</h2>
+    <div class="demo-layout rise">
+      <table class="sheet-table">
+        <thead>
+          <tr>
+            <th>What the customer gave us</th>
+            <th>What sales needs to find</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Contact, email, company</td><td class="found">What the company does</td></tr>
+          <tr><td>Product / quantity</td><td class="found">Industry</td></tr>
+          <tr><td>Request type</td><td class="found">End user, OEM, SI, or distributor</td></tr>
+          <tr><td>One inbound row</td><td class="found">Size, location, recent activity</td></tr>
+          <tr><td></td><td>Possible application, questions to ask, reply draft</td></tr>
+        </tbody>
+      </table>
+      <div class="demo-flow-card">
+        <span class="kicker">Demo flow</span>
+        <div class="demo-flow-list">
+          <div class="demo-flow-item"><div class="no">1</div><p>HubSpot form is the source.</p></div>
+          <div class="demo-flow-item"><div class="no">2</div><p>Google Sheet is the working surface.</p></div>
+          <div class="demo-flow-item"><div class="no">3</div><p>Claude finds and reads sources from the selected row.</p></div>
+          <div class="demo-flow-item"><div class="no">4</div><p>Preview first, write back after approval.</p></div>
+        </div>
+      </div>
+    </div>
+    <p class="sub rise">HubSpot is the source. Google Sheet is the working surface.</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 9">
+    <div class="eyebrow rise">Bridge from Session 1</div>
+    <h2 class="rise">Same role. New reach.</h2>
+    <div class="grid-2 rise">
+      <div class="card">
+        <h3>Same project habits</h3>
+        <ul>
+          <li>Senior sales at Neteon</li>
+          <li>Do not guess</li>
+          <li>Mark uncertainty as <strong>Need to confirm</strong></li>
+          <li>Separate facts from assumptions</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What changed</h3>
+        <p>Session 1 used the files you uploaded. Session 2 reads the page you are viewing.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Slide 10">
+    <div class="eyebrow rise">Security check 1</div>
+    <h2 class="rise">Use public or test data only.</h2>
+    <p class="lead rise">Before we let AI read a browser tab, we choose what kind of tab it is allowed to see.</p>
+    <div class="grid-2 rise">
+      <div class="card">
+        <h3>Allowed for this demo</h3>
+        <ul>
+          <li>Public company webpages.</li>
+          <li>Demo / test Google Sheet.</li>
+          <li>Anonymized inquiry data only.</li>
+          <li>Screenshots or recordings for unstable steps.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Not allowed here</h3>
+        <ul>
+          <li>Passwords or payment information.</li>
+          <li>Personal data or salary data.</li>
+          <li>Contracts or internal pricing.</li>
+          <li>Private customer history or confidential company records.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Slide 11">
+    <div class="eyebrow rise">Security check 2</div>
+    <h2 class="rise">View first. Edit only when needed.</h2>
+    <div class="grid-3 rise">
+      <div class="card">
+        <h3>Permission setting</h3>
+        <ul>
+          <li>Default to view / read-only.</li>
+          <li>Give edit only for a test Sheet or low-risk field.</li>
+          <li>Do not give edit access to sensitive systems during practice.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Ask before acting</h3>
+        <ul>
+          <li>Claude should ask before clicking.</li>
+          <li>Claude should ask before saving or submitting.</li>
+          <li>Claude should ask before changing data.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Human review</h3>
+        <ul>
+          <li>AI output is a draft.</li>
+          <li>Review before anything enters a system.</li>
+          <li>Review before anything is shared externally.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead rise">Core rule: view first, edit only when needed, ask before acting, human review before submit.</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 12">
+    <div class="eyebrow rise">Reach 1 - live</div>
+    <h2 class="rise">It finds and reads the customer's website.</h2>
+    <div class="demo-layout rise">
+      <div class="browser">
+        <div class="browser-top">
+          <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <div class="url">Google Sheet row → official website</div>
+          <div class="tab-label">Current tab</div>
+        </div>
+        <div class="browser-body">
+          <div class="webpage">
+            <div class="web-hero"></div>
+            <div class="lines">
+              <span class="line dark"></span>
+              <span class="line"></span>
+              <span class="line mid"></span>
+              <span class="line short"></span>
+            </div>
+          </div>
+          <div class="sidebar">
+            <div class="ai-head">Claude <span class="pill">View</span></div>
+            <div class="answer">
+              <p><b>Company:</b> Electric aviation company</p>
+              <p><b>Category:</b> End user / manufacturer</p>
+              <p><b>Confidence:</b> Mark assumptions clearly</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="prompt">Use the selected row in this test Google Sheet.
+
+Find the official website using the company name or email domain.
+Ask me before opening any page.
+
+After reading the official website, preview:
+1. What the company does
+2. Industry
+3. Likely customer type: end user, OEM, SI, distributor, or Need to confirm
+4. What still needs confirmation
+
+Rules:
+- Do not guess.
+- Separate facts from assumptions.
+- Do not edit the Sheet yet.</div>
+    </div>
+    <p class="sub rise">Ask after the result: how many tabs would this usually take you?</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 13">
+    <div class="eyebrow rise">Reach 2 - screenshot or recording</div>
+    <h2 class="rise">LinkedIn proves the point.</h2>
+    <p class="lead rise">Try pasting a LinkedIn URL into chat. It gets blocked. Here, I am already logged in.</p>
+    <div class="demo-layout rise">
+      <div class="card">
+        <h3>Show in 20-30 seconds</h3>
+        <ul>
+          <li>Open Archer Aviation LinkedIn company page.</li>
+          <li>Show Claude reading what is visible in your browser.</li>
+          <li>Result: size, HQ/location, industry, recent visible activity.</li>
+          <li>Connect back to the URL limitation from Slide 4.</li>
+        </ul>
+      </div>
+      <div class="prompt">Now find the company LinkedIn page for the same company.
+
+Ask me before opening it.
+Use only what is visible in my browser.
+
+Preview:
+1. Company size or employee range
+2. HQ / location
+3. Industry or company description
+4. Recent visible activity or latest visible post themes
+5. Any signal useful for a first sales reply
+
+If a field is not visible, write Need to confirm.
+Do not edit the Sheet yet.</div>
+    </div>
+    <p class="sub rise">Backup: customer About / News page plus a Google search result.</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 14">
+    <div class="eyebrow rise">Reach 3 - screenshot or recording</div>
+    <h2 class="rise">It puts research back where I work.</h2>
+    <div class="demo-layout rise">
+      <div class="flow">
+        <div class="flow-card">
+          <h3>Before</h3>
+          <p>Inquiry row has customer-provided fields only.</p>
+          <div class="mode">Screenshot</div>
+        </div>
+        <div class="flow-card">
+          <h3>Prepare</h3>
+          <p>Claude formats values for the research columns.</p>
+          <div class="mode">Review</div>
+        </div>
+        <div class="flow-card">
+          <h3>After</h3>
+          <p>Test Sheet shows completed research fields.</p>
+          <div class="mode">Edit only in demo Sheet</div>
+        </div>
+      </div>
+      <div class="prompt">Use the website and LinkedIn findings from this chat.
+
+Fill the selected row in my test Sheet.
+
+Before editing, show me a preview table with:
+- Company background
+- Industry
+- Customer type
+- Size / location / recent activity
+- Possible application
+- Follow-up questions
+
+After I approve, write only to the selected test Sheet row.
+Ask before acting.
+Do not save, submit, or change anything else.</div>
+    </div>
+    <p class="sub rise">If write-back is slow, ask Claude to format the row output and paste manually.</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 15">
+    <div class="eyebrow rise">Not just sales</div>
+    <h2 class="rise">One move, everyone's job.</h2>
+    <div class="grid-3 rise">
+      <div class="card">
+        <h3>Marketing</h3>
+        <p>Read competitor pages or exhibitor lists, then fill campaign research.</p>
+      </div>
+      <div class="card">
+        <h3>Operations</h3>
+        <p>Read supplier pages, verify addresses, update order prep notes.</p>
+      </div>
+      <div class="card">
+        <h3>Anyone</h3>
+        <p>Read several webpages and organize findings into a table you already use.</p>
+      </div>
+    </div>
+    <p class="lead rise">One existing table + a few webpages + "help me fill this column."</p>
+  </section>
+
+  <section class="slide team-slide" aria-label="Slide 16">
+    <div class="eyebrow rise">Breakout rooms</div>
+    <h2 class="rise">We will split into 3 teams.</h2>
+    <div class="grid-3 rise">
+      <div class="card">
+        <span class="team-mark" aria-hidden="true">💻</span>
+        <span class="kicker">Room 1</span>
+        <h3 style="margin-top:10px">IPC team</h3>
+      </div>
+      <div class="card">
+        <span class="team-mark" aria-hidden="true">🖥️</span>
+        <span class="kicker">Room 2</span>
+        <h3 style="margin-top:10px">Moxa team</h3>
+      </div>
+      <div class="card">
+        <span class="team-mark" aria-hidden="true">🤖</span>
+        <span class="kicker">Room 3</span>
+        <h3 style="margin-top:10px">Operation</h3>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Slide 17">
+    <div class="eyebrow rise">Group discussion</div>
+    <h2 class="rise">Where would this save you a tab-switching afternoon?</h2>
+    <div class="steps rise">
+      <div class="step"><div class="no">1</div><p>What table, tracker, or backend do you fill every week?</p></div>
+      <div class="step"><div class="no">2</div><p>What webpages do you need to check before filling it correctly?</p></div>
+      <div class="step"><div class="no">3</div><p>Which column would you never let AI fill without human review?</p></div>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Slide 18">
+    <div class="eyebrow rise">Try later</div>
+    <h2 class="rise">Three steps, whenever you have 20 minutes.</h2>
+    <div class="grid-2 rise">
+      <div class="card">
+        <h3>Start small</h3>
+        <ul>
+          <li>Install Claude in Chrome.</li>
+          <li>Open a Sheet or table you already use.</li>
+          <li>Start with public data or a test Sheet.</li>
+          <li>Ask it to fill one low-risk column.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Security reminder</h3>
+        <ul>
+          <li>Start with view / read-only.</li>
+          <li>Use edit only when needed.</li>
+          <li>Do not open sensitive pages while testing.</li>
+          <li>Review before saving, submitting, or sharing.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Slide 19">
+    <div class="eyebrow rise">Check-in and next step</div>
+    <h2 class="rise">One line. Thirty seconds.</h2>
+    <div class="grid-2 wide-close rise">
+      <div class="card">
+        <h3>Check-in</h3>
+        <a class="checkin-link" href="https://forms.gle/GdLUW9x6ArTqPfyC8" target="_blank" rel="noopener">forms.gle/GdLUW9x6ArTqPfyC8</a>
+        <span class="session-pill">Choose Session 2</span>
+        <p class="close-question">What did you see today, and where might this save you time?</p>
+      </div>
+      <div class="card">
+        <span class="date-pill">Next session · Aug 13th</span>
+        <h3>Possible next: Cowork</h3>
+        <p>Same pattern, more rows, real files written back to your computer.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<p class="hint" id="hint">Use arrow keys or click the sides to navigate</p>
+<nav class="nav" aria-label="Slide navigation">
+  <div class="brand">From Prompt to Partner <span class="brand-dot">·</span></div>
+  <div class="navctl">
+    <button class="fs" id="fsBtn" type="button" aria-label="Toggle fullscreen">Fullscreen</button>
+    <span class="count"><b id="cur">1</b> / <span id="tot">19</span></span>
+    <button class="arrow" id="prev" type="button" aria-label="Previous slide">‹</button>
+    <button class="arrow" id="next" type="button" aria-label="Next slide">›</button>
+  </div>
+</nav>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const total = slides.length;
+  let index = 0;
+  let touchStartX = null;
+
+  const curEl = document.getElementById('cur');
+  const totEl = document.getElementById('tot');
+  const progressEl = document.getElementById('progress');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const fsBtn = document.getElementById('fsBtn');
+  const hintEl = document.getElementById('hint');
+  const edgePrev = document.getElementById('edgePrev');
+  const edgeNext = document.getElementById('edgeNext');
+
+  totEl.textContent = total;
+
+  const copyText = async text => {
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    textarea.style.pointerEvents = 'none';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    textarea.remove();
+  };
+
+  document.querySelectorAll('.prompt').forEach(prompt => {
+    const promptText = prompt.textContent.trim();
+    const button = document.createElement('button');
+    button.className = 'copy-prompt';
+    button.type = 'button';
+    button.textContent = 'Copy';
+    button.setAttribute('aria-label', 'Copy prompt text');
+    button.addEventListener('click', async event => {
+      event.stopPropagation();
+      try{
+        await copyText(promptText);
+        button.textContent = 'Copied';
+        window.setTimeout(() => { button.textContent = 'Copy'; }, 1300);
+      }catch(error){
+        button.textContent = 'Failed';
+        window.setTimeout(() => { button.textContent = 'Copy'; }, 1600);
+      }
+    });
+    prompt.appendChild(button);
+  });
+
+  const clampSlide = n => Math.max(0, Math.min(total - 1, n));
+
+  const isTypingTarget = target => target.closest('button,a,input,textarea,select,[contenteditable="true"]');
+
+  const updateFullscreenLabel = () => {
+    fsBtn.textContent = document.fullscreenElement ? 'Exit fullscreen' : '⛶ Fullscreen';
+    fsBtn.setAttribute('aria-label', document.fullscreenElement ? 'Exit fullscreen' : 'Enter fullscreen');
+  };
+
+  const showSlide = (nextIndex, push = true) => {
+    index = clampSlide(nextIndex);
+    slides.forEach((slide, slideIndex) => {
+      const isActive = slideIndex === index;
+      slide.classList.toggle('active', isActive);
+      slide.setAttribute('aria-hidden', String(!isActive));
+      slide.toggleAttribute('inert', !isActive);
+      slide.tabIndex = isActive ? 0 : -1;
+    });
+    curEl.textContent = String(index + 1);
+    progressEl.style.width = total > 1 ? `${(index / (total - 1)) * 100}%` : '100%';
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === total - 1;
+    edgePrev.setAttribute('aria-disabled', String(index === 0));
+    edgeNext.setAttribute('aria-disabled', String(index === total - 1));
+    if(index > 0) hintEl.hidden = true;
+    if(push) history.replaceState(null, '', `#${index + 1}`);
+  };
+
+  const nextSlide = () => {
+    if(index < total - 1) showSlide(index + 1);
+  };
+
+  const prevSlide = () => {
+    if(index > 0) showSlide(index - 1);
+  };
+
+  const toggleFullscreen = () => {
+    if(!document.fullscreenElement && document.documentElement.requestFullscreen){
+      document.documentElement.requestFullscreen();
+      return;
+    }
+    if(document.exitFullscreen) document.exitFullscreen();
+  };
+
+  document.addEventListener('keydown', event => {
+    if(isTypingTarget(event.target)) return;
+    if(['ArrowRight','ArrowDown','PageDown',' '].includes(event.key)){
+      event.preventDefault();
+      nextSlide();
+      return;
+    }
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(event.key)){
+      event.preventDefault();
+      prevSlide();
+      return;
+    }
+    if(event.key === 'Home'){
+      event.preventDefault();
+      showSlide(0);
+      return;
+    }
+    if(event.key === 'End'){
+      event.preventDefault();
+      showSlide(total - 1);
+      return;
+    }
+    if(event.key === 'f' || event.key === 'F') toggleFullscreen();
+  });
+
+  prevBtn.addEventListener('click', prevSlide);
+  nextBtn.addEventListener('click', nextSlide);
+  edgePrev.addEventListener('click', prevSlide);
+  edgeNext.addEventListener('click', nextSlide);
+  fsBtn.addEventListener('click', toggleFullscreen);
+  document.addEventListener('fullscreenchange', updateFullscreenLabel);
+
+  document.addEventListener('touchstart', event => {
+    touchStartX = event.touches[0].clientX;
+  }, { passive:true });
+
+  document.addEventListener('touchend', event => {
+    if(touchStartX === null) return;
+    const delta = event.changedTouches[0].clientX - touchStartX;
+    if(Math.abs(delta) > 45) delta < 0 ? nextSlide() : prevSlide();
+    touchStartX = null;
+  });
+
+  window.addEventListener('hashchange', () => {
+    const hashSlide = parseInt(location.hash.replace('#', ''), 10);
+    if(Number.isFinite(hashSlide)) showSlide(hashSlide - 1, false);
+  });
+
+  const start = parseInt(location.hash.replace('#', ''), 10) || 1;
+  updateFullscreenLabel();
+  showSlide(start - 1, false);
+</script>
+</body>
+</html>
