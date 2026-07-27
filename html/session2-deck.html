@@ -428,6 +428,24 @@
     gap:16px;
     align-items:start;
   }
+  .compat-note{
+    grid-column:1 / -1;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border:1px solid var(--line);
+    border-left:4px solid var(--coral);
+    border-radius:var(--radius-sm);
+    background:rgba(255,255,255,.72);
+    color:var(--ink-mid);
+    box-shadow:0 14px 30px -28px rgba(14,42,46,.48);
+    padding:12px 18px;
+    font-size:clamp(13px,1.35vw,16px);
+    line-height:1.4;
+  }
+  .compat-note strong{
+    color:var(--ink);
+  }
   .no{
     display:grid;
     place-items:center;
@@ -449,6 +467,7 @@
 
   .prompt{
     position:relative;
+    z-index:25;
     width:min(100%,1160px);
     border-radius:var(--radius);
     background:linear-gradient(135deg,#0b2226,#123b40);
@@ -463,7 +482,8 @@
   .copy-prompt{
     position:absolute;
     top:13px;
-    right:14px;
+    right:clamp(58px,6vw,88px);
+    z-index:45;
     border:1px solid rgba(159,220,228,.34);
     border-radius:8px;
     background:rgba(255,255,255,.08);
@@ -896,6 +916,22 @@
   .demo-layout .flow-card::after{
     display:none;
   }
+  .flow-stack{
+    display:grid;
+    gap:16px;
+  }
+  .surface-note{
+    border:1px solid var(--line);
+    border-left:4px solid var(--coral);
+    border-radius:var(--radius-sm);
+    background:rgba(255,255,255,.82);
+    color:var(--ink-mid);
+    box-shadow:0 16px 34px -30px rgba(14,42,46,.5);
+    padding:14px 18px;
+    font-size:clamp(14px,1.45vw,17px);
+    line-height:1.38;
+  }
+  .surface-note strong{color:var(--ink)}
   .team-mark{
     display:block;
     margin-bottom:clamp(14px,2vh,22px);
@@ -1224,8 +1260,8 @@
   </section>
 
   <section class="slide" aria-label="Slide 5">
-    <div class="eyebrow rise">Install once, try later</div>
-    <h2 class="rise">The install is not the lesson.</h2>
+    <div class="eyebrow rise">Setup</div>
+    <h2 class="rise">Installation guide</h2>
     <div class="install-layout rise">
       <div class="steps">
         <a class="extension-link" href="https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn" target="_blank" rel="noopener">Chrome Web Store: Claude extension</a>
@@ -1245,33 +1281,32 @@
           <span>Click image area to open</span>
         </div>
       </div>
+      <div class="compat-note"><strong>Browser note:</strong> this extension flow is for Chrome / Edge. Safari or Firefox can still use copy-paste, but not the same page-reading extension experience.</div>
     </div>
   </section>
 
   <section class="slide" aria-label="Slide 6">
-    <div class="eyebrow rise">Permissions and boundaries</div>
+    <div class="eyebrow rise">Browser control</div>
     <h2 class="rise">The tab is the steering wheel.</h2>
     <div class="grid-2 rise">
       <div class="card">
-        <h3>How to steer</h3>
+        <h3>What Claude sees</h3>
         <ul>
-          <li>Claude sees the tab you have open.</li>
-          <li>You steer by switching tabs.</li>
-          <li>It asks before clicking, saving, submitting, or editing.</li>
-          <li>Today uses public pages and a test Sheet only.</li>
+          <li>The current Chrome tab.</li>
+          <li>The page content visible to you.</li>
+          <li>Your logged-in view, if you are already signed in.</li>
         </ul>
       </div>
       <div class="card">
-        <h3>Permission rule</h3>
+        <h3>How you steer</h3>
         <ul>
-          <li>Start with <strong>view / read-only</strong>.</li>
-          <li>Use <strong>edit</strong> only when actually needed.</li>
-          <li>Edit is acceptable for test Sheets, public data, and low-risk fields.</li>
-          <li>Do not give edit access to sensitive systems during practice.</li>
+          <li>Switch tabs to change context.</li>
+          <li>Keep the right page open before asking.</li>
+          <li>Approve before it clicks or changes anything.</li>
         </ul>
       </div>
     </div>
-    <p class="lead rise">View first. Edit only when needed. Ask before acting. Human review before submit.</p>
+    <p class="lead rise">It reads where you point it. It acts only after you approve.</p>
   </section>
 
   <section class="slide" aria-label="Slide 7">
@@ -1318,11 +1353,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td>Contact, email, company</td><td class="found">What the company does</td></tr>
+          <tr><td>Contact, email, company</td><td class="found">Official website + company summary</td></tr>
           <tr><td>Product / quantity</td><td class="found">Industry</td></tr>
-          <tr><td>Request type</td><td class="found">End user, OEM, SI, or distributor</td></tr>
-          <tr><td>One inbound row</td><td class="found">Size, location, recent activity</td></tr>
-          <tr><td></td><td>Possible application, questions to ask, reply draft</td></tr>
+          <tr><td>Request type</td><td class="found">LinkedIn URL</td></tr>
+          <tr><td>One inbound row</td><td class="found">LinkedIn recent activity + sales signal</td></tr>
+          <tr><td></td><td>Follow-up questions + reply draft</td></tr>
         </tbody>
       </table>
       <div class="demo-flow-card">
@@ -1369,7 +1404,6 @@
           <li>Public company webpages.</li>
           <li>Demo / test Google Sheet.</li>
           <li>Anonymized inquiry data only.</li>
-          <li>Screenshots or recordings for unstable steps.</li>
         </ul>
       </div>
       <div class="card">
@@ -1440,7 +1474,7 @@
             <div class="ai-head">Claude <span class="pill">View</span></div>
             <div class="answer">
               <p><b>Company:</b> Electric aviation company</p>
-              <p><b>Category:</b> End user / manufacturer</p>
+              <p><b>Use case:</b> Need to confirm</p>
               <p><b>Confidence:</b> Mark assumptions clearly</p>
             </div>
           </div>
@@ -1448,19 +1482,21 @@
       </div>
       <div class="prompt">Use the selected row in this test Google Sheet.
 
-Find the official website using the company name or email domain.
+Find the official website using the company name and email domain.
 Ask me before opening any page.
 
-After reading the official website, preview:
-1. What the company does
-2. Industry
-3. Likely customer type: end user, OEM, SI, distributor, or Need to confirm
-4. What still needs confirmation
+After reading the official website, preview these fields:
+1. Official website
+2. Company summary
+3. Industry
+
+After I approve, write only these website fields back to the selected row.
 
 Rules:
-- Do not guess.
-- Separate facts from assumptions.
-- Do not edit the Sheet yet.</div>
+- Use only public website information.
+- Do not guess. If unclear, write Need to confirm.
+- Ask before editing.
+- Do not edit any other fields.</div>
     </div>
     <p class="sub rise">Ask after the result: how many tabs would this usually take you?</p>
   </section>
@@ -1470,71 +1506,70 @@ Rules:
     <h2 class="rise">LinkedIn proves the point.</h2>
     <p class="lead rise">Try pasting a LinkedIn URL into chat. It gets blocked. Here, I am already logged in.</p>
     <div class="demo-layout rise">
-      <div class="card">
-        <h3>Show in 20-30 seconds</h3>
-        <ul>
-          <li>Open Archer Aviation LinkedIn company page.</li>
-          <li>Show Claude reading what is visible in your browser.</li>
-          <li>Result: size, HQ/location, industry, recent visible activity.</li>
-          <li>Connect back to the URL limitation from Slide 4.</li>
-        </ul>
-      </div>
-      <div class="prompt">Now find the company LinkedIn page for the same company.
+      <div class="prompt">Use the selected row in this test Google Sheet.
 
-Ask me before opening it.
-Use only what is visible in my browser.
+Find the company's official LinkedIn page.
+Use the official website and email domain to confirm the match.
+The LinkedIn name may not exactly match the company name.
+
+Search using:
+- company name
+- official website domain
+- site:linkedin.com/company
+
+Ask me before opening any page.
+If there are multiple possible matches, show me the options and ask me to choose.</div>
+      <div class="prompt">Use only what is visible in my browser.
 
 Preview:
-1. Company size or employee range
-2. HQ / location
-3. Industry or company description
-4. Recent visible activity or latest visible post themes
-5. Any signal useful for a first sales reply
+1. LinkedIn URL
+2. LinkedIn Recent Activity
 
 If a field is not visible, write Need to confirm.
-Do not edit the Sheet yet.</div>
+After I approve, write only these two fields back to the selected row.
+Do not edit any other fields.</div>
     </div>
     <p class="sub rise">Backup: customer About / News page plus a Google search result.</p>
   </section>
 
   <section class="slide" aria-label="Slide 14">
     <div class="eyebrow rise">Reach 3 - screenshot or recording</div>
-    <h2 class="rise">It puts research back where I work.</h2>
+    <h2 class="rise">It turns research into next steps.</h2>
     <div class="demo-layout rise">
-      <div class="flow">
-        <div class="flow-card">
-          <h3>Before</h3>
-          <p>Inquiry row has customer-provided fields only.</p>
-          <div class="mode">Screenshot</div>
-        </div>
-        <div class="flow-card">
-          <h3>Prepare</h3>
-          <p>Claude formats values for the research columns.</p>
-          <div class="mode">Review</div>
-        </div>
-        <div class="flow-card">
-          <h3>After</h3>
-          <p>Test Sheet shows completed research fields.</p>
-          <div class="mode">Edit only in demo Sheet</div>
+      <div class="flow-stack">
+        <div class="surface-note"><strong>Why Sheet today?</strong> Safe demo surface: no confidential HubSpot data. Direct system access comes later with approved Cowork / MCP workflows.</div>
+        <div class="flow">
+          <div class="flow-card">
+            <h3>Before</h3>
+            <p>Website and LinkedIn fields are already reviewed.</p>
+            <div class="mode">Selected row</div>
+          </div>
+          <div class="flow-card">
+            <h3>Prepare</h3>
+            <p>Claude drafts follow-up questions and a first reply.</p>
+            <div class="mode">Preview</div>
+          </div>
+          <div class="flow-card">
+            <h3>After</h3>
+            <p>The final fields are written back after approval.</p>
+            <div class="mode">Edit only in demo Sheet</div>
+          </div>
         </div>
       </div>
-      <div class="prompt">Use the website and LinkedIn findings from this chat.
+      <div class="prompt">Use the selected row in my test Sheet.
 
-Fill the selected row in my test Sheet.
+It should already include the form row, website findings, and LinkedIn findings.
 
-Before editing, show me a preview table with:
-- Company background
-- Industry
-- Customer type
-- Size / location / recent activity
-- Possible application
+Draft final fields:
+- LinkedIn Sales Signal
 - Follow-up questions
+- Reply draft
 
-After I approve, write only to the selected test Sheet row.
+Preview first.
+After I approve, write only these final fields to the selected row.
 Ask before acting.
 Do not save, submit, or change anything else.</div>
     </div>
-    <p class="sub rise">If write-back is slow, ask Claude to format the row output and paste manually.</p>
   </section>
 
   <section class="slide" aria-label="Slide 15">
@@ -1778,10 +1813,15 @@ Do not save, submit, or change anything else.</div>
   document.addEventListener('fullscreenchange', updateFullscreenLabel);
 
   document.addEventListener('touchstart', event => {
+    if(event.target.closest('.prompt,.copy-prompt,button,a,input,textarea,select,[contenteditable="true"]')) return;
     touchStartX = event.touches[0].clientX;
   }, { passive:true });
 
   document.addEventListener('touchend', event => {
+    if(event.target.closest('.prompt,.copy-prompt,button,a,input,textarea,select,[contenteditable="true"]')){
+      touchStartX = null;
+      return;
+    }
     if(touchStartX === null) return;
     const delta = event.changedTouches[0].clientX - touchStartX;
     if(Math.abs(delta) > 45) delta < 0 ? nextSlide() : prevSlide();
