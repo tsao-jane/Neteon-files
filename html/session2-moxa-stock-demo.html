@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Session 2 side demo deck for Moxa eOrder stock check to Google Sheet.">
+<meta name="theme-color" content="#0e7d8c">
+<title>Session 2 Side Demo - Moxa Stock Check</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#0e7d8c;
+    --teal-hi:#14a3b6;
+    --teal-deep:#0e2a2e;
+    --coral:#c2552f;
+    --amber:#d7a73f;
+    --bg:#f5f8f6;
+    --card:#ffffff;
+    --ink:#0e2a2e;
+    --ink-mid:#3d5359;
+    --ink-soft:#61777d;
+    --line:#d5e4e6;
+    --line-soft:#e8f0f1;
+    --display:"Fraunces", Georgia, serif;
+    --sans:"Hanken Grotesk", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono:"SFMono-Regular", Menlo, Consolas, monospace;
+    --radius:10px;
+    --content-wide:min(calc(100vw - clamp(76px,12vw,208px)),1180px);
+    --content-prompt:min(calc(100vw - clamp(76px,12vw,208px)),1120px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden}
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--teal-deep);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  button{font:inherit}
+  .deck{
+    position:fixed;
+    inset:0;
+    background:
+      linear-gradient(135deg, rgba(14,125,140,.11), transparent 32%),
+      linear-gradient(315deg, rgba(194,85,47,.08), transparent 36%),
+      linear-gradient(rgba(14,42,46,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(14,42,46,.03) 1px, transparent 1px),
+      var(--bg);
+    background-size:auto, auto, 36px 36px, 36px 36px, auto;
+    counter-reset:slide;
+  }
+  .slide{
+    position:absolute;
+    inset:0;
+    min-height:100svh;
+    width:100vw;
+    display:grid;
+    align-content:center;
+    justify-items:start;
+    gap:clamp(14px,2.2vh,26px);
+    padding:clamp(38px,6vw,104px);
+    padding-bottom:calc(clamp(78px,11vh,126px) + env(safe-area-inset-bottom));
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    overflow:auto;
+    overscroll-behavior:contain;
+    transition:opacity .35s ease;
+    counter-increment:slide;
+  }
+  .slide::before{
+    content:"";
+    position:fixed;
+    left:clamp(18px,3vw,42px);
+    top:clamp(30px,5vh,56px);
+    bottom:clamp(88px,12vh,132px);
+    width:3px;
+    border-radius:999px;
+    background:linear-gradient(var(--teal), var(--coral));
+    opacity:.22;
+    pointer-events:none;
+  }
+  .slide::after{
+    content:counter(slide, decimal-leading-zero);
+    position:fixed;
+    right:clamp(22px,4vw,54px);
+    top:clamp(22px,4vh,44px);
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(30px,5.6vw,78px);
+    line-height:1;
+    color:rgba(14,42,46,.15);
+    pointer-events:none;
+  }
+  .slide.active{opacity:1;visibility:visible;pointer-events:auto}
+  .slide:focus{outline:none}
+  .slide.active .rise{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+  .slide.active .rise:nth-child(2){animation-delay:.05s}
+  .slide.active .rise:nth-child(3){animation-delay:.1s}
+  .slide.active .rise:nth-child(4){animation-delay:.15s}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    color:var(--teal);
+    font-size:clamp(12px,1.5vw,15px);
+    font-weight:800;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+  }
+  .eyebrow::before{
+    content:"";
+    width:24px;
+    height:2px;
+    border-radius:999px;
+    background:var(--coral);
+  }
+  h1{
+    width:var(--content-wide);
+    max-width:18ch;
+    font-family:var(--display);
+    font-size:clamp(56px,8.8vw,118px);
+    line-height:1;
+    font-weight:600;
+    letter-spacing:0;
+    overflow-wrap:anywhere;
+  }
+  h2{
+    width:var(--content-wide);
+    max-width:24ch;
+    font-family:var(--display);
+    font-size:clamp(38px,5.7vw,70px);
+    line-height:1.04;
+    font-weight:600;
+    letter-spacing:0;
+    overflow-wrap:anywhere;
+  }
+  h3{
+    font-size:clamp(18px,2.1vw,27px);
+    line-height:1.16;
+    font-weight:800;
+  }
+  .lead{
+    width:var(--content-wide);
+    max-width:66ch;
+    color:var(--ink-mid);
+    font-size:clamp(20px,2.35vw,30px);
+    line-height:1.36;
+  }
+  .sub{
+    width:var(--content-wide);
+    color:var(--ink-mid);
+    font-size:clamp(16px,1.8vw,22px);
+    line-height:1.48;
+  }
+  strong{font-weight:800;color:var(--ink)}
+  .accent{color:var(--coral)}
+  h1,h2,.lead,.sub,.chips,.grid-2,.grid-3,.flow,.prompt,.table{
+    justify-self:stretch;
+  }
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:rgba(255,255,255,.78);
+    color:var(--ink);
+    box-shadow:0 10px 22px -20px rgba(14,42,46,.55);
+    padding:9px 16px;
+    font-size:clamp(13px,1.5vw,17px);
+    font-weight:700;
+  }
+  .grid-2,.grid-3{
+    display:grid;
+    gap:clamp(16px,2.5vw,30px);
+    width:var(--content-wide);
+  }
+  .grid-2{grid-template-columns:1fr 1fr}
+  .grid-3{grid-template-columns:repeat(3,1fr)}
+  .card{
+    position:relative;
+    width:100%;
+    border:1px solid rgba(213,228,230,.95);
+    border-radius:var(--radius);
+    background:rgba(255,255,255,.86);
+    backdrop-filter:blur(12px);
+    box-shadow:0 22px 48px -34px rgba(14,42,46,.55);
+    padding:clamp(20px,2.5vw,32px);
+  }
+  .card::before{
+    content:"";
+    position:absolute;
+    inset:0 0 auto 0;
+    height:4px;
+    border-radius:var(--radius) var(--radius) 0 0;
+    background:linear-gradient(90deg,var(--teal),var(--coral));
+  }
+  .card p,.card li{
+    color:var(--ink-mid);
+    font-size:clamp(15px,1.65vw,20px);
+    line-height:1.45;
+  }
+  .card ul{display:grid;gap:9px;margin-left:1em}
+  .flow{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:12px;
+    width:var(--content-wide);
+  }
+  .flow-step{
+    min-height:156px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:rgba(255,255,255,.82);
+    padding:18px;
+    box-shadow:0 16px 38px -32px rgba(14,42,46,.55);
+  }
+  .flow-step .no{
+    font-family:var(--display);
+    font-size:clamp(26px,3vw,42px);
+    line-height:1;
+    color:var(--teal);
+    margin-bottom:10px;
+  }
+  .flow-step p{
+    color:var(--ink-mid);
+    font-size:clamp(14px,1.45vw,18px);
+    line-height:1.35;
+  }
+  .prompt{
+    position:relative;
+    width:var(--content-prompt);
+    min-width:0;
+    max-height:min(58vh,560px);
+    overflow:auto;
+    border-radius:var(--radius);
+    background:linear-gradient(135deg,#0b2226,#11383d);
+    color:#e6f3f4;
+    padding:clamp(52px,4vw,62px) clamp(18px,2.4vw,30px) clamp(18px,2.4vw,30px);
+    font-family:var(--mono);
+    font-size:clamp(12px,1.28vw,16px);
+    line-height:1.55;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+    box-shadow:0 26px 56px -34px rgba(14,42,46,.72);
+  }
+  .prompt::before{
+    content:attr(data-label);
+    position:absolute;
+    top:16px;
+    left:18px;
+    color:#9fdce4;
+    font-family:var(--sans);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .copy-prompt{
+    position:absolute;
+    top:12px;
+    right:12px;
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:8px;
+    background:rgba(255,255,255,.1);
+    color:#e6f3f4;
+    padding:7px 12px;
+    font-size:12px;
+    font-weight:800;
+    cursor:pointer;
+  }
+  .copy-prompt:hover{background:rgba(255,255,255,.18)}
+  .table{
+    width:var(--content-prompt);
+    border-collapse:separate;
+    border-spacing:0;
+    overflow:hidden;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:rgba(255,255,255,.86);
+    box-shadow:0 18px 44px -34px rgba(14,42,46,.55);
+    font-size:clamp(14px,1.45vw,18px);
+  }
+  .table th,.table td{
+    padding:13px 16px;
+    text-align:left;
+    border-bottom:1px solid var(--line-soft);
+    vertical-align:top;
+  }
+  .table th{
+    background:#eaf5f6;
+    color:var(--ink);
+    font-weight:800;
+  }
+  .table tr:last-child td{border-bottom:0}
+  .tag{
+    display:inline-flex;
+    align-items:center;
+    border-radius:999px;
+    background:#e7f4f5;
+    border:1px solid var(--line);
+    color:var(--teal);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:5px 10px;
+    margin-bottom:10px;
+  }
+  .footer{
+    position:fixed;
+    left:clamp(28px,4vw,56px);
+    bottom:calc(22px + env(safe-area-inset-bottom));
+    z-index:20;
+    font-family:var(--display);
+    font-size:clamp(14px,1.5vw,19px);
+    font-weight:700;
+    color:var(--ink);
+  }
+  .footer::after{content:"";display:inline-block;width:4px;height:4px;margin-left:4px;border-radius:50%;background:var(--coral);vertical-align:middle}
+  .nav{
+    position:fixed;
+    right:calc(clamp(20px,4vw,54px) + env(safe-area-inset-right));
+    bottom:calc(20px + env(safe-area-inset-bottom));
+    z-index:30;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .nav button{
+    width:38px;
+    height:38px;
+    border:1px solid var(--line);
+    border-radius:50%;
+    background:rgba(255,255,255,.85);
+    color:var(--teal-deep);
+    cursor:pointer;
+    box-shadow:0 10px 22px -18px rgba(14,42,46,.55);
+  }
+  .nav button:disabled{opacity:.35;cursor:not-allowed}
+  .counter{
+    color:var(--ink-mid);
+    font-size:15px;
+    font-weight:800;
+    font-variant-numeric:tabular-nums;
+    min-width:54px;
+    text-align:center;
+  }
+  .progress{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:40;
+    height:4px;
+    width:0;
+    background:linear-gradient(90deg,var(--teal),var(--coral));
+  }
+  .hint{
+    position:fixed;
+    left:50%;
+    bottom:calc(76px + env(safe-area-inset-bottom));
+    transform:translateX(-50%);
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:rgba(255,255,255,.82);
+    color:var(--ink-soft);
+    padding:8px 13px;
+    font-size:12px;
+    font-weight:800;
+  }
+  @media(max-width:900px){
+    .grid-2,.grid-3,.flow{grid-template-columns:1fr}
+    .slide{align-content:start}
+    .prompt{max-height:none}
+  }
+  @media(max-width:560px){
+    .slide{
+      padding-left:38px;
+      padding-right:18px;
+      padding-bottom:calc(92px + env(safe-area-inset-bottom));
+    }
+    h1,h2,.lead,.sub,.chips,.grid-2,.grid-3,.flow,.prompt,.table{
+      width:min(calc(100vw - 56px),314px);
+      max-width:min(calc(100vw - 56px),314px);
+    }
+    h1{font-size:clamp(42px,14vw,56px)}
+    h2{font-size:clamp(34px,11vw,44px)}
+    .lead{font-size:clamp(18px,5.3vw,22px)}
+    .prompt{font-size:12px}
+    .hint{display:none}
+  }
+  @media print{
+    html,body{overflow:visible;height:auto}
+    .deck{position:static}
+    .slide{position:relative;opacity:1;visibility:visible;page-break-after:always;height:100vh}
+    .nav,.hint,.progress{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<main class="deck" aria-label="Moxa eOrder stock check side demo deck">
+  <section class="slide active" aria-label="Slide 1">
+    <div class="eyebrow rise">Claude in Chrome · Side demo</div>
+    <h1 class="rise">Moxa eOrder Stock Check</h1>
+    <p class="lead rise">A supervised inventory lookup from the Moxa portal to Google Sheet.</p>
+    <div class="chips rise">
+      <span class="chip">Inventory lookup</span>
+      <span class="chip">Sales workflow</span>
+      <span class="chip">Human review</span>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Slide 2">
+    <div class="eyebrow rise">Process</div>
+    <h2 class="rise">Keep the live demo small.</h2>
+    <div class="flow rise">
+      <div class="flow-step"><div class="no">1</div><p>Open the Sheet with product models.</p></div>
+      <div class="flow-step"><div class="no">2</div><p>Open Moxa eOrder Stock Check.</p></div>
+      <div class="flow-step"><div class="no">3</div><p>Search exact model and add to list.</p></div>
+      <div class="flow-step"><div class="no">4</div><p>Read final Stock Check table once.</p></div>
+      <div class="flow-step"><div class="no">5</div><p>Preview, approve, write, verify.</p></div>
+    </div>
+    <p class="sub rise"><strong>Recommendation:</strong> run 1-2 models live, then show the completed 5-model or 10-model result.</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 3">
+    <div class="eyebrow rise">Prompt 1</div>
+    <h2 class="rise">Extract from portal. Preview only.</h2>
+    <div class="prompt rise" data-label="Portal search prompt">Go to the Moxa Order Management portal:
+https://eorder.moxa.com/Order/StockCheck.asp
+
+I am already logged in.
+
+Pull stock data for these exact models:
+- MGate 5118-T
+- SDS-G3008
+- MDS-G4012
+- LM-7000H-4GSFP
+- RKS-G4028-4GS-2HV-T
+
+For each model:
+1. Start a new search.
+2. Type the model into "Model Keyword".
+3. Search.
+4. Select only the row whose Model column is an exact match.
+5. Add it to Stock Check List.
+6. Continue selecting product.
+
+Rules:
+- Pick only the exact model listed.
+- Do not select temperature-rated, Layer 3, or other suffixed variants unless they exactly match my list.
+- If the full model returns no result, retry with a shorter distinctive fragment, then choose only the exact match.
+- Tell me which models needed a shorter search.
+- If a model cannot be found, leave it out and flag it.
+- Do not substitute a similar model.
+
+After all found models are added, read the final Stock Check table once.
+
+Preview the extracted data first. Do not write to Google Sheet yet.</div>
+  </section>
+
+  <section class="slide" aria-label="Slide 4">
+    <div class="eyebrow rise">Prompt 2</div>
+    <h2 class="rise">Write to Sheet after approval.</h2>
+    <div class="prompt rise" data-label="Sheet write-back prompt">Use the Google Sheet tab I have open.
+Before writing, confirm which Sheet and tab you are using.
+
+Write the previewed stock check results into these columns:
+- Part#/Model Spec
+- Current Available Qty
+- Stock Available on date (1)
+- Qty on date (1)
+- Stock Available on date (2)
+- Qty on date (2)
+- Taiwan Current Available Qty
+- Standard Lead Time
+- MRP Other (Qty &lt;= 3pcs)
+- MRP Other (Qty &gt;= 4pcs)
+- MRP End User (Qty &lt;= 3pcs)
+- MRP End User (Qty &gt;= 4pcs)
+
+Important:
+The two "Stock Available on date" fields in the portal show a date on top and quantity underneath.
+Keep date and quantity separate. Do not hardcode dates into headers.
+
+If no date is shown, put N/A for the date and record the quantity as displayed.
+
+After writing:
+1. Bold and freeze the header row.
+2. Read the rows back from the Sheet.
+3. Verify the data matches the preview.
+4. Give me a short summary of items actually in stock and any unusually long lead times.</div>
+  </section>
+
+  <section class="slide" aria-label="Slide 5">
+    <div class="eyebrow rise">Next step</div>
+    <h2 class="rise">Practice the pattern. Don’t depend on it yet.</h2>
+    <p class="lead rise">Claude in Chrome is useful for learning how to delegate browser work, but it can still be slow and fragile.</p>
+    <div class="grid-2 rise">
+      <div class="card">
+        <span class="tag">Right now</span>
+        <h3>Practice with 1-2 models</h3>
+        <ul>
+          <li>Watch each browser action.</li>
+          <li>Preview before writing.</li>
+          <li>Verify the final Sheet.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag">Session 3</span>
+        <h3>Cowork will be the better fit</h3>
+        <ul>
+          <li>Organize files, instructions, and outputs together.</li>
+          <li>Handle a repeatable workflow with less tab-by-tab prompting.</li>
+          <li>Use it for larger batches after the process is proven.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="sub rise"><strong>Remember:</strong> Cowork can make the workflow faster, but it cannot make a slow portal load faster.</p>
+  </section>
+</main>
+
+<div class="footer">From Prompt to Partner</div>
+<div class="hint" id="hint">Use arrow keys or buttons to navigate</div>
+<nav class="nav" aria-label="Slide navigation">
+  <button id="prev" type="button" aria-label="Previous slide">‹</button>
+  <div class="counter"><span id="cur">1</span> / <span id="tot">5</span></div>
+  <button id="next" type="button" aria-label="Next slide">›</button>
+</nav>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const total = slides.length;
+  let index = 0;
+  let touchStartX = null;
+
+  const curEl = document.getElementById('cur');
+  const totEl = document.getElementById('tot');
+  const progressEl = document.getElementById('progress');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const hintEl = document.getElementById('hint');
+
+  totEl.textContent = total;
+
+  const copyText = async text => {
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    textarea.style.pointerEvents = 'none';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    textarea.remove();
+  };
+
+  document.querySelectorAll('.prompt').forEach(prompt => {
+    const promptText = prompt.textContent.trim();
+    const button = document.createElement('button');
+    button.className = 'copy-prompt';
+    button.type = 'button';
+    button.textContent = 'Copy';
+    button.setAttribute('aria-label', 'Copy prompt text');
+    button.addEventListener('click', async event => {
+      event.preventDefault();
+      event.stopPropagation();
+      const copyButton = event.currentTarget;
+      try{
+        await copyText(promptText);
+        copyButton.textContent = 'Copied';
+        window.setTimeout(() => { copyButton.textContent = 'Copy'; }, 1200);
+      }catch(error){
+        copyButton.textContent = 'Failed';
+        window.setTimeout(() => { copyButton.textContent = 'Copy'; }, 1500);
+      }
+    });
+    prompt.appendChild(button);
+  });
+
+  const clampSlide = n => Math.max(0, Math.min(total - 1, n));
+
+  const showSlide = (nextIndex, push = true) => {
+    index = clampSlide(nextIndex);
+    slides.forEach((slide, slideIndex) => {
+      const active = slideIndex === index;
+      slide.classList.toggle('active', active);
+      slide.setAttribute('aria-hidden', String(!active));
+      slide.toggleAttribute('inert', !active);
+      slide.tabIndex = active ? 0 : -1;
+    });
+    curEl.textContent = String(index + 1);
+    progressEl.style.width = total > 1 ? `${(index / (total - 1)) * 100}%` : '100%';
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === total - 1;
+    if(index > 0) hintEl.hidden = true;
+    if(push) history.replaceState(null, '', `#${index + 1}`);
+  };
+
+  const nextSlide = () => {
+    if(index < total - 1) showSlide(index + 1);
+  };
+
+  const prevSlide = () => {
+    if(index > 0) showSlide(index - 1);
+  };
+
+  document.addEventListener('keydown', event => {
+    if(event.target.closest('button,a,input,textarea,select,[contenteditable="true"]')) return;
+    if(['ArrowRight','ArrowDown','PageDown',' '].includes(event.key)){
+      event.preventDefault();
+      nextSlide();
+      return;
+    }
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(event.key)){
+      event.preventDefault();
+      prevSlide();
+      return;
+    }
+    if(event.key === 'Home'){
+      event.preventDefault();
+      showSlide(0);
+      return;
+    }
+    if(event.key === 'End'){
+      event.preventDefault();
+      showSlide(total - 1);
+    }
+  });
+
+  prevBtn.addEventListener('click', prevSlide);
+  nextBtn.addEventListener('click', nextSlide);
+
+  document.addEventListener('touchstart', event => {
+    if(event.target.closest('.prompt,button,a,input,textarea,select,[contenteditable="true"]')) return;
+    touchStartX = event.touches[0].clientX;
+  }, { passive:true });
+
+  document.addEventListener('touchend', event => {
+    if(event.target.closest('.prompt,button,a,input,textarea,select,[contenteditable="true"]')){
+      touchStartX = null;
+      return;
+    }
+    if(touchStartX === null) return;
+    const delta = event.changedTouches[0].clientX - touchStartX;
+    if(Math.abs(delta) > 45) delta < 0 ? nextSlide() : prevSlide();
+    touchStartX = null;
+  });
+
+  window.addEventListener('hashchange', () => {
+    const hashSlide = parseInt(location.hash.replace('#', ''), 10);
+    if(Number.isFinite(hashSlide)) showSlide(hashSlide - 1, false);
+  });
+
+  const start = parseInt(location.hash.replace('#', ''), 10) || 1;
+  showSlide(start - 1, false);
+</script>
+</body>
+</html>
