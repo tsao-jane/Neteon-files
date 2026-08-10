@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="From Prompt to Partner Session 3 HTML slide deck.">
+<meta name="theme-color" content="#0e7d8c">
+<title>From Prompt to Partner - Session 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#0e7d8c;
+    --teal-hi:#14a3b6;
+    --teal-deep:#0e2a2e;
+    --coral:#c2552f;
+    --amber:#d7a73f;
+    --mint:#e9f5f6;
+    --bg:#f5f8f6;
+    --card:#ffffff;
+    --ink:#0e2a2e;
+    --ink-mid:#3d5359;
+    --ink-soft:#61777d;
+    --line:#d5e4e6;
+    --line-soft:#e8f0f1;
+    --danger:#b8452d;
+    --ok:#287d62;
+    --display:"Fraunces", Georgia, serif;
+    --sans:"Hanken Grotesk", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono:"SFMono-Regular", Menlo, Consolas, monospace;
+    --radius:10px;
+    --radius-sm:8px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden}
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--teal-deep);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+  }
+  button{font:inherit}
+  .deck{
+    position:fixed;
+    inset:0;
+    background:
+      linear-gradient(135deg, rgba(14,125,140,.11), transparent 32%),
+      linear-gradient(315deg, rgba(194,85,47,.08), transparent 36%),
+      linear-gradient(rgba(14,42,46,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(14,42,46,.03) 1px, transparent 1px),
+      var(--bg);
+    background-size:auto, auto, 36px 36px, 36px 36px, auto;
+    counter-reset:slide;
+  }
+  .slide{
+    position:absolute;
+    inset:0;
+    min-height:100svh;
+    width:100vw;
+    display:grid;
+    align-content:center;
+    justify-items:start;
+    gap:clamp(14px,2.2vh,26px);
+    padding:clamp(38px,6vw,104px);
+    padding-bottom:calc(clamp(78px,11vh,126px) + env(safe-area-inset-bottom));
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    overflow:auto;
+    overscroll-behavior:contain;
+    transition:opacity .45s ease;
+    counter-increment:slide;
+  }
+  .slide::before{
+    content:"";
+    position:fixed;
+    left:clamp(18px,3vw,42px);
+    top:clamp(30px,5vh,56px);
+    bottom:clamp(88px,12vh,132px);
+    width:3px;
+    border-radius:999px;
+    background:linear-gradient(var(--teal), var(--coral));
+    opacity:.22;
+    pointer-events:none;
+  }
+  .slide::after{
+    content:counter(slide, decimal-leading-zero);
+    position:fixed;
+    right:clamp(22px,4vw,54px);
+    top:clamp(22px,4vh,44px);
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(30px,5.6vw,78px);
+    line-height:1;
+    color:rgba(14,42,46,.15);
+    pointer-events:none;
+  }
+  .slide.active{opacity:1;visibility:visible;pointer-events:auto}
+  .slide:focus{outline:none}
+  .slide.active .rise{animation:rise .55s cubic-bezier(.2,.7,.2,1) both}
+  .slide.active .rise:nth-child(2){animation-delay:.05s}
+  .slide.active .rise:nth-child(3){animation-delay:.10s}
+  .slide.active .rise:nth-child(4){animation-delay:.15s}
+  .slide.active .rise:nth-child(5){animation-delay:.2s}
+  @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    color:var(--teal);
+    font-size:clamp(12px,1.5vw,15px);
+    font-weight:800;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+  }
+  .eyebrow::before{
+    content:"";
+    width:24px;
+    height:2px;
+    border-radius:999px;
+    background:var(--coral);
+  }
+  h1{
+    max-width:18ch;
+    font-family:var(--display);
+    font-size:clamp(58px,9vw,120px);
+    line-height:1;
+    font-weight:600;
+  }
+  h2{
+    max-width:24ch;
+    font-family:var(--display);
+    font-size:clamp(40px,5.8vw,72px);
+    line-height:1.04;
+    font-weight:600;
+  }
+  h3{
+    font-size:clamp(19px,2.3vw,28px);
+    line-height:1.16;
+    font-weight:800;
+  }
+  .lead{
+    color:var(--ink-mid);
+    font-size:clamp(20px,2.7vw,32px);
+    line-height:1.36;
+  }
+  .sub{
+    color:var(--ink-mid);
+    font-size:clamp(17px,2.1vw,25px);
+    line-height:1.48;
+  }
+  .quote{
+    max-width:34ch;
+    font-family:var(--display);
+    font-size:clamp(38px,6.2vw,78px);
+    line-height:1.08;
+    font-weight:600;
+  }
+  .accent{color:var(--coral)}
+  strong{font-weight:800;color:var(--ink)}
+  h1,h2,.quote{text-wrap:balance}
+  p,li,.lead,.sub{text-wrap:pretty}
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:rgba(255,255,255,.78);
+    color:var(--ink);
+    box-shadow:0 10px 22px -20px rgba(14,42,46,.55);
+    padding:9px 16px;
+    font-size:clamp(13px,1.5vw,17px);
+    font-weight:700;
+  }
+  .chip b{color:var(--teal)}
+  .chip.on{border-color:var(--teal);background:var(--mint);box-shadow:0 12px 26px -18px rgba(14,125,140,.6)}
+
+  .grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:clamp(18px,2.8vw,34px);
+    width:min(100%,1220px);
+    align-items:stretch;
+  }
+  .grid-3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:clamp(14px,2vw,24px);
+    width:min(100%,1220px);
+  }
+  .card{
+    position:relative;
+    width:100%;
+    border:1px solid rgba(213,228,230,.95);
+    border-radius:var(--radius);
+    background:rgba(255,255,255,.86);
+    backdrop-filter:blur(12px);
+    box-shadow:0 22px 48px -34px rgba(14,42,46,.55);
+    padding:clamp(20px,2.7vw,34px);
+  }
+  .card::before{
+    content:"";
+    position:absolute;
+    inset:0 0 auto 0;
+    height:4px;
+    border-radius:var(--radius) var(--radius) 0 0;
+    background:linear-gradient(90deg,var(--teal),var(--coral));
+    opacity:.9;
+  }
+  .card h3{margin-bottom:12px}
+  .card p,.card li{
+    color:var(--ink-mid);
+    font-size:clamp(16px,1.95vw,22px);
+    line-height:1.45;
+  }
+  .card ul{display:grid;gap:10px;list-style:none}
+  .card li::before{
+    content:"";
+    display:inline-block;
+    width:8px;
+    height:8px;
+    margin-right:10px;
+    border-radius:50%;
+    background:var(--teal);
+    transform:translateY(-1px);
+  }
+  .small{font-size:clamp(13px,1.45vw,16px);color:var(--ink-soft);line-height:1.45}
+  .kicker{
+    color:var(--ink-soft);
+    font-size:clamp(13px,1.45vw,16px);
+    font-weight:800;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+  }
+
+  .compare-table{
+    width:min(100%,1220px);
+    border-collapse:separate;
+    border-spacing:0;
+    overflow:hidden;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:#fff;
+    box-shadow:0 24px 52px -36px rgba(14,42,46,.62);
+  }
+  .compare-table th,.compare-table td{
+    border-bottom:1px solid var(--line-soft);
+    padding:clamp(12px,1.8vw,20px);
+    text-align:left;
+    vertical-align:top;
+    color:var(--ink-mid);
+    font-size:clamp(14px,1.65vw,19px);
+    line-height:1.35;
+  }
+  .compare-table th{
+    background:#eef7f8;
+    color:var(--ink);
+    font-weight:800;
+  }
+  .compare-table tr:last-child td{border-bottom:0}
+  .compare-table td b{color:var(--teal-deep)}
+  .compare-table .no-cell{color:var(--ink-soft)}
+
+  .steps{display:grid;gap:clamp(12px,1.8vh,18px);width:min(100%,1240px)}
+  .step{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
+  .no{
+    display:grid;
+    place-items:center;
+    width:42px;
+    height:42px;
+    border-radius:10px;
+    background:var(--teal);
+    color:#fff;
+    font-family:var(--display);
+    font-weight:700;
+    font-size:22px;
+  }
+  .step p{padding-top:6px;color:var(--ink-mid);font-size:clamp(16px,2vw,23px);line-height:1.38}
+  .step p b{color:var(--ink)}
+
+  .note{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    width:min(100%,1220px);
+    border:1px solid var(--line);
+    border-left:4px solid var(--coral);
+    border-radius:var(--radius-sm);
+    background:rgba(255,255,255,.72);
+    color:var(--ink-mid);
+    box-shadow:0 14px 30px -28px rgba(14,42,46,.48);
+    padding:14px 20px;
+    font-size:clamp(14px,1.5vw,18px);
+    line-height:1.42;
+  }
+  .note strong{color:var(--ink)}
+
+  .path{
+    display:inline-block;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:#fff;
+    color:var(--teal-deep);
+    padding:6px 14px;
+    font-family:var(--mono);
+    font-size:clamp(13px,1.5vw,18px);
+    font-weight:600;
+  }
+
+  /* ---- signature 1: the two-axis map ---- */
+  .axis-map{
+    display:grid;
+    gap:0;
+    width:min(100%,1220px);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:rgba(255,255,255,.8);
+    box-shadow:0 24px 52px -36px rgba(14,42,46,.6);
+    padding:clamp(22px,3vw,40px);
+  }
+  .axis-label{
+    display:block;
+    margin-bottom:16px;
+    color:var(--ink-soft);
+    font-size:clamp(12px,1.35vw,15px);
+    font-weight:800;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .stations{display:flex;align-items:center;flex-wrap:wrap;gap:clamp(10px,1.6vw,20px)}
+  .station{
+    border:1px solid var(--line);
+    border-radius:var(--radius-sm);
+    background:#fff;
+    color:var(--ink);
+    box-shadow:0 12px 26px -24px rgba(14,42,46,.6);
+    padding:clamp(12px,1.6vw,20px) clamp(18px,2.4vw,32px);
+    font-size:clamp(17px,2.2vw,27px);
+    font-weight:800;
+  }
+  .station.is-now{
+    border-color:var(--teal);
+    background:linear-gradient(135deg,#eef8f9,#fbfefe);
+    color:var(--teal-deep);
+  }
+  .station-arrow{color:var(--coral);font-size:clamp(18px,2.2vw,26px);font-weight:800}
+  .plug-rail{
+    position:relative;
+    height:0;
+    margin:clamp(22px,3.2vh,34px) 0 clamp(26px,3.6vh,40px);
+    border-top:2px dashed rgba(14,125,140,.4);
+  }
+  .plug-rail::after{
+    content:"plugs into any of them";
+    position:absolute;
+    left:clamp(12px,2vw,28px);
+    top:-9px;
+    color:var(--teal);
+    background:#fdfefe;
+    padding:0 12px;
+    font-size:clamp(11px,1.2vw,14px);
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  .plugs{display:flex;flex-wrap:wrap;gap:clamp(10px,1.6vw,18px)}
+  .plug{
+    border:1px dashed rgba(14,125,140,.55);
+    border-radius:999px;
+    background:var(--mint);
+    color:var(--teal-deep);
+    padding:clamp(9px,1.2vw,14px) clamp(16px,2vw,26px);
+    font-size:clamp(15px,1.85vw,22px);
+    font-weight:800;
+  }
+
+  /* ---- signature 2: the name collision ---- */
+  .collide{display:grid;gap:0;width:min(100%,1220px);justify-items:center}
+  .collide-word{
+    font-family:var(--display);
+    font-size:clamp(44px,7vw,92px);
+    font-weight:600;
+    line-height:1;
+    color:var(--ink);
+  }
+  .collide-stem{
+    width:2px;
+    height:clamp(26px,4vh,46px);
+    margin:clamp(10px,1.6vh,18px) 0 clamp(14px,2.2vh,24px);
+    border-radius:999px;
+    background:linear-gradient(rgba(14,42,46,.28), rgba(14,42,46,.08));
+  }
+  .collide-split{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:clamp(18px,2.8vw,34px);
+    width:100%;
+  }
+  .collide-card{
+    position:relative;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:#fff;
+    box-shadow:0 22px 46px -34px rgba(14,42,46,.58);
+    padding:clamp(20px,2.7vw,34px);
+  }
+  .collide-card h3{color:var(--teal-deep)}
+  .collide-card .small{margin-top:8px}
+  .collide-card.is-local{border-color:rgba(194,85,47,.4)}
+  .collide-card.is-local h3{color:var(--coral)}
+
+  /* ---- signature 3: the three rungs ---- */
+  .ladder{display:grid;gap:clamp(12px,1.9vh,20px);width:min(100%,1240px);list-style:none}
+  .rung{
+    display:grid;
+    grid-template-columns:auto minmax(0,1fr) auto minmax(0,1.1fr);
+    gap:clamp(12px,1.8vw,22px);
+    align-items:center;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:rgba(255,255,255,.86);
+    box-shadow:0 18px 40px -34px rgba(14,42,46,.55);
+    padding:clamp(14px,1.9vw,24px) clamp(16px,2.2vw,28px);
+  }
+  .rung:nth-child(2){margin-left:clamp(0px,3vw,44px)}
+  .rung:nth-child(3){margin-left:clamp(0px,6vw,88px);border-color:var(--teal);background:linear-gradient(135deg,#eef8f9,#fdffff)}
+  .rung-n{
+    display:grid;
+    place-items:center;
+    width:38px;
+    height:38px;
+    border-radius:9px;
+    background:var(--teal);
+    color:#fff;
+    font-family:var(--display);
+    font-weight:700;
+    font-size:20px;
+  }
+  .rung:nth-child(3) .rung-n{background:var(--coral)}
+  .rung-what{font-size:clamp(15px,1.85vw,22px);font-weight:800;color:var(--ink)}
+  .rung-what span{display:block;color:var(--ink-soft);font-size:clamp(12px,1.35vw,15px);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-top:4px}
+  .rung-to{color:var(--coral);font-size:clamp(16px,2vw,24px);font-weight:800}
+  .rung-out{font-size:clamp(15px,1.85vw,22px);color:var(--ink-mid);line-height:1.34}
+  .rung-out b{color:var(--teal-deep)}
+  .borrow{
+    width:min(100%,1240px);
+    margin-left:auto;
+    color:var(--teal);
+    font-size:clamp(13px,1.5vw,17px);
+    font-weight:800;
+    text-align:right;
+  }
+
+  /* ---- checklist ---- */
+  .checklist{display:grid;gap:clamp(10px,1.5vh,16px);width:min(100%,1180px);list-style:none}
+  .checklist li{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:14px;
+    align-items:start;
+    border:1px solid var(--line);
+    border-radius:var(--radius-sm);
+    background:rgba(255,255,255,.84);
+    padding:clamp(12px,1.6vw,18px) clamp(14px,2vw,24px);
+    color:var(--ink-mid);
+    font-size:clamp(16px,1.95vw,23px);
+    line-height:1.36;
+  }
+  .checklist li::before{
+    content:"☐";
+    color:var(--teal);
+    font-size:clamp(18px,2.1vw,24px);
+    line-height:1.1;
+  }
+
+  /* ---- reward tiers ---- */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,24px);width:min(100%,1220px)}
+  .tier{
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:#fff;
+    box-shadow:0 20px 42px -34px rgba(14,42,46,.55);
+    padding:clamp(18px,2.4vw,30px);
+    text-align:center;
+  }
+  .tier.top{border-color:var(--coral);background:linear-gradient(135deg,#fdf3ee,#fffdfc)}
+  .tier .ic{font-size:clamp(28px,3.4vw,42px);line-height:1;margin-bottom:10px}
+  .tier .kicker{display:block;margin-bottom:10px}
+  .tier .amt{font-size:clamp(16px,1.9vw,23px);font-weight:800;color:var(--ink)}
+  .tier .amt b{color:var(--teal)}
+  .tier.top .amt b{color:var(--coral)}
+  .tier .pto{display:block;margin-top:8px;color:var(--coral);font-size:clamp(13px,1.5vw,17px);font-weight:800}
+
+  /* ---- sharing directions ---- */
+  .dirs{display:grid;gap:clamp(10px,1.6vh,16px);width:min(100%,1180px);list-style:none;counter-reset:dir}
+  .dirs li{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:clamp(14px,1.8vw,22px);
+    align-items:center;
+    border-bottom:1px solid var(--line-soft);
+    padding-bottom:clamp(10px,1.5vh,16px);
+    color:var(--ink-mid);
+    font-size:clamp(17px,2.1vw,26px);
+    line-height:1.34;
+    counter-increment:dir;
+  }
+  .dirs li::before{
+    content:counter(dir);
+    display:grid;
+    place-items:center;
+    width:clamp(34px,3.4vw,46px);
+    height:clamp(34px,3.4vw,46px);
+    border-radius:10px;
+    color:#fff;
+    font-family:var(--display);
+    font-size:clamp(18px,2vw,26px);
+    font-weight:700;
+    line-height:1;
+  }
+  .dirs li:nth-child(1)::before{background:var(--teal)}
+  .dirs li:nth-child(2)::before{background:var(--coral)}
+  .dirs li:nth-child(3)::before{background:var(--amber);color:var(--teal-deep)}
+  .dirs li:last-child{border-bottom:0}
+
+  .checkin-link{
+    display:inline-block;
+    border:1px solid var(--line);
+    border-bottom-width:3px;
+    border-bottom-color:var(--coral);
+    border-radius:var(--radius-sm);
+    background:#fff;
+    color:var(--teal-deep);
+    box-shadow:0 16px 34px -28px rgba(14,42,46,.6);
+    padding:14px 22px;
+    font-family:var(--mono);
+    font-size:clamp(15px,1.9vw,24px);
+    font-weight:600;
+    text-decoration:none;
+    word-break:break-all;
+  }
+  .checkin-link:hover{border-color:var(--teal);border-bottom-color:var(--coral);color:var(--teal)}
+  .checkin-link:focus-visible{outline:3px solid rgba(20,163,182,.45);outline-offset:3px}
+
+
+  .nav{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:30;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:clamp(52px,8vh,68px);
+    padding:0 clamp(20px,4vw,44px);
+    padding-bottom:env(safe-area-inset-bottom);
+    background:linear-gradient(180deg,transparent,rgba(245,248,246,.9));
+    pointer-events:none;
+  }
+  .nav>*{pointer-events:auto}
+  .brand{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(14px,1.7vw,19px);
+    color:var(--ink);
+  }
+  .brand .brand-dot{color:var(--coral)}
+  .navctl{display:flex;align-items:center;gap:14px}
+  .arrow{
+    border:1px solid var(--line);
+    border-radius:50%;
+    background:var(--card);
+    color:var(--ink);
+    width:38px;
+    height:38px;
+    display:grid;
+    place-items:center;
+    font-size:17px;
+    line-height:1;
+    cursor:pointer;
+    transition:.15s;
+  }
+  .arrow:hover{border-color:var(--teal);color:var(--teal)}
+  .arrow:disabled{opacity:.35;cursor:default}
+  .fs{
+    border:0;
+    background:none;
+    color:var(--ink-soft);
+    cursor:pointer;
+    font-family:var(--sans);
+    font-size:13px;
+    font-weight:700;
+  }
+  .fs:hover{color:var(--teal)}
+  .count{
+    color:var(--ink-soft);
+    font-size:clamp(13px,1.5vw,16px);
+    font-variant-numeric:tabular-nums;
+    font-weight:700;
+  }
+  .count b{color:var(--ink)}
+  .arrow:focus-visible,.fs:focus-visible,.edge:focus-visible{
+    outline:3px solid rgba(20,163,182,.45);
+    outline-offset:3px;
+  }
+  .progress{
+    position:fixed;
+    left:0;
+    top:0;
+    z-index:40;
+    height:4px;
+    width:0;
+    background:linear-gradient(90deg,var(--teal),var(--coral));
+    transition:width .35s ease;
+  }
+  .edge{
+    position:fixed;
+    top:0;
+    bottom:0;
+    z-index:20;
+    width:18vw;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+    pointer-events:none;
+  }
+  .edge.prev{left:0}
+  .edge.next{right:0}
+  .edge:focus-visible{outline:3px solid rgba(20,163,182,.35);outline-offset:-6px}
+  .hint{
+    position:fixed;
+    left:50%;
+    bottom:calc(clamp(60px,9vh,78px) + env(safe-area-inset-bottom));
+    transform:translateX(-50%);
+    z-index:40;
+    color:var(--ink-soft);
+    font-size:13px;
+    font-weight:700;
+    background:rgba(255,255,255,.82);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:7px 12px;
+  }
+
+  .slide.cover{justify-items:center;text-align:center;align-content:center}
+  .slide.cover::before{
+    left:50%;
+    top:auto;
+    bottom:clamp(92px,12vh,132px);
+    width:min(52vw,680px);
+    height:3px;
+    transform:translateX(-50%);
+    background:linear-gradient(90deg,transparent,var(--teal),var(--coral),transparent);
+    opacity:.5;
+  }
+  .slide.cover::after{
+    content:"Session 03";
+    right:auto;
+    left:50%;
+    top:clamp(28px,5vh,54px);
+    transform:translateX(-50%);
+    color:rgba(14,42,46,.28);
+    font-size:clamp(18px,2vw,28px);
+  }
+  .slide.cover h1{max-width:none;font-size:clamp(58px,10vw,136px)}
+  .slide.cover .lead{font-size:clamp(22px,3vw,36px)}
+
+  @media(max-width:820px){
+    .grid-2,.grid-3,.collide-split,.tiers{grid-template-columns:1fr}
+    .rung{grid-template-columns:auto 1fr;row-gap:8px}
+    .rung-to{display:none}
+    .rung:nth-child(2),.rung:nth-child(3){margin-left:0}
+    .rung-out{grid-column:2}
+    .collide-stem{display:none}
+  }
+  @media(max-width:620px){
+    .slide{padding:30px 22px 96px}
+    .slide::before,.slide::after{display:none}
+    h1{font-size:46px}
+    h2{font-size:36px}
+    .slide.cover{justify-items:start;text-align:left}
+    .nav{justify-content:flex-end}
+    .brand{display:none}
+    .fs{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .slide,.progress{transition:none}
+    .slide.active .rise{animation:none}
+  }
+  @media print{
+    html,body{height:auto;overflow:visible;background:#fff}
+    .deck{position:static;background:#fff}
+    .slide{
+      position:relative;
+      opacity:1!important;
+      visibility:visible!important;
+      pointer-events:auto;
+      min-height:100vh;
+      break-after:page;
+    }
+    .slide::before,.slide::after,.nav,.edge,.hint,.progress{display:none!important}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<button class="edge prev" id="edgePrev" aria-label="Previous slide"></button>
+<button class="edge next" id="edgeNext" aria-label="Next slide"></button>
+<main class="deck" id="deck" role="region" aria-label="From Prompt to Partner Session 3 slide deck">
+
+  <section class="slide cover" aria-label="Slide 1">
+    <div class="eyebrow rise">Neteon · AI Workshop</div>
+    <h1 class="rise">Your AI toolkit</h1>
+    <p class="lead rise">Projects, Skills, and Connectors &mdash; and where to actually start on Monday.</p>
+    <div class="chips rise">
+      <span class="chip">3-part live series</span>
+      <span class="chip"><b>Session 3</b></span>
+      <span class="chip">Final session</span>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Slide 2">
+    <div class="eyebrow rise">Quick recap</div>
+    <h2 class="rise">Where we got to.</h2>
+    <div class="grid-2 rise">
+      <div class="card">
+        <h3>Session 1 &mdash; the standard</h3>
+        <ul>
+          <li>Prompt structure: RACE / RTF</li>
+          <li>Project = Instructions + Knowledge</li>
+          <li>Stop re-explaining your job every time</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Session 2 &mdash; the context</h3>
+        <ul>
+          <li>Claude in Chrome reads the tab you're on</li>
+          <li>Not a crawler &mdash; it sees what you see</li>
+          <li>View first · Ask before acting · Human review</li>
+        </ul>
+      </div>
+    </div>
+    <p class="sub rise">Today: no live demo. First half is the map, second half is you.</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 3">
+    <div class="eyebrow rise">The map</div>
+    <h2 class="rise">These are two different questions.</h2>
+    <div class="axis-map rise">
+      <div>
+        <span class="axis-label">Where you work</span>
+        <div class="stations">
+          <span class="station">Chat</span>
+          <span class="station-arrow">&rarr;</span>
+          <span class="station">Project</span>
+          <span class="station-arrow">&rarr;</span>
+          <span class="station is-now">Cowork</span>
+        </div>
+      </div>
+      <div class="plug-rail"></div>
+      <div>
+        <span class="axis-label">What it can reach</span>
+        <div class="plugs">
+          <span class="plug">Browser</span>
+          <span class="plug">Skills</span>
+          <span class="plug">Connectors</span>
+        </div>
+      </div>
+    </div>
+    <p class="sub rise">Browser, Skills and Connectors are not a fourth level. They are attachments.</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 4">
+    <div class="eyebrow rise">New today</div>
+    <h2 class="rise">So what is Cowork?</h2>
+    <p class="lead rise">You hand it a job. It works through the steps. You get files back.</p>
+    <div class="grid-3 rise">
+      <div class="card">
+        <h3>Chat</h3>
+        <p>You ask, it answers.</p>
+      </div>
+      <div class="card">
+        <h3>Claude in Chrome</h3>
+        <p>It reads the page you already have open.</p>
+      </div>
+      <div class="card">
+        <h3>Cowork</h3>
+        <p>It does the job and hands you the result.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Slide 5">
+    <div class="eyebrow rise">What's different about it</div>
+    <div class="steps rise">
+      <div class="step"><span class="no">1</span><p>It works <b>on your computer</b>. Reads and writes your files, no uploading and downloading.</p></div>
+      <div class="step"><span class="no">2</span><p>What comes out is <b>a real file</b>. Excel with formulas that work, PowerPoint, Word &mdash; not a wall of text in a chat window.</p></div>
+      <div class="step"><span class="no">3</span><p>It runs <b>multiple steps on its own</b>. Describe the outcome, come back to the result.</p></div>
+      <div class="step"><span class="no">4</span><p>It <b>pairs with Claude in Chrome</b> &mdash; last session's browser skill, working inside this.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Slide 6">
+    <div class="eyebrow rise">Before we go further</div>
+    <h2 class="rise">It still needs you for four things.</h2>
+    <div class="grid-2 rise">
+      <div class="card"><h3>A goal</h3><p>It doesn't decide what's worth doing.</p></div>
+      <div class="card"><h3>The data</h3><p>It can only work from what you give it access to.</p></div>
+      <div class="card"><h3>Permission</h3><p>Every system it touches, you approved.</p></div>
+      <div class="card"><h3>Your review</h3><p>What it produces is a first version, not a final one.</p></div>
+    </div>
+    <p class="quote rise" style="font-size:clamp(28px,4.1vw,52px);">It's handing over a job, not asking a question.</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 7">
+    <div class="eyebrow rise">When to reach for it</div>
+    <h2 class="rise">Is there a file at either end?</h2>
+    <div class="grid-2 rise">
+      <div class="card">
+        <h3>Open Cowork</h3>
+        <ul>
+          <li>It starts from files you already have</li>
+          <li>What you need back is a file, not an answer</li>
+          <li>You'd be opening several files to do it by hand</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Just use Chat</h3>
+        <ul>
+          <li>You want an answer or a second opinion</li>
+          <li>Nothing goes in, nothing comes out</li>
+          <li>You just need to know something</li>
+        </ul>
+      </div>
+    </div>
+    <p class="quote rise" style="font-size:clamp(26px,3.8vw,48px);">If the answer is &ldquo;just send me the file,&rdquo; that's a Cowork job.</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 8">
+    <div class="eyebrow rise">The confusing part</div>
+    <div class="collide rise">
+      <div class="collide-word">&ldquo;Project&rdquo;</div>
+      <div class="collide-stem"></div>
+      <div class="collide-split">
+        <div class="collide-card">
+          <h3>Chat Project</h3>
+          <p class="small">On claude.ai, in your account. What we built in Session 1.</p>
+        </div>
+        <div class="collide-card is-local">
+          <h3>Cowork Project</h3>
+          <p class="small">In Cowork. Holds the actual folders you work in.</p>
+        </div>
+      </div>
+    </div>
+    <p class="sub rise">Two things carry the same name. That's the product's doing, not yours &mdash; so from here on, always say which one.</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 9">
+    <div class="eyebrow rise">Side by side</div>
+    <table class="compare-table rise">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Chat Project</th>
+          <th>Cowork Project</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><b>What you do there</b></td><td>Ask questions</td><td>Hand over jobs</td></tr>
+        <tr><td><b>Holds your folders</b></td><td class="no-cell">No &mdash; you upload files to it</td><td>Yes, several at once</td></tr>
+        <tr><td><b>Remembers across sessions</b></td><td>Yes &mdash; what you discussed</td><td>Yes &mdash; what it did for you</td></tr>
+        <tr><td><b>What comes back</b></td><td>An answer</td><td>A file</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="slide" aria-label="Slide 10">
+    <div class="eyebrow rise">How they stack</div>
+    <ol class="ladder rise">
+      <li class="rung">
+        <span class="rung-n">1</span>
+        <div class="rung-what">Chat<span>ask a question</span></div>
+        <span class="rung-to">&rarr;</span>
+        <div class="rung-out">An answer.</div>
+      </li>
+      <li class="rung">
+        <span class="rung-n">2</span>
+        <div class="rung-what">Chat Project<span>ask a question</span></div>
+        <span class="rung-to">&rarr;</span>
+        <div class="rung-out">An answer that <b>follows your standard</b>.</div>
+      </li>
+      <li class="rung">
+        <span class="rung-n">3</span>
+        <div class="rung-what">Cowork Project<span>hand over a job</span></div>
+        <span class="rung-to">&rarr;</span>
+        <div class="rung-out">A <b>finished file</b> that follows your standard.</div>
+      </li>
+    </ol>
+    <p class="borrow rise">&uarr; level 3 can borrow everything from level 2</p>
+    <p class="sub rise">Project is the noun. Cowork is the verb.</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 11">
+    <div class="eyebrow rise">The question you're about to ask</div>
+    <h2 class="rise">&ldquo;So was Session 1 wasted?&rdquo;</h2>
+    <p class="lead rise">No. Cowork gives you three ways to start a project &mdash; and one of them pulls in the Chat Project you already built.</p>
+    <div class="rise">
+      <p class="kicker" style="margin-bottom:14px;">In Cowork, click <b>+</b> next to Projects</p>
+      <div class="chips">
+        <span class="chip">Start from scratch</span>
+        <span class="chip on"><b>Import from project</b></span>
+        <span class="chip">Use an existing folder</span>
+      </div>
+    </div>
+    <p class="sub rise">The sales rules you wrote and the files you uploaded keep working.</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 12">
+    <div class="eyebrow rise">The other question</div>
+    <h2 class="rise">&ldquo;I already have a folder. Why a project?&rdquo;</h2>
+    <div class="grid-2 rise">
+      <div class="card">
+        <h3>Doing it once</h3>
+        <p>Just point Cowork at the folder. You don't need a project at all.</p>
+      </div>
+      <div class="card">
+        <h3>Doing it every week</h3>
+        <p>Make it a project. That's what the wrapper is for.</p>
+      </div>
+    </div>
+    <div class="steps rise">
+      <div class="step"><span class="no">1</span><p><b>Instructions apply themselves.</b> You stop saying "read the rules file first."</p></div>
+      <div class="step"><span class="no">2</span><p><b>It remembers.</b> Correct it once and you don't correct it again. A folder can't do that.</p></div>
+      <div class="step"><span class="no">3</span><p><b>Several sources at once.</b> Folders in different places, reference links, plus your Chat Project.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Slide 13">
+    <div class="eyebrow rise">Before you use anything it makes</div>
+    <h2 class="rise">How to check what it hands you.</h2>
+    <ul class="checklist rise">
+      <li>Did it actually use the material I gave it?</li>
+      <li>Did it flag what it wasn't sure about?</li>
+      <li>Can I tell the facts apart from the assumptions?</li>
+      <li>Have I checked the numbers, specs and part codes against the source?</li>
+      <li>Could this go out as-is, or what still needs changing?</li>
+    </ul>
+    <p class="quote rise" style="font-size:clamp(26px,3.8vw,48px);">It can prepare the work. It can't be accountable for it.</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 14">
+    <div class="eyebrow rise">Attachment one</div>
+    <h2 class="rise">Skills</h2>
+    <p class="lead rise">A skill is writing down how you always do something &mdash; once.</p>
+    <div class="grid-2 rise">
+      <div class="card"><h3>A prompt</h3><p>A one-off request. You type it again next time.</p></div>
+      <div class="card"><h3>A skill</h3><p>The SOP. Every run after that follows the same standard.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Slide 15">
+    <div class="eyebrow rise">Two ways to make one</div>
+    <h2 class="rise">Neither involves writing a file.</h2>
+    <div class="grid-2 rise">
+      <div class="card">
+        <h3>A &nbsp;·&nbsp; Tell it</h3>
+        <p>In chat, say "here's how I always do X &mdash; turn that into a skill." It asks you questions and writes the whole thing.</p>
+      </div>
+      <div class="card">
+        <h3>B &nbsp;·&nbsp; Show it</h3>
+        <p>Record yourself doing the task &mdash; screen, clicks, talking out loud. It drafts the skill from the recording for you to approve.</p>
+      </div>
+    </div>
+    <p class="quote rise" style="font-size:clamp(28px,4.2vw,54px);"><span class="accent">You don't have to write anything.</span> Just record yourself doing the thing.</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 16">
+    <div class="eyebrow rise">Where to switch them on</div>
+    <p class="kicker rise">The one setup trip</p>
+    <p class="path rise" style="font-size:clamp(18px,2.5vw,32px);padding:10px 24px;">Settings &rsaquo; Capabilities &rsaquo; Skills</p>
+    <p class="sub rise">Set it once on your account and it works in Chat <em>and</em> in Cowork. Not two setups.</p>
+    <div class="rise">
+      <p class="kicker" style="margin-bottom:14px;">Three worth building at Neteon</p>
+      <div class="chips">
+        <span class="chip">Quote email first draft</span>
+        <span class="chip">Datasheet comparison</span>
+        <span class="chip">Customer background</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Slide 17">
+    <div class="eyebrow rise">Attachment two</div>
+    <h2 class="rise">Connectors</h2>
+    <p class="lead rise">A structured, permissioned way for AI to reach a tool or a data source.</p>
+    <div class="chips rise">
+      <span class="chip">Google Drive</span>
+      <span class="chip">Docs &amp; Sheets</span>
+      <span class="chip">Gmail</span>
+      <span class="chip">Slack</span>
+      <span class="chip">Local files</span>
+      <span class="chip">HubSpot</span>
+    </div>
+    <div class="rise">
+      <p class="path" style="font-size:clamp(18px,2.5vw,32px);padding:10px 24px;">Settings &rsaquo; Connectors</p>
+      <p class="sub" style="margin-top:18px;">Same settings page as Skills. Nothing is connected until you switch it on yourself.</p>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Slide 18">
+    <div class="eyebrow rise">What this looks like on your desk</div>
+    <div class="grid-2 rise">
+      <div class="card"><h3>Sales</h3><p>Inbound lead &rarr; research &rarr; handoff doc &rarr; CRM note</p></div>
+      <div class="card"><h3>Marketing</h3><p>Product page + datasheet &rarr; campaign brief &rarr; LinkedIn draft</p></div>
+      <div class="card"><h3>Operations</h3><p>Supplier page + order info &rarr; prep note &rarr; tracker update</p></div>
+      <div class="card"><h3>Product</h3><p>Vendor datasheets &rarr; comparison &rarr; positioning notes</p></div>
+    </div>
+    <p class="sub rise">That's what I imagine. Now let's hear what people are <strong>actually</strong> doing.</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 19">
+    <div class="eyebrow rise">Over to you</div>
+    <h2 class="rise">What our team is actually doing with AI.</h2>
+    <ol class="dirs rise">
+      <li>What did you use it for?</li>
+      <li>Did it save time, or come out better somehow?</li>
+      <li>Did you get stuck anywhere &mdash; and how did you work around it?</li>
+    </ol>
+    <p class="sub rise">No slides, no demo. Just one thing you've actually done.</p>
+  </section>
+
+  <section class="slide" aria-label="Slide 20">
+    <div class="eyebrow rise">Three sessions</div>
+    <div class="steps rise">
+      <div class="step"><span class="no">1</span><p>We taught it <b>your standard</b>.</p></div>
+      <div class="step"><span class="no">2</span><p>We gave it <b>the right context</b>.</p></div>
+      <div class="step"><span class="no">3</span><p>You've now seen <b>the whole toolkit</b> &mdash; and where to start.</p></div>
+    </div>
+    <p class="quote rise" style="font-size:clamp(30px,4.4vw,58px);">Don't try to connect everything. <span class="accent">One task you do every week. One folder. One output. One review.</span></p>
+  </section>
+
+  <section class="slide" aria-label="Slide 21">
+    <div class="eyebrow rise">Before you go</div>
+    <h2 class="rise">This is session three. Check in and you've got all three.</h2>
+    <div class="tiers rise">
+      <div class="tier">
+        <div class="ic">&#127903;&#65039;</div>
+        <span class="kicker">1 check-in</span>
+        <div class="amt">US <b>$30</b> gift card<br>TW <b>NT$1,000</b></div>
+      </div>
+      <div class="tier">
+        <div class="ic">&#127873;</div>
+        <span class="kicker">2 check-ins</span>
+        <div class="amt">US <b>$60</b> gift card<br>TW <b>NT$2,000</b></div>
+      </div>
+      <div class="tier top">
+        <div class="ic">&#127941;</div>
+        <span class="kicker">All 3</span>
+        <div class="amt">US <b>$100</b> gift card<br>TW <b>NT$3,000</b></div>
+        <span class="pto">+ 2 days PTO</span>
+      </div>
+    </div>
+    <div class="rise">
+      <span class="kicker" style="display:block;margin-bottom:12px;">Check-in form</span>
+      <a class="checkin-link" href="https://forms.gle/GdLUW9x6ArTqPfyC8" target="_blank" rel="noopener">forms.gle/GdLUW9x6ArTqPfyC8</a>
+    </div>
+    <div class="rise">
+      <span class="kicker" style="display:block;margin-bottom:10px;">One question to take with you</span>
+      <p class="sub" style="max-width:none;">Which weekly job would you want AI to prepare for you &mdash; <strong>but never send on its own?</strong></p>
+    </div>
+  </section>
+
+</main>
+
+<p class="hint" id="hint">Use arrow keys or click the sides to navigate</p>
+<nav class="nav" aria-label="Slide navigation">
+  <div class="brand">From Prompt to Partner <span class="brand-dot">·</span></div>
+  <div class="navctl">
+    <button class="fs" id="fsBtn" type="button" aria-label="Toggle fullscreen">Fullscreen</button>
+    <span class="count"><b id="cur">1</b> / <span id="tot">21</span></span>
+    <button class="arrow" id="prev" type="button" aria-label="Previous slide">&lsaquo;</button>
+    <button class="arrow" id="next" type="button" aria-label="Next slide">&rsaquo;</button>
+  </div>
+</nav>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const total = slides.length;
+  let index = 0;
+  let touchStartX = null;
+
+  const curEl = document.getElementById('cur');
+  const totEl = document.getElementById('tot');
+  const progressEl = document.getElementById('progress');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const fsBtn = document.getElementById('fsBtn');
+  const hintEl = document.getElementById('hint');
+  const edgePrev = document.getElementById('edgePrev');
+  const edgeNext = document.getElementById('edgeNext');
+
+  totEl.textContent = total;
+
+  const clampSlide = n => Math.max(0, Math.min(total - 1, n));
+  const isTypingTarget = target => target.closest('button,a,input,textarea,select,video,[contenteditable="true"]');
+
+  const updateFullscreenLabel = () => {
+    fsBtn.textContent = document.fullscreenElement ? 'Exit fullscreen' : '⛶ Fullscreen';
+    fsBtn.setAttribute('aria-label', document.fullscreenElement ? 'Exit fullscreen' : 'Enter fullscreen');
+  };
+
+  const showSlide = (nextIndex, push = true) => {
+    index = clampSlide(nextIndex);
+    slides.forEach((slide, slideIndex) => {
+      const isActive = slideIndex === index;
+      slide.classList.toggle('active', isActive);
+      slide.setAttribute('aria-hidden', String(!isActive));
+      slide.toggleAttribute('inert', !isActive);
+      slide.tabIndex = isActive ? 0 : -1;
+      if(!isActive){
+        slide.querySelectorAll('video').forEach(v => v.pause());
+      }
+    });
+    curEl.textContent = String(index + 1);
+    progressEl.style.width = total > 1 ? `${(index / (total - 1)) * 100}%` : '100%';
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === total - 1;
+    edgePrev.setAttribute('aria-disabled', String(index === 0));
+    edgeNext.setAttribute('aria-disabled', String(index === total - 1));
+    if(index > 0) hintEl.hidden = true;
+    if(push) history.replaceState(null, '', `#${index + 1}`);
+  };
+
+  const nextSlide = () => { if(index < total - 1) showSlide(index + 1); };
+  const prevSlide = () => { if(index > 0) showSlide(index - 1); };
+
+  const toggleFullscreen = () => {
+    if(!document.fullscreenElement && document.documentElement.requestFullscreen){
+      document.documentElement.requestFullscreen();
+      return;
+    }
+    if(document.exitFullscreen) document.exitFullscreen();
+  };
+
+  document.addEventListener('keydown', event => {
+    if(isTypingTarget(event.target)) return;
+    if(['ArrowRight','ArrowDown','PageDown',' '].includes(event.key)){
+      event.preventDefault(); nextSlide(); return;
+    }
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(event.key)){
+      event.preventDefault(); prevSlide(); return;
+    }
+    if(event.key === 'Home'){ event.preventDefault(); showSlide(0); return; }
+    if(event.key === 'End'){ event.preventDefault(); showSlide(total - 1); return; }
+    if(event.key === 'f' || event.key === 'F') toggleFullscreen();
+  });
+
+  prevBtn.addEventListener('click', prevSlide);
+  nextBtn.addEventListener('click', nextSlide);
+  edgePrev.addEventListener('click', prevSlide);
+  edgeNext.addEventListener('click', nextSlide);
+  fsBtn.addEventListener('click', toggleFullscreen);
+  document.addEventListener('fullscreenchange', updateFullscreenLabel);
+
+  document.addEventListener('touchstart', event => {
+    if(event.target.closest('video,button,a,input,textarea,select,[contenteditable="true"]')) return;
+    touchStartX = event.touches[0].clientX;
+  }, { passive:true });
+
+  document.addEventListener('touchend', event => {
+    if(event.target.closest('video,button,a,input,textarea,select,[contenteditable="true"]')){
+      touchStartX = null; return;
+    }
+    if(touchStartX === null) return;
+    const delta = event.changedTouches[0].clientX - touchStartX;
+    if(Math.abs(delta) > 45) delta < 0 ? nextSlide() : prevSlide();
+    touchStartX = null;
+  });
+
+  window.addEventListener('hashchange', () => {
+    const hashSlide = parseInt(location.hash.replace('#', ''), 10);
+    if(Number.isFinite(hashSlide)) showSlide(hashSlide - 1, false);
+  });
+
+  const start = parseInt(location.hash.replace('#', ''), 10) || 1;
+  updateFullscreenLabel();
+  showSlide(start - 1, false);
+</script>
+</body>
+</html>
