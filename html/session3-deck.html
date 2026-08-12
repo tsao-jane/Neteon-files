@@ -473,6 +473,25 @@
     font-weight:700;
   }
 
+  /* ---- what's inside a skill ---- */
+  .inside{
+    display:grid;
+    gap:8px;
+    width:min(100%,1240px);
+    list-style:none;
+    border-left:3px solid var(--teal);
+    padding:14px 0 14px 22px;
+    background:linear-gradient(90deg,rgba(233,245,246,.75),transparent 70%);
+    border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  .inside li{
+    color:var(--ink-mid);
+    font-family:var(--mono);
+    font-size:clamp(13px,1.5vw,18px);
+    line-height:1.45;
+  }
+  .inside li::before{content:"· ";color:var(--teal);font-weight:700}
+
   /* ---- checklist ---- */
   .checklist{display:grid;gap:clamp(8px,1.2vh,14px);width:min(100%,1180px);list-style:none}
   .checklist li{
@@ -982,10 +1001,25 @@
   <section class="slide" aria-label="Slide 15">
     <div class="eyebrow rise">Attachment one</div>
     <h2 class="rise">Skills</h2>
-    <p class="lead rise">A skill is writing down how you always do something &mdash; once.</p>
+    <p class="lead rise">What you'd tell a new colleague in their first week &mdash; written down once.</p>
     <div class="grid-2 rise">
-      <div class="card"><h3>A prompt</h3><p>A one-off request. You type it again next time.</p></div>
-      <div class="card"><h3>A skill</h3><p>The SOP. Every run after that follows the same standard.</p></div>
+      <div class="card">
+        <h3>A prompt</h3>
+        <p>A one-off request. You type it again next time.</p>
+      </div>
+      <div class="card">
+        <h3>A skill</h3>
+        <p>The same instructions, saved. Every run after that follows them.</p>
+      </div>
+    </div>
+    <div class="rise">
+      <p class="kicker" style="margin-bottom:10px;">What's actually inside one &mdash; &ldquo;Quote email first draft&rdquo;</p>
+      <ul class="inside">
+        <li>Open with the part number and quantity they asked for</li>
+        <li>Give price, lead time and MOQ &mdash; in that order</li>
+        <li>If something is out of stock, say so in the first line. Don't bury it</li>
+        <li>Never quote freight unless they asked for it</li>
+      </ul>
     </div>
   </section>
 
